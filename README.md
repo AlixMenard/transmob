@@ -3,22 +3,23 @@ Yolo based vehicle tracking solution
 
 ## transmob
 
-Yolo object detection, SORT tracking.
+Yolo object detection, SORT tracking.\
 Paralleled video processing.
 
 ## transmobNT
 
-Yolo object detection, SORT tracking.
-Paralleled video processing.
+Yolo object detection, SORT tracking.\
+Paralleled video processing.\
 Nested Threads for processing (frame processing vs tracking)
 
 ## transmobYT
 
-Yolo object detection, Yolo tracking.
-Paralleled video processing.
+Yolo object detection, Yolo tracking.\
+Paralleled video processing.\
+*todo : run everythin yolo step on cuda ?*
 
 ### Performances
-**Precision :** transmob == transmobNT, transmobYT to be determined
+**Precision :** transmob == transmobNT, transmobYT to be determined\
 **Speed :** transmobYT ~= transmobNT > transmob \
 Videos can be processed every 2 frames to speed up. On low quality, every frame is necessary.
 
