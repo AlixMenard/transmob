@@ -1,4 +1,5 @@
 import tkinter as tk
+from tkinter.ttk import Label
 
 from PIL.ImageColor import colormap
 from pandas.io.sas.sas_constants import column_label_length_offset
@@ -6,7 +7,6 @@ from tkinterdnd2 import TkinterDnD, DND_FILES
 import Transmob.VideoProcesser as vp
 import TransmobNT.VideoProcesser as vpNT
 import TransmobYT.VideoProcesser as vpYT
-from TransmobYT.VideoProcesser import Playlist
 
 
 def setup_window():
@@ -30,6 +30,8 @@ def setup_window():
     T.grid(row = 0, column = 2, columnspan = 2, pady=20, padx=5)
     TNT.grid(row = 0, column = 4, columnspan = 2, pady=20, padx=5)
     TYT.grid(row = 0, column = 6, columnspan = 2, pady=20, padx=5)
+
+    recommended_cores = {"Classic" : 5, "NT" : 4, "YT" : 3}
 
     # Set window title and dimensions
     root.title("AI Video Processing")
@@ -101,7 +103,7 @@ def setup_window():
         if value_if_allowed.isdigit() or value_if_allowed == "":
             return True
         return False
-    core_nb = tk.IntVar(value=3)
+    core_nb = tk.IntVar(value=recommended_cores[process.get()])
     core_l = tk.Label(root, text = "Number of cores")
     core_l.grid(row = 5, column = 0, columnspan= 4, pady=10, padx=5)
     vcmd = (root.register(validate_input), '%P')
@@ -120,8 +122,8 @@ def setup_window():
                 Playlist = vpYT.Playlist
         P = Playlist(entry_var.get(), cores=core_nb.get(), model=f"weights/yolov8{model_letter.get()}.pt", watch_classes=classes)
         P.initialise()
-        P.play()
-        setup_window()
+        results = P.play()
+        result_window(results)
 
     def create_bt():
         val_bt = tk.Button(root, text="Start", command=start)
@@ -132,6 +134,25 @@ def setup_window():
     root.dnd_bind('<<Drop>>', on_drop)
 
     root.mainloop()
+
+def result_window(results):
+    vidd, procd, diff = results
+    root = tk.Tk()
+    L = tk.Label(root, text="Results")
+    L.pack()
+    L1 = tk.Label(root, text = f"Total video time   : {vp.format_dur(vidd)}")
+    L1.pack()
+    L2 = tk.Label(root, text = f"Total process time : {vp.format_dur(procd)}")
+    L2.pack()
+    L3 = tk.Label(root, text = f"Difference : {diff}%")
+    L3.pack()
+
+    def gosetup():
+        root.destroy()
+        setup_window()
+
+    bt = tk.Button(root, text = "Ok", command=gosetup)
+    bt.pack()
 
 if __name__ == "__main__":
     setup_window()

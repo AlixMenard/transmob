@@ -119,10 +119,7 @@ class Playlist:
         process_dur = end-start
         print("\n"*3)
         diff = round(100*(process_dur/video_d)-100, 2) if process_dur<video_d else round(100*(process_dur/video_d)-100, 2)
-        print(f"Total video time   : {format_dur(video_d)}")
-        print(f"Total process time : {format_dur(process_dur)}")
-        print(f"Difference : {diff}%")
-        return diff
+        return video_d, process_dur, diff
 
     def get_lines(self):
         lines = {}
@@ -130,25 +127,25 @@ class Playlist:
             lines[f] = self.analysers[f].get_lines()
         return lines
 
-def models_trials(folder, cores):
+def models_trials(folder, cores, lines = None):
     #! Growth factors :
     #! {'n': 3.97, 's': 129.22, 'm': 423.48, 'l': 841.08, 'x': 1266.49}
-    lines = None
     models = {"n" : None, "s" : None, "m" : None, "l" : None, "x" : None}
     for m in models:
+        print("anotherpb")
         print("\n"*3)
         print(f"Model size : {m}")
         p = Playlist(folder, model=f"weights/yolov8{m}.pt", cores = cores)
-        if m != "n" and not lines is None:
+        if not lines is None:
             p.initialise(lines)
         else:
             p.initialise()
-        if m == "n":
+        if lines is None:
             lines = p.get_lines()
         diff = p.play()
         models[m] = diff
-        print(models)
-        shutil.copy(f"{folder}/product/results.txt", f"{folder}/model{m}.txt")
+        print("NT", models)
+    return models, lines
 
 
 if __name__ == "__main__":
