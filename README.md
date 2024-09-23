@@ -20,6 +20,14 @@ Paralleled video processing.
 ### Performances
 **Precision :** transmob == transmobNT, transmobYT to be determined
 **Speed :** transmobYT ~= transmobNT > transmob
+Videos can be processed every 2 frames to speed up. On low quality, every frame is necessary.
+
+**models :**
+- n : ~real time with double frame
+- s
+- m : ~x3 with multi threading
+- l
+- x
 
 ### todo
 - file sorting for better core workload share
