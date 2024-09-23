@@ -16,7 +16,7 @@ Nested Threads for processing (frame processing vs tracking)
 
 Yolo object detection, Yolo tracking.\
 Paralleled video processing.\
-*todo : run everythin yolo step on cuda ?*
+*todo : run every yolo step on cuda ?*
 
 ### Performances
 **Precision :** transmob == transmobNT, transmobYT to be determined\
