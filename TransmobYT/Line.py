@@ -1,5 +1,5 @@
 import numpy as np
-from Vehicle import Vehicle
+from .Vehicle import Vehicle
 from typing import Dict, List
 
 class Line:

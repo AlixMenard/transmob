@@ -2,14 +2,14 @@ import os
 
 os.environ["OPENCV_LOG_LEVEL"] = "SILENT"
 
-from Vehicle import Fleet
-from Box import Box as vBox
-from Line import Line
+from .Vehicle import Fleet
+from .Box import Box as vBox
+from .Line import Line
 import cv2
 import multiprocessing
 
 import numpy as np
-from sort import Sort
+from .sort import Sort
 from ultralytics import YOLO
 from typing import List
 import time

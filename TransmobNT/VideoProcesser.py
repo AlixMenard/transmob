@@ -4,7 +4,7 @@ import shutil
 from typing import Dict
 
 
-from Analyze import *
+from .Analyze import *
 
 
 class NoDaemonProcess(multiprocessing.Process):

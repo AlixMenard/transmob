@@ -1,4 +1,4 @@
-from Box import Box as vBox
+from .Box import Box as vBox
 from typing import Dict, List
 import numpy as np
 

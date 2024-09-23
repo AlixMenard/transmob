@@ -2,9 +2,9 @@ import os
 
 os.environ["OPENCV_LOG_LEVEL"] = "SILENT"
 
-from Vehicle import Fleet
-from Box import Box as vBox
-from Line import Line
+from .Vehicle import Fleet
+from .Box import Box as vBox
+from .Line import Line
 import cv2
 
 import numpy as np

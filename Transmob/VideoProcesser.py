@@ -4,7 +4,7 @@ from typing import Dict
 
 from torch.cuda import graph
 
-from Analyze import *
+from .Analyze import *
 
 
 def vidduration(filename):

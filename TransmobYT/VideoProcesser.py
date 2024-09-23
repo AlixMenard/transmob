@@ -2,7 +2,7 @@ import multiprocessing
 import shutil
 from typing import Dict
 
-from Analyze import *
+from .Analyze import *
 
 
 def vidduration(filename):
