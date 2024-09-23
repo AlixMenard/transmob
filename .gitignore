@@ -1,9 +1,5 @@
-media/
-ANTIBES/
-Antibes_ped_try/
-media2/
-media2short/
+**/screens/
 screens/
-tahiti/
 web/
+videos/
 **/yolov8x.pt

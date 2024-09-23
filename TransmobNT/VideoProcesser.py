@@ -66,12 +66,12 @@ class Playlist:
         self.watch_classes = watch_classes
         self.files : List[str] = [f for f in os.listdir(self.folder) if f[-4:].lower() in [".mp4", ".mts", ".lrv", ".avi"]]
         self.cores = min(cores, len(self.files))
-        #self.sort_files()
+        self.sort_files()
         self.analysers : Dict[str, Analyser|None] = {f:None for f in self.files}
         self.frame_nb = frame_nb
 
     def sort_files(self):
-        durations = {f:int(vidduration(f)) for f in self.files}
+        durations = {f:int(vidduration(self.folder+"/"+f)) for f in self.files}
         cores = [[("",0,0)] for _ in range(self.cores)]
         while durations:
             longest_vid = max(zip(durations.values(), durations.keys()))[1]
@@ -81,7 +81,6 @@ class Playlist:
 
         for core in cores:
             core.pop(0)
-            print(core)
         final_order = []
         while any([len(c) > 0 for c in cores]):
             earliest = min(cores, key=lambda x: x[0][-1] - x[0][-2])
