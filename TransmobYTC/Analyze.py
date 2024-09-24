@@ -48,6 +48,11 @@ def dic_search(dic: dict, tupl: tuple):
 
     return "", 0
 
+def resize_frame(frame):
+    height, width = frame.shape[:2]
+    new_height = (height // 32) * 32  # Make sure it's divisible by 32
+    new_width = (width // 32) * 32  # Make sure it's divisible by 32
+    return cv2.resize(frame, (new_width, new_height))
 
 def draw_line(frame, line, color = (255, 255, 0), thickness = 2):
     cv2.line(frame, line.start, line.end, color, thickness=thickness)
@@ -181,7 +186,8 @@ class Analyser:
             if not self.mask is None:
                 frame = cv2.bitwise_and(frame, self.mask)
 
-            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            frame_resized = resize_frame(frame)
+            frame_rgb = cv2.cvtColor(frame_resized, cv2.COLOR_BGR2RGB)
             frame_tensor = transform(frame_rgb).unsqueeze(0).to('cuda')
 
             results = self.yolo.track(frame_tensor, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids)
