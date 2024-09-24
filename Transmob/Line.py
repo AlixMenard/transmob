@@ -20,6 +20,7 @@ class Line:
         self.start = (x1, y1)
         self.center = ((x1+x2)/2, (y1+y2)/2)
         self.end = (x2, y2)
+        self.p3 = (x3,y3)
         dx, dy = abs(x2-x1), abs(y2-y1)
         self.bounds = [x1-0.1*dx, x2+0.1*dx, min(y1, y2)-0.1*dy, max(y1, y2)+0.1*dy]
         dx = x2-x1
