@@ -186,12 +186,7 @@ class Analyser:
             if not self.mask is None:
                 frame = cv2.bitwise_and(frame, self.mask)
 
-            frame_resized = resize_frame(frame)
-            print(type(frame_resized))
-            frame_rgb = cv2.cvtColor(frame_resized, cv2.COLOR_BGR2RGB)
-            frame_tensor = transform(frame_rgb).unsqueeze(0).to('cuda')
-
-            results = self.yolo.track(frame_tensor, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids)
+            results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device=1)
             try:
                 ids = results[0].boxes.id.int().to('cuda')
             except:
