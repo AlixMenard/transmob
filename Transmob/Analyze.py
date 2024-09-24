@@ -176,7 +176,7 @@ class Analyser:
             if not self.mask is None:
                 frame = cv2.bitwise_and(frame, self.mask)
 
-            detected = self.yolo(frame, stream=True, verbose=False, classes=self.watch_classes_ids)
+            detected = self.yolo(frame, stream=True, verbose=False, classes=self.watch_classes_ids, device='cpu')
             detection = np.empty((0, 5))
 
             class_map = {}

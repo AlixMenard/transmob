@@ -174,7 +174,7 @@ class Analyser:
             if not self.mask is None:
                 frame = cv2.bitwise_and(frame, self.mask)
 
-            results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids)
+            results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device='cpu')
             try:
                 ids = results[0].boxes.id.int().cpu().tolist()
             except:
