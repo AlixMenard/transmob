@@ -254,9 +254,7 @@ class Analyser:
                 if len(self.points) == 3:
                     self.lines.append(Line(self.points[0][0], self.points[0][1], self.points[1][0], self.points[1][1],
                                            self.points[2][0], self.points[2][1]))
-                    cv2.line(frame, self.lines[-1].start, self.lines[-1].end, (255, 255, 0), thickness=5)
-                    cv2.putText(frame, f'{self.lines[-1].id}', self.lines[-1].end, cv2.FONT_HERSHEY_SIMPLEX, 0.6,
-                                (0, 0, 0), 2)
+                    draw_line(frame, self.lines[-1])
                     cv2.imshow("Line setup", frame)
                     self.points = []
                     self.create_mask(frame)
