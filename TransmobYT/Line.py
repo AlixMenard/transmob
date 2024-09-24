@@ -18,7 +18,7 @@ class Line:
             x1, x2 = x2, x1
             y1, y2 = y2, y1
         self.start = (x1, y1)
-        self.center = ((x1+x2)/2, (y1+y2)/2)
+        self.center = (int((x1+x2)/2), int((y1+y2)/2))
         self.end = (x2, y2)
         self.p3 = (x3,y3)
         dx, dy = abs(x2-x1), abs(y2-y1)
