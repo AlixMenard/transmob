@@ -130,7 +130,7 @@ class Playlist:
 def models_trials(folder, cores, lines = None):
     #! Growth factors :
     #! {'n': 3.97, 's': 129.22, 'm': 423.48, 'l': 841.08, 'x': 1266.49}
-    models = {"n" : None, "s" : None, "m" : None, "l" : None, "x" : None}
+    models = {"n" : None, "s" : None, "m" : None, "l" : None}
     for m in models:
         print("\n"*3)
         print(f"Model size : {m}")
