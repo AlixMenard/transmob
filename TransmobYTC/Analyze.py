@@ -187,6 +187,7 @@ class Analyser:
                 frame = cv2.bitwise_and(frame, self.mask)
 
             frame_resized = resize_frame(frame)
+            print(type(frame_resized))
             frame_rgb = cv2.cvtColor(frame_resized, cv2.COLOR_BGR2RGB)
             frame_tensor = transform(frame_rgb).unsqueeze(0).to('cuda')
 
