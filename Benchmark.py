@@ -15,3 +15,6 @@ if __name__ == '__main__':
     processes["Classique"], lines = vp.models_trials(f, cores =4)
     processes["NT"] = vpNT.models_trials(f, 3, lines)
     processes["YT"] = vpYT.models_trials(f, 4, lines)
+
+    for p in processes:
+        print(p, processes[p])
