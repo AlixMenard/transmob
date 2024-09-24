@@ -11,7 +11,6 @@ import numpy as np
 from ultralytics import YOLO
 from typing import List
 import time
-from torchvision import transforms
 
 
 # ? First try at box connection, either too slow (often) or incorrect and leaving objects unclassed
@@ -48,11 +47,6 @@ def dic_search(dic: dict, tupl: tuple):
 
     return "", 0
 
-def resize_frame(frame):
-    height, width = frame.shape[:2]
-    new_height = (height // 32) * 32  # Make sure it's divisible by 32
-    new_width = (width // 32) * 32  # Make sure it's divisible by 32
-    return cv2.resize(frame, (new_width, new_height))
 
 def draw_line(frame, line, color = (255, 255, 0), thickness = 2):
     cv2.line(frame, line.start, line.end, color, thickness=thickness)
@@ -154,11 +148,6 @@ class Analyser:
         time_last_save = saves = count = 0
         print(f"File : {self.url} - {self.fps} FPS - {int(self.length / self.fps)} seconds")
 
-        transform = transforms.Compose([
-            transforms.ToTensor(),  # Convert the frame to a tensor with shape [C, H, W] and values [0, 1]
-            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])  # Normalize like ImageNet
-        ])
-
         print("start processing")
         while self.cap.isOpened():
 
@@ -186,7 +175,7 @@ class Analyser:
             if not self.mask is None:
                 frame = cv2.bitwise_and(frame, self.mask)
 
-            results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device=1)
+            results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device=0)
             try:
                 ids = results[0].boxes.id.int().cpu().tolist()
             except:
