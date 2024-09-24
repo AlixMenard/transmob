@@ -24,7 +24,7 @@ Paralleled video processing.\
 YOLO runs on CUDA
 
 ### Performances
-**Precision :** transmob == transmobNT < transmobYT 
+**Precision :** transmob == transmobNT < transmobYT \
 **Speed :** transmobYTC >= transmobYT ~= transmobNT > transmob \
 Videos can be processed every 2 frames to speed up. On low quality, every frame is necessary.
 
