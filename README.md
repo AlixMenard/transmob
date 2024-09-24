@@ -32,5 +32,5 @@ Videos can be processed every 2 frames to speed up. On low quality, every frame 
 
 ### todo
 - [x] file sorting for better core workload share 
-- [x] adapt to cuda devices
-- [x] benchmark
+- [] adapt to cuda devices
+- [] benchmark
