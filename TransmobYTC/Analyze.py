@@ -11,6 +11,7 @@ import numpy as np
 from ultralytics import YOLO
 from typing import List
 import time
+import torch
 
 
 # ? First try at box connection, either too slow (often) or incorrect and leaving objects unclassed
@@ -172,8 +173,16 @@ class Analyser:
                     continue
                 count += 1
 
-            if not self.mask is None:
-                frame = cv2.bitwise_and(frame, self.mask)
+            if self.mask is not None:
+                # Transfer to GPU
+                gpu_frame = torch.from_numpy(frame).cuda()
+                gpu_mask = torch.from_numpy(self.mask).cuda()
+
+                # Perform bitwise_and operation on GPU
+                gpu_result = gpu_frame & gpu_mask
+
+                # Transfer back to CPU
+                frame = gpu_result.cpu().numpy()
 
             results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device=0)
             try:
