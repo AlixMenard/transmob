@@ -1,12 +1,17 @@
 import tkinter as tk
 from tkinter.ttk import Label
 
+import torch
+
 from PIL.ImageColor import colormap
 from pandas.io.sas.sas_constants import column_label_length_offset
 from tkinterdnd2 import TkinterDnD, DND_FILES
 import Transmob.VideoProcesser as vp
 import TransmobNT.VideoProcesser as vpNT
-import TransmobYT.VideoProcesser as vpYT
+if not torch.cuda.is_available():
+    import TransmobYT.VideoProcesser as vpYT
+else:
+    import TransmobYTC.VideoProcesser as vpYT
 
 
 def setup_window():
