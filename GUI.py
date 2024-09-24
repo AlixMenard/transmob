@@ -10,7 +10,9 @@ import Transmob.VideoProcesser as vp
 import TransmobNT.VideoProcesser as vpNT
 if not torch.cuda.is_available():
     import TransmobYT.VideoProcesser as vpYT
+    bcuda = False
 else:
+    bcuda = True
     import TransmobYTC.VideoProcesser as vpYT
 
 
@@ -31,7 +33,7 @@ def setup_window():
     process = tk.StringVar(value = "NT")
     T = tk.Radiobutton(root, text = "Classic", variable = process, value = "Classic")
     TNT = tk.Radiobutton(root, text = "Nested Threads", variable = process, value = "NT")
-    TYT = tk.Radiobutton(root, text = "YAllO", variable = process, value = "YT")
+    TYT = tk.Radiobutton(root, text = "YAllO"+" (CUDA)" if bcuda else "", variable = process, value = "YT")
     T.grid(row = 0, column = 2, columnspan = 2, pady=20, padx=5)
     TNT.grid(row = 0, column = 4, columnspan = 2, pady=20, padx=5)
     TYT.grid(row = 0, column = 6, columnspan = 2, pady=20, padx=5)
