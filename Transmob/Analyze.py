@@ -128,7 +128,7 @@ class Analyser:
             self.create_line(frame)
 
             strt = self.get_start_time()
-            end = time_5(strt + int(self.length / self.fps))
+            end = time_1(strt + int(self.length / self.fps))
 
             if not lines is None or (cv2.waitKey(0) & 0xFF == 13):
                 f_name = f"{self.folder}/product/{str_time(strt)}-{str_time(end)[11:]}.jpg"
