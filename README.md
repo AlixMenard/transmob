@@ -16,11 +16,16 @@ Nested Threads for processing (frame processing vs tracking)
 
 Yolo object detection, Yolo tracking.\
 Paralleled video processing.\
-*todo : run every yolo step on cuda ?*
+
+## transmobYTC
+
+Yolo object detection, Yolo tracking.\
+Paralleled video processing.\
+YOLO runs on CUDA
 
 ### Performances
-**Precision :** transmob == transmobNT, transmobYT to be determined\
-**Speed :** transmobYT ~= transmobNT > transmob \
+**Precision :** transmob == transmobNT < transmobYT 
+**Speed :** transmobYTC >= transmobYT ~= transmobNT > transmob \
 Videos can be processed every 2 frames to speed up. On low quality, every frame is necessary.
 
 **models :**
@@ -32,5 +37,9 @@ Videos can be processed every 2 frames to speed up. On low quality, every frame 
 
 ### todo
 - [x] file sorting for better core workload share 
-- [ ] adapt to cuda devices
-- [ ] benchmark
+- [X] adapt to cuda devices
+- [X] benchmark (except model x, too long)
+- [ ] Make sure person + bicycle -> bicycle only (same with motorbikes)
+- [ ]   └> running on CUDA with Numba
+- [ ] Try nested thread on YTC
+- [ ] Directional process
