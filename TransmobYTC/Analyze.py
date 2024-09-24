@@ -188,14 +188,14 @@ class Analyser:
 
             results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device=1)
             try:
-                ids = results[0].boxes.id.int().to('cuda')
+                ids = results[0].boxes.id.int().cpu().tolist()
             except:
                 continue
-            classes = results[0].boxes.cls.int().to('cuda')
-            confs = results[0].boxes.conf.float().to('cuda')
-            boxes = results[0].boxes.xyxy.to('cuda')
+            classes = results[0].boxes.cls.int().cpu().tolist()
+            confs = results[0].boxes.conf.float().cpu().tolist()
+            boxes = results[0].boxes.xyxy.cpu().tolist()
 
-            for id, classe, conf, box in zip(ids.cpu().tolist(), classes.cpu().tolist(), confs.cpu().tolist(), boxes.cpu().tolist()):
+            for id, classe, conf, box in zip(ids, classes, confs, boxes):
                 class_name = self.class_labels[classe]
                 if not class_name in self.watch_classes:
                     continue
