@@ -41,8 +41,7 @@ def benchmark(size):
 
     # Measure CPU time
     start_cpu = time.time()
-    if size<=10**4:
-        overlaps_cpu = box_overlap_cpu(list1, list2)
+    overlaps_cpu = box_overlap_cpu(list1, list2)
     end_cpu = time.time()
     cpu_dur = end_cpu - start_cpu
 
@@ -70,19 +69,20 @@ def benchmark(size):
     list1_gpu = cuda.to_device(list1)
     list2_gpu = cuda.to_device(list2)
     # Define the thread and block size
-    threads_per_block = (16, 16)
-    blocks_per_grid = ((list1_gpu.shape[0] + threads_per_block[0] - 1) // threads_per_block[0],
-                       (list2_gpu.shape[0] + threads_per_block[1] - 1) // threads_per_block[1])
+    threads_per_block = 512
+    blocks_per_grid = 512
 
 
     # Initialize an array on the GPU to hold the overlap results
     overlaps_gpu = cuda.device_array((list1_gpu.shape[0], list2_gpu.shape[0]), dtype=np.float32)
     box_overlap_kernel[blocks_per_grid, threads_per_block](list1_gpu, list2_gpu, overlaps_gpu) #?Pre-compile
+    cuda.synchronize()
 
     # Initialize the GPU execution
     start_gpu = time.time()
     # Launch the kernel
     box_overlap_kernel[blocks_per_grid, threads_per_block](list1_gpu, list2_gpu, overlaps_gpu)
+    cuda.synchronize()
 
     # Copy the results back to the host
     overlaps_gpu2cpu = overlaps_gpu.copy_to_host()
@@ -94,12 +94,15 @@ def benchmark(size):
 cpus = []
 gpus = []
 x= []
-for i in range(7):
-    cpu, gpu = benchmark(10**i)
+for i in range(1, 14):
+    cpu, gpu = benchmark(2**i)
     cpus.append(cpu)
     gpus.append(gpu)
-    x.append(10**i)
+    x.append(2**i)
+for i in range(13):
+    print(x[i], cpus[i], gpus[i])
 plt.plot(x, cpus, label = "CPU")
 plt.plot(x, gpus, label = "GPU")
 plt.yscale("log")
+plt.legend()
 plt.show()
