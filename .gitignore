@@ -1,6 +1,3 @@
-**/screens/
-screens/
-web/
 videos/
 **/yolov8x.pt
 **/__pycache__/
