@@ -122,7 +122,7 @@ def models_trials(folder, cores, lines = None):
             lines = p.get_lines()
         diff = p.play()
         models[m] = diff
-        print("Classic", models)
+        print("YTC", models)
     return models, lines
 
 

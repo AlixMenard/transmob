@@ -3,12 +3,14 @@ import TransmobNT.VideoProcesser as vpNT
 import torch
 if not torch.cuda.is_available():
     import TransmobYT.VideoProcesser as vpYT
+    cudab= True
 else:
     import TransmobYTC.VideoProcesser as vpYT
+    cudab= False
 
 
 if __name__ == '__main__':
-    processes = {"Classique" : None, "NT" : None, "YT" : None}
+    processes = {"Classique" : None, "NT" : None, "YT" if not cudab else "YTC" : None}
 
     f = r"C:\Users\alixm\Desktop\transmob\videos\10x1min"
 
