@@ -136,11 +136,8 @@ def setup_window():
                 Playlist = vpNT.Playlist
             case "YT":
                 Playlist = vpYT.Playlist
-<<<<<<< HEAD
+            
         P = Playlist(entry_var.get(), cores=core_nb.get(), model=f"weights/yolov8{model_letter.get()}.pt", watch_classes=classes, graph = graphb.get())
-=======
-        P = Playlist(entry_var.get(), cores=core_nb.get(), model=f"weights/yolov8{model_letter.get()}.pt", watch_classes=classes, graph=graphb.get())
->>>>>>> 89e0e670d25519b1af4e261299f1417d5e3ea605
         P.initialise()
         results = P.play()
         result_window(results)
