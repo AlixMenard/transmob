@@ -117,10 +117,10 @@ def setup_window():
     core_entry = tk.Entry(root, textvariable = core_nb, width=10, validate="key", validatecommand=vcmd)
     core_entry.grid(row = 5, column = 4, columnspan= 6, pady=10, padx=5)
 
-    # ! graph option
+    # ? graph option
     graphb = tk.BooleanVar(value=False)
     graph_l = tk.Label(root, text = "With video")
-    graph_l.grid(row = 6, column = 0, coluùnspan = 4)
+    graph_l.grid(row = 6, column = 0, columnspan = 4)
     graph_t = tk.Radiobutton(root, text = "True", variable = graphb, value = True)
     graph_t.grid(row = 6, column = 4, columnspan = 2)
     graph_f = tk.Radiobutton(root, text = "False", variable = graphb, value = False)
@@ -136,7 +136,7 @@ def setup_window():
                 Playlist = vpNT.Playlist
             case "YT":
                 Playlist = vpYT.Playlist
-        P = Playlist(entry_var.get(), cores=core_nb.get(), model=f"weights/yolov8{model_letter.get()}.pt", watch_classes=classes)
+        P = Playlist(entry_var.get(), cores=core_nb.get(), model=f"weights/yolov8{model_letter.get()}.pt", watch_classes=classes, graph = graphb.get())
         P.initialise()
         results = P.play()
         result_window(results)
