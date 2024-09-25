@@ -1,11 +1,13 @@
 from .Box import Box as vBox
 from typing import Dict, List
 import numpy as np
+from .box_overlap import overlap
 
 class Vehicle:
 
     def __init__(self, id:int, box:vBox, _class:str, conf:float, frame:int, fleet):
         self.id : int = id
+        self.idbis = self.classbis = None
         self.fleet = fleet
         self.crossed : List[int] = []
         self.hist_conf : List[(str, float)] = []
@@ -17,6 +19,11 @@ class Vehicle:
         self.speeds : List[float] = []
     
     def class_check(self):
+        if self.idbis is not None:
+            self.id = self.idbis
+            self._class = self.classbis
+            return
+
         classes : Dict[str|None, float] = {}
         temp_save = self._class
         for _class, conf in self.hist_conf:
@@ -28,7 +35,8 @@ class Vehicle:
             classes.pop(None)
         self._class = max(zip(classes.values(), classes.keys()))[1]
         if self._class is None and not temp_save is None:
-            self._class = temp_save
+            self._class = temp_sav
+
         if self._class == "person" and (self.is_fast or self.close_speed("car")):
             self._class = "scooter"
 
@@ -104,6 +112,19 @@ class Fleet:
     def speed(self, _class:str):
         l = [self.vehicles[v].avg_spd for v in self.vehicles if self.vehicles[v]._class == _class and not np.isnan(self.vehicles[v].avg_spd)]
         return np.average(l) if l else None, np.std(l) if l else None
+
+    def watch_bikes(selfself):
+        people = np.array([self.vehicles[v] for v in self.vehicles if self.vehicles[v]._class == "person"])
+        bikes = np.array([self.vehicles[v] for v in self.vehicles if self.vehicles[v]._class in ["bicycle","motorbike"]])
+        IoU = np.zeros((people.shape[0], bikes.shape[0]))
+        overlap(people, bikes, IoU)
+        for i,p in enumerate(people):
+            if sum(IoU[i]) == 1:
+                b = np.where(IoU)[0]
+                p.idbis = b.id
+                p.classbis = b._class
+
+
 
     @property
     def ids(self) -> List[int]:

@@ -217,6 +217,8 @@ class Analyser:
                         cv2.putText(frame, f'{v.id} ({v._class})', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
                                     (255, 255, 0), 2)
 
+            # ! add fleet bike processing
+
             if cv2.waitKey(1) & 0xFF == 13:
                 del self.cap
                 break
