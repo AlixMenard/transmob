@@ -24,16 +24,17 @@ Paralleled video processing.\
 YOLO runs on CUDA
 
 ### Performances
-**Precision :** transmob == transmobNT < transmobYT \
-**Speed :** transmobYTC >= transmobYT ~= transmobNT > transmob \
+**Precision :** transmob == transmobNT < transmobYT == transmobYTC \
+**Speed :** transmobYTC > transmobYT ~= transmobNT > transmob \
+YTC almost doesn't scale based on model size, very efficient, others scale on a q~=1.3 ratio \
 Videos can be processed every 2 frames to speed up. On low quality, every frame is necessary.
 
-**models :**
-- n : ~real time with double frame
+**models :** (best case, my computer)
+- n : half time with double framing
 - s
-- m : ~x3 with multi threading
+- m : 
 - l
-- x
+- x : slightly faster than real time with double framing
 
 ### todo
 - [x] file sorting for better core workload share 
@@ -41,5 +42,6 @@ Videos can be processed every 2 frames to speed up. On low quality, every frame 
 - [X] benchmark (except model x, too long)
 - [ ] Make sure person + bicycle -> bicycle only (same with motorbikes)
 - [ ]   └> running on CUDA with Numba
+- [ ]       └> benchmark numba's efficiency
 - [ ] Try nested thread on YTC
 - [ ] Directional process
