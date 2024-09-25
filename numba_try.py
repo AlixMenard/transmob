@@ -3,6 +3,8 @@ import time
 from numba import cuda
 from random import randint
 import matplotlib.pyplot as plt
+from scipy.ndimage import label
+
 
 def benchmark(size):
     def create_list(size):
@@ -96,6 +98,7 @@ for i in range(5):
     cpus.append(cpu)
     gpus.append(gpu)
     x.append(10**i)
-plt.plot(x, cpus)
-plt.plot(x, gpus)
+plt.plot(x, cpus, label = "CPU")
+plt.plot(x, gpus, label = "GPU")
+plt.yscale("log") 
 plt.show()
