@@ -48,7 +48,7 @@ def benchmark(size):
         # Get 2D grid indices
         ix, iy = cuda.grid(2)  # The first index is the fastest dimension
         threads_per_grid_x, threads_per_grid_y = cuda.gridsize(2)  # threads per grid dimension
-        n0, n1 = list1.shape(0), list2.shape(0)
+        n0, n1 = list1.shape[0], list2.shape[0]
         for i in range(iy, n0, threads_per_grid_y):
             for j in range(ix, n1, threads_per_grid_x):
                 xmin1, ymin1, xmax1, ymax1 = list1[i]
