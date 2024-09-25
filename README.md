@@ -11,15 +11,15 @@ A CUDA comaptible graphic card is highly recommended for increased speed perform
 
 ### Install
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
-- Navigate to the desired place to store the algorithm (use *cd <folder_name>* to navigate)
-- Execute *git clone https://github.com/AlixMenard/transmob*
-- Go in the repository : *cd transmob*
-- Install the necessary packages : *pip install -r requiremetns.txt*
+- Navigate to the desired place to store the algorithm (use `cd <folder_name>` to navigate)
+- Execute `git clone https://github.com/AlixMenard/transmob`
+- Go in the repository : `cd transmob`
+- Install the necessary packages : `pip install -r requiremetns.txt`
 
 ### Use
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
 - Navigate to the git repository (at *<previous_path>/transmob*)
-- Execute *py GUI.py*
+- Execute `py GUI.py`
 - Drag&Drop the folder containing the videos to process (every video will be processed, make sure to eliminate duplicates, even with different extension, like "file.mp4" and "file.lrv")
 - Choose the fitting options
 - Start and let the program run
