@@ -117,6 +117,15 @@ def setup_window():
     core_entry = tk.Entry(root, textvariable = core_nb, width=10, validate="key", validatecommand=vcmd)
     core_entry.grid(row = 5, column = 4, columnspan= 6, pady=10, padx=5)
 
+    # ! graph option
+    graphb = tk.BooleanVar(value=False)
+    graph_l = tk.Label(root, text = "With video")
+    graph_l.grid(row = 6, column = 0, coluùnspan = 4)
+    graph_t = tk.Radiobutton(root, text = "True", variable = graphb, value = True)
+    graph_t.grid(row = 6, column = 4, columnspan = 2)
+    graph_f = tk.Radiobutton(root, text = "False", variable = graphb, value = False)
+    graph_f.grid(row = 6, column = 6, columnspan = 2)
+
     # ! Validation
     def start():
         root.destroy()
@@ -134,7 +143,7 @@ def setup_window():
 
     def create_bt():
         val_bt = tk.Button(root, text="Start", command=start)
-        val_bt.grid(row = 6, column=0, columnspan=8, pady=10, padx=5)
+        val_bt.grid(row = 7, column=0, columnspan=8, pady=10, padx=5)
 
     # Bind the entry widget to accept file drops
     root.drop_target_register(DND_FILES)
