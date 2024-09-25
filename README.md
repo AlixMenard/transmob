@@ -25,8 +25,8 @@ YOLO runs on CUDA
 
 ### Performances
 **Precision :** transmob == transmobNT < transmobYT == transmobYTC \
-**Speed :** transmobYTC > transmobYT ~= transmobNT > transmob \
-YTC almost doesn't scale based on model size, very efficient, others scale on a q~=1.3 ratio \
+**Speed :** transmobYTC > transmobYT \~= transmobNT > transmob \
+YTC almost doesn't scale based on model size, very efficient, others scale on a q\~=1.3 ratio \
 Videos can be processed every 2 frames to speed up. On low quality, every frame is necessary.
 
 **models :** (best case, my computer)
