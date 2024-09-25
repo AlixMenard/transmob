@@ -88,10 +88,12 @@ def benchmark(size):
 
 cpus = []
 gpus = []
+x= []
 for i in range(7):
     cpu, gpu = benchmark(10**i)
     cpus.append(cpu)
     gpus.append(gpu)
-plt.plot(cpus)
-plt.plot(gpus)
+    x.append(10**i)
+plt.plot(x, cpus)
+plt.plot(x, gpus)
 plt.show()
