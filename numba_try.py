@@ -46,19 +46,21 @@ def benchmark(size):
     @cuda.jit
     def box_overlap_kernel(list1, list2, overlaps):
         # Get 2D grid indices
-        i, j = cuda.grid(2)
-
-        if i < list1.shape[0] and j < list2.shape[0]:
-            xmin1, ymin1, xmax1, ymax1 = list1[i]
-            xmin2, ymin2, xmax2, ymax2 = list2[j]
-            ixmin = max(xmin1, xmin2)
-            iymin = max(ymin1, ymin2)
-            ixmax = min(xmax1, xmax2)
-            iymax = min(ymax1, ymax2)
-            width = max(0, ixmax - ixmin)
-            height = max(0, iymax - iymin)
-            overlap_area = width * height
-            overlaps[i, j] = overlap_area
+        ix, iy = cuda.grid(2)  # The first index is the fastest dimension
+        threads_per_grid_x, threads_per_grid_y = cuda.gridsize(2)  # threads per grid dimension
+        n0, n1 = list1.shape(0), list2.shape(0)
+        for i in range(iy, n0, threads_per_grid_y):
+            for j in range(ix, n1, threads_per_grid_x):
+                xmin1, ymin1, xmax1, ymax1 = list1[i]
+                xmin2, ymin2, xmax2, ymax2 = list2[j]
+                ixmin = max(xmin1, xmin2)
+                iymin = max(ymin1, ymin2)
+                ixmax = min(xmax1, xmax2)
+                iymax = min(ymax1, ymax2)
+                width = max(0, ixmax - ixmin)
+                height = max(0, iymax - iymin)
+                overlap_area = width * height
+                overlaps[i, j] = overlap_area
 
 
     # Transfer data to the GPU
