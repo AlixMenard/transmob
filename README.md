@@ -42,6 +42,6 @@ Videos can be processed every 2 frames to speed up. On low quality, every frame 
 - [X] benchmark (except model x, too long)
 - [ ] Make sure person + bicycle -> bicycle only (same with motorbikes)
 - [ ]   └> running on CUDA with Numba
-- [ ]       └> benchmark numba's efficiency
+- [ ] &emsp;&emsp;└> benchmark numba's efficiency
 - [ ] Try nested thread on YTC
 - [ ] Directional process
