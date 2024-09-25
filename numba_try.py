@@ -41,7 +41,8 @@ def benchmark(size):
 
     # Measure CPU time
     start_cpu = time.time()
-    overlaps_cpu = box_overlap_cpu(list1, list2)
+    if size<=10**4:
+        overlaps_cpu = box_overlap_cpu(list1, list2)
     end_cpu = time.time()
     cpu_dur = end_cpu - start_cpu
 
@@ -93,12 +94,12 @@ def benchmark(size):
 cpus = []
 gpus = []
 x= []
-for i in range(5):
+for i in range(7):
     cpu, gpu = benchmark(10**i)
     cpus.append(cpu)
     gpus.append(gpu)
     x.append(10**i)
 plt.plot(x, cpus, label = "CPU")
 plt.plot(x, gpus, label = "GPU")
-plt.yscale("log") 
+plt.yscale("log")
 plt.show()
