@@ -65,7 +65,7 @@ YOLO et autres processus tournant sur CUDA.
 YTC n'est que peu affecté en temps par la taille du modèle utilisé, les autres processus sont affectés par un ratio q\~=1.3  \
 Les vidéos peuvent être analysées par 2 images à la fois. Sur de la qualité basse, à éviter.
 
-**Modèles : ** 
+**Modèles :** 
 - n : 
 - s :
 - m : 
