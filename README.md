@@ -31,9 +31,9 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
   - Number of cores dedicated to the process. If the computer has 10 physical cores or more, the recommendations are *Classic (4)*, *Nested Threads (3)* and *YallO (4)*.
   - With video : If yes, the videos will be displayed as they are treated. This considerably slows down the process. It is however useful to test the quality of detection of a model size if you are unsure about the picture quality.
 - Start
-- The 1st frame of each video will be displayed successively to create the counting lines. It takes 3 clicks to create a single line : the first 2 clicks define the starting and ending point of the line, the 3rd click defines the direction of counting. At an intersection, it is recommended to do the 3rd click in the middle of the intersection. /!\ The first 2 clicks defining the line through which vehicles will be countd, they must be accurate so to not miss vehicles or count additional ones. However, the 3rd click's accuracy is not to worry about.
+- The 1st frame of each video will be displayed successively to create the counting lines. It takes 3 clicks to create a single line : the first 2 clicks define the starting and ending points of the line, the 3rd click defines the direction of counting. At an intersection, it is recommended to do the 3rd click in the middle of the intersection. **/!\** *The first 2 clicks defining the line through which vehicles will be counted, they must be accurate so not to miss vehicles or count additional ones. However, the 3rd click's accuracy is not to worry about.*
 - After defining all the lines on the picture, press `Enter` to validate and repeat the process for every video.
-- Once no more video is shown, te setup is over and the program will process every video on its own.
+- Once no more video is shown, the setup is over and the program will process every video on its own.
 
 ## transmob
 
