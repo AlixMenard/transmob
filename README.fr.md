@@ -1,83 +1,83 @@
 # transmob
-[Yolo](https://github.com/ultralytics/ultralytics) based vehicle tracking solution\
-Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/AlixMenard/transmob/blob/main/README.md)
+Suivi vidéo de véhicule basé [YOLOv8](https://github.com/ultralytics/ultralytics) \
+Langues : [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/AlixMenard/transmob/blob/main/README.md)
 [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/AlixMenard/transmob/blob/main/README.fr.md)
 
 ## Installation
-### Pre-requisite
+### Prérequis
 - Python >= 3.12
 - git
-### Optionnal
-If the computer has a [CUDA compatible graphic card](https://en.wikipedia.org/wiki/CUDA#GPUs_supported), you need to download and install [NVIDIA CUDA toolkit](https://developer.nvidia.com/cuda-downloads).\
-During the next step, after installing the required modules, you need to uninstall pytorch modules (`pip uninstall torch torchvision torchaudio`) and re-install it with CUDA support on the [Pytorch Website](https://pytorch.org/get-started/locally/). Select the *Stable* version, the correct OS, *pip*, *python* and a *CUDA version*, then copy and execute the command given by the website.\
-A CUDA compatible graphic card is highly recommended for increased speed performances.
+### Optionnel
+Si l'ordinateur a une [carte graphique compatible avec CUDA](https://en.wikipedia.org/wiki/CUDA#GPUs_supported), il faut télécharger et installer [NVIDIA CUDA toolkit](https://developer.nvidia.com/cuda-downloads).\
+Durant la prochaine étape, après avoir installé les librairies requises, il faut désinstaller les librairies pytorch par défaut (`pip uninstall torch torchvision torchaudio`) et les ré-installer avec le support de CUDA sur le [site de PyTorch](https://pytorch.org/get-started/locally/). Sélectionnez la version *Stable*, votre système d'exploitation, *pip*, *python* et une *version de CUDA*, puis copier et exécuter la commande donnée par le site.\
+Avoir une carte graphique compatible avec CUDA est hautemeent recommandé pour de meilleurs performances.
 
-### Install
-- Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
-- Navigate to the desired place to store the algorithm (use `cd <folder_name>` to navigate)
-- Execute `git clone https://github.com/AlixMenard/transmob`
-- Go in the repository : `cd transmob`
-- Install the necessary packages : `pip install -r requirements.txt`\
-\* This will install the yolo models of sizes *n*, *s*, *m* and *l*. On the first time you ask the program to use the model of size *x*, it will be automatically downloaded before processing.
+### Installer
+- Ouvrir un powershell/commandline shell : win+r, taper "powershell" ou "cmd", puis `Entrée`
+- Naviguer jusqu'à l'emplacement ou vous souhaiter installer le programme (Utilisez `cd <nom_dossier>` pour naviguer)
+- Exécutez `git clone https://github.com/AlixMenard/transmob`
+- Allez dans le dépôt : `cd transmob`
+- Installez les librairies nécessaires : `pip install -r requirements.txt`\
+\* Ces étapes vont aussi installer les models YOLOv8 de tailles *n*, *s*, *m* et *l*. La première fois que vous demanderez au programme d'utiliser le modèle de taille *x*, il le téléchargera automatiquement avant de commencer.
 
 ### Use
-- Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
-- Navigate to the git repository (at *<previous_path>/transmob*)
-- Execute cpy GUI.py`
-- Drag&Drop the folder containing the videos to process (every video will be processed, make sure to eliminate duplicates, even with different extension, like "file.mp4" and "file.lrv")
-- Choose the fitting options
+- Ouvrez un powershell/commandline shell : win+r, tapez "powershell" ou "cmd", puis `Entrée`
+- Naviguez jusqu'au dépôt (à *<chemin_précédent>/transmob*)
+- Exécutez `py GUI.py`
+- Glissez et déposez le dossier contenant les vidéos à analyser (**chaque** fichier sera analysé, pensez à supprimer les duplicata, comme ceux avec différentes extensions, comme "fichier.mp4" et "fichier.lrv")
+- Choissisez les options que vous voulez :
   - Process (explained below)
-  - Frame number : 1, each frame will be processed, 2, one in two frames will be processed (twice as fast, heavily not recommended in case of low quality video)
-  - YOLO model : bigger models will be better, but slower in most cases. With CUDA support the slow down is negligible and always using the model of size *x* is highly recommended
-  - Classes : Vehicle types to count, the others will be ignored. If pedestrians (*person*) are monitored, *bicycle* and *motorbike* can't be ignored.
-  - Number of cores dedicated to the process. If the computer has 10 physical cores or more, the recommendations are *Classic (4)*, *Nested Threads (3)* and *YallO (4)*.
-  - With video : If yes, the videos will be displayed as they are treated. This considerably slows down the process. It is however useful to test the quality of detection of a model size if you are unsure about the picture quality.
+  - Frame number : 1, chaque image se analysée, 2,une image sur deux sera analysée (deux fois plus rapide, très fortement déconseillé pour les vidéos avec une qualité d'image basse)
+  - YOLO model : les modèles plus gros sont plus précis, mais considérablement plus lent dans le plupart des cas. Avec le support CUDA, le ralentissement lié à la taille du modèle est négligeable et toujours utiliser le modèle de taille *x* est fortement conseillé. 
+  - Classes : Types de véhicules à compter, Les autre seront ignorés. Si les piétons (*person*) sont comptés, les vélos et motocylettes (*bicycle* and *motorbike*) ne peuvent pas être ignorés.
+  - Number of cores : Nombre de cœurs dédiés au programme. Si l'ordinateur possède 10 cœurs physiques ou plus, les recommendations sont *Classic (4)*, *Nested Threads (3)* and *YallO (4)*.
+  - With video : Si oui, la vidéo sera affichée durant son traitement. Cela ralentit considérablement le processus. C'est en revanche très utile pour juger de l'efficacité de détection d'un mmodèle sur une vidéo dont vous n'êtes pas certain.e de la qualité.
 - Start
-- The 1st frame of each video will be displayed successively to create the counting lines. It takes 3 clicks to create a single line : the first 2 clicks define the starting and ending points of the line, the 3rd click defines the direction of counting. At an intersection, it is recommended to do the 3rd click in the middle of the intersection. **/!\** *The first 2 clicks defining the line through which vehicles will be counted, they must be accurate so not to miss vehicles or count additional ones. However, the 3rd click's accuracy is not to worry about.*
-- After defining all the lines on the picture, press `Enter` to validate and repeat the process for every video.
-- Once no more video is shown, the setup is over and the program will process every video on its own.
+- La première image de chaque vidéo sera montrée, successivement, pour créer les lignes de comptage. Il faut 3 clics pour créer une ligne : les 2 premiers clics définissent les points de début et de fin de la ligne, le 3e clic défini la direction de comptage. A une intersection, Il est recommendé d'effectuer le 3e clic au milieu de l'intersection. **/!\\** *les 2 premiers clics définissant la ligne à travers laquelle les véhicules seront comptés, ils doivent être précis pour ne pas rater de véhicule ou en compter trop. Cependant, la précision du 3e clic n'a aucune importance.*
+- Après avoir défini toutes les lignes sur l'image, pressez `Entrée` pour valider, et répéter pour chaque vidéo.
+- Quand plus aucune vidéo n'est montrée, le paramétrage est terminé et le programme va analyser toutes les vidéos.
 
 ## transmob
 
-Yolo object detection, SORT tracking.\
-Paralleled video processing.
+Detection d'objet par YOLO, suivi par SORT.\
+Analyse en parallèle des vidéos.
 
 ## transmobNT
 
-Yolo object detection, SORT tracking.\
-Paralleled video processing.\
-Nested Threads for processing (frame processing // tracking)
+Detection d'objet par YOLO, suivi par SORT.\
+Analyse en parallèle des vidéos.\
+Parallélisation interne des vidéos (detection // suivi)
 
 ## transmobYT
 
-Yolo object detection, Yolo tracking via BoT-SORT.\
-Paralleled video processing.\
+Detection d'objet par YOLO, suivi par YOLO via BoT-SORT.\
+Analyse en parallèle des vidéos.\
 
 ## transmobYTC
 
-Yolo object detection, Yolo tracking via BoT-SORT.\
-Paralleled video processing.\
-YOLO and additional processes running on CUDA
+Detection d'objet par YOLO, suivi par YOLO via BoT-SORT.\
+Analyse en parallèle des vidéos.\
+YOLO et autres processus tournant sur CUDA.
 
 ### Performances
-**Precision :** transmob == transmobNT < transmobYT == transmobYTC \
-**Speed :** transmobYTC >> transmobYT > transmobNT >= transmob \
-YTC almost doesn't scale based on model size, very efficient, others scale on a q\~=1.3 ratio \
-Videos can be processed every 2 frames to speed up. On low quality, every frame is necessary.
+**Précision :** transmob == transmobNT < transmobYT == transmobYTC \
+**Rapidité :** transmobYTC >> transmobYT > transmobNT >= transmob \
+YTC n'est que peu affecté en temps par la taille du modèle utilisé, les autres processus sont affectés par un ratio q\~=1.3  \
+Les vidéos peuvent être analysées par 2 images à la fois. Sur de la qualité basse, à éviter.
 
-**models :** (best case, my computer)
-- n : half time with double framing
+**Modèles : ** 
+- n : 
 - s :
 - m : 
 - l :
-- x : slightly faster than real time with double framing
+- x :
 
-### todo
-- [x] file sorting for better core workload share 
-- [X] adapt to cuda devices
-- [X] benchmark (except model x, too long)
-- [ ] Make sure person + bicycle -> bicycle only (same with motorbikes)
-- [ ] &emsp;└> running on CUDA with Numba
-- [X] &emsp;&emsp;&emsp;└> benchmark numba's efficiency
-- [ ] Try nested thread on YTC
-- [ ] Directional process
+### A faire
+- [x] Organisation des fichiers pour un ordre de traitemetn optimisé 
+- [X] Support CUDA
+- [X] Banc de test (modèle *x* déterminé par inférence)
+- [ ] Traiter person + bicycle -> bicycle uniquement (idem avec motorbikes)
+- [ ] &emsp;└> Faire tourner sur CUDA avec Numba
+- [X] &emsp;&emsp;&emsp;└> banc de test pour l'efficacité de numba
+- [ ] Essayer parallélisation interne des vidéos sur YTC
+- [ ] Analyse directionnelle
