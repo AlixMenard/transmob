@@ -7,7 +7,8 @@ Yolo based vehicle tracking solution
 - git
 ### Optionnal
 If the computer has a [CUDA compatible graphic card](https://en.wikipedia.org/wiki/CUDA#GPUs_supported), you need to download and install [NVIDIA CUDA toolkit](https://developer.nvidia.com/cuda-downloads).
-A CUDA comaptible graphic card is highly recommended for increased speed performances.
+During the next step, after installing the required modules, you need to uninstall pytorch modules (`pip uninstall torch torchvision torchaudio`) and re-install it with CUDA support on the [Pytorch Website](https://pytorch.org/get-started/locally/). Select the *Stable* version, the correct OS, *pip*, *python* and a *CUDA version*, then copy and execute the command given by the website.
+A CUDA compatible graphic card is highly recommended for increased speed performances.
 
 ### Install
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
