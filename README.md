@@ -24,7 +24,7 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
 - Navigate to the git repository (at *<previous_path>/transmob*)
 - Execute `py GUI.py`
-- Drag&Drop the folder containing the videos to process (every video will be processed, make sure to eliminate duplicates, even with different extension, like "file.mp4" and "file.lrv")
+- Drag&Drop the folder containing the videos to process (**every** video will be processed, make sure to eliminate duplicates, even with different extension, like "file.mp4" and "file.lrv")
 - Choose the fitting options
   - Process (explained below)
   - Frame number : 1, each frame will be processed, 2, one in two frames will be processed (twice as fast, heavily not recommended in case of low quality video)
