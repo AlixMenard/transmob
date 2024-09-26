@@ -48,7 +48,7 @@ def dic_search(dic: dict, tupl: tuple):
     return "", 0
 
 
-def draw_line(frame, line, color = (255, 255, 0), thickness = 1):
+def draw_line(frame, line, color = (255, 255, 0), thickness = 3):
     cv2.line(frame, line.start, line.end, color, thickness=thickness)
     cv2.line(frame, line.center, line.p3, color, thickness=thickness)
     cv2.putText(frame, f'{line.id}', line.end, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2)
