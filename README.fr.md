@@ -1,7 +1,7 @@
 # transmob
 [Yolo](https://github.com/ultralytics/ultralytics) based vehicle tracking solution\
-Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/AlixMenard/transmob/edit/main/README.md)
-[![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/AlixMenard/transmob/edit/main/README.fr.md)
+Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/AlixMenard/transmob/blob/main/README.md)
+[![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/AlixMenard/transmob/blob/main/README.fr.md)
 
 ## Installation
 ### Pre-requisite
