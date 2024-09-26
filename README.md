@@ -21,7 +21,7 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 ### Use
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
 - Navigate to the git repository (at *<previous_path>/transmob*)
-- Execute `py GUI.py`
+- Execute cpy GUI.py`
 - Drag&Drop the folder containing the videos to process (every video will be processed, make sure to eliminate duplicates, even with different extension, like "file.mp4" and "file.lrv")
 - Choose the fitting options
   - Process (explained below)
@@ -31,6 +31,9 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
   - Number of cores dedicated to the process. If the computer has 10 physical cores or more, the recommendations are *Classic (4)*, *Nested Threads (3)* and *YallO (4)*.
   - With video : If yes, the videos will be displayed as they are treated. This considerably slows down the process. It is however useful to test the quality of detection of a model size if you are unsure about the picture quality.
 - Start
+- The 1st frame of each video will be displayed successively to create the counting lines. It takes 3 clicks to create a single line : the first 2 clicks define the starting and ending point of the line, the 3rd click defines the direction of counting. At an intersection, it is recommended to do the 3rd click in the middle of the intersection. /!\ The first 2 clicks defining the line through which vehicles will be countd, they must be accurate so to not miss vehicles or count additional ones. However, the 3rd click's accuracy is not to worry about.
+- After defining all the lines on the picture, press `Enter` to validate and repeat the process for every video.
+- Once no more video is shown, te setup is over and the program will process every video on its own.
 
 ## transmob
 
