@@ -1,5 +1,5 @@
 # transmob
-Yolo based vehicle tracking solution
+[Yolo](https://github.com/ultralytics/ultralytics) based vehicle tracking solution
 
 ## Installation
 ### Pre-requisite
