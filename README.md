@@ -44,30 +44,30 @@ Paralleled video processing.
 
 Yolo object detection, SORT tracking.\
 Paralleled video processing.\
-Nested Threads for processing (frame processing vs tracking)
+Nested Threads for processing (frame processing // tracking)
 
 ## transmobYT
 
-Yolo object detection, Yolo tracking.\
+Yolo object detection, Yolo tracking via BoT-SORT.\
 Paralleled video processing.\
 
 ## transmobYTC
 
-Yolo object detection, Yolo tracking.\
+Yolo object detection, Yolo tracking via BoT-SORT.\
 Paralleled video processing.\
-YOLO runs on CUDA
+YOLO and additional processes running on CUDA
 
 ### Performances
 **Precision :** transmob == transmobNT < transmobYT == transmobYTC \
-**Speed :** transmobYTC > transmobYT \~= transmobNT > transmob \
+**Speed :** transmobYTC >> transmobYT > transmobNT >= transmob \
 YTC almost doesn't scale based on model size, very efficient, others scale on a q\~=1.3 ratio \
 Videos can be processed every 2 frames to speed up. On low quality, every frame is necessary.
 
 **models :** (best case, my computer)
 - n : half time with double framing
-- s
+- s :
 - m : 
-- l
+- l :
 - x : slightly faster than real time with double framing
 
 ### todo
