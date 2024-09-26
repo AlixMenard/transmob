@@ -15,7 +15,8 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 - Navigate to the desired place to store the algorithm (use `cd <folder_name>` to navigate)
 - Execute `git clone https://github.com/AlixMenard/transmob`
 - Go in the repository : `cd transmob`
-- Install the necessary packages : `pip install -r requirements.txt`
+- Install the necessary packages : `pip install -r requirements.txt`\
+\* This will install the yolo models of sizes *n*, *s*, *m* and *l*. On the first time you ask the program to use the model of size *x*, it will be automatically downloaded before processing.
 
 ### Use
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
