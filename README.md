@@ -14,7 +14,7 @@ A CUDA comaptible graphic card is highly recommended for increased speed perform
 - Navigate to the desired place to store the algorithm (use `cd <folder_name>` to navigate)
 - Execute `git clone https://github.com/AlixMenard/transmob`
 - Go in the repository : `cd transmob`
-- Install the necessary packages : `pip install -r requiremetns.txt`
+- Install the necessary packages : `pip install -r requirements.txt`
 
 ### Use
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
