@@ -1,4 +1,5 @@
 import shutil
+import torch.multiprocessing as mp
 from typing import Dict
 
 from .Analyze import *
@@ -91,9 +92,8 @@ class Playlist:
     def play(self):
         An = [self.analysers[f] for f in self.files]
         start = time.time()
-        results = []
-        for an in An:
-            results.append(self.start(an))
+        with mp.Pool(processes=self.cores) as pool:
+            results = pool.map(self.start, An)
         end = time.time()
         video_d = sum(results)
         process_dur = end-start
