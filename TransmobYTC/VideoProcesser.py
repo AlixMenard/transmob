@@ -1,4 +1,3 @@
-import multiprocessing
 import shutil
 from typing import Dict
 
@@ -92,8 +91,8 @@ class Playlist:
     def play(self):
         An = [self.analysers[f] for f in self.files]
         start = time.time()
-        with multiprocessing.Pool(processes=self.cores) as pool:
-            results =pool.map(self.start, An)
+        for an in An:
+            results.append(self.start(an))
         end = time.time()
         video_d = sum(results)
         process_dur = end-start
