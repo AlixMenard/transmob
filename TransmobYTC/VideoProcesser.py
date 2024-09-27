@@ -79,9 +79,10 @@ class Playlist:
             else: an.starter()
             self.analysers[f] = an
 
-    def start(self, an:Analyser):
+    def start(self, an:Analyser, s):
         start_time = time.time()
-        an.process()
+        with torch.cuda.stream(s):
+            an.process()
         end_time = time.time()
         process_duration = end_time - start_time
         d = vidduration(an.url)
@@ -90,10 +91,14 @@ class Playlist:
 
     def play(self):
         An = [self.analysers[f] for f in self.files]
+        streams = [torch.cuda.Stream() for _ in range(self.cores)]
         start = time.time()
         results = []
-        for an in An:
-            results.append(self.start(an))
+        for i, an in enumerate(An):
+            stream = streams[i % len(streams)]
+            results.append(self.start(an, stream))
+        for stream in streams:
+            stream.synchronize()
         end = time.time()
         video_d = sum(results)
         process_dur = end-start
