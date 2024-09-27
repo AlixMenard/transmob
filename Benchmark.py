@@ -9,7 +9,7 @@ else:
     cudab= False
 
 
-if __name__ == '__main__':
+def process_benchmark():
     processes = {"Classique" : None, "NT" : None, "YT" if not cudab else "YTC" : None}
 
     f = r"C:\Users\alixm\Desktop\transmob\videos\10x1min"
@@ -20,3 +20,6 @@ if __name__ == '__main__':
 
     for p in processes:
         print(p, processes[p])
+
+if __name__ == '__main__':
+    process_benchmark()
