@@ -159,7 +159,7 @@ def accuracy(folder, cores, lines = None):
             p.initialise()
             lines = p.get_lines()
         p.play()
-        with open(rf"{folder}/product/resulst.txt") as f:
+        with open(rf"{folder}/product/results.txt") as f:
             models[m] = f.read()
         print("NT", models)
     return models, lines
