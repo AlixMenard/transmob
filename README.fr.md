@@ -56,8 +56,8 @@ Analyse en parallèle des vidéos.\
 ## transmobYTC
 
 Detection d'objet par YOLO, suivi par YOLO via BoT-SORT.\
-Analyse en parallèle des vidéos.\
-YOLO et autres processus tournant sur CUDA.
+YOLO et autres processus tournant sur CUDA.\
+L'usage de CUDA empêche la parallèlisation des vidéos qui sont de facto analysées successivement.
 
 ### Performances
 **Précision :** transmob == transmobNT < transmobYT == transmobYTC \

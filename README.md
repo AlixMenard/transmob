@@ -56,8 +56,8 @@ Paralleled video processing.\
 ## transmobYTC
 
 Yolo object detection, Yolo tracking via BoT-SORT.\
-Paralleled video processing.\
-YOLO and additional processes running on CUDA
+YOLO and additional processes running on CUDA\
+CUDA usage prevents paralleled processing, serialized is de facto used.
 
 ### Performances
 **Precision :** transmob == transmobNT < transmobYT == transmobYTC \
