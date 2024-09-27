@@ -126,6 +126,22 @@ def models_trials(folder, cores, lines = None):
         print("YAllO", models)
     return models, lines
 
+def accuracy(folder, cores, lines = None):
+    models = {"n" : None, "m" : None, "x" : None}
+    for m in models:
+        print("\n"*3)
+        print(f"Model size : {m}")
+        p = Playlist(folder, model=f"weights/yolov8{m}.pt", cores = cores)
+        if not lines is None:
+            p.initialise(lines)
+        else:
+            p.initialise()
+            lines = p.get_lines()
+        p.play()
+        with open(rf"{folder}/product/resulst.txt") as f:
+            models[m] = f.read()
+        print("YT", models)
+    return models, lines
 
 if __name__ == "__main__":
     folder = input("Give folder : ")
