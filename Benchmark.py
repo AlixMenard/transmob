@@ -3,10 +3,10 @@ import TransmobNT.VideoProcesser as vpNT
 import torch
 if not torch.cuda.is_available():
     import TransmobYT.VideoProcesser as vpYT
-    cudab= True
+    cudab= False
 else:
     import TransmobYTC.VideoProcesser as vpYT
-    cudab= False
+    cudab= True
 
 def process_benchmark_accuracy():
     yt = "YT" if not cudab else "YTC"
