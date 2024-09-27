@@ -91,6 +91,7 @@ class Playlist:
     def play(self):
         An = [self.analysers[f] for f in self.files]
         start = time.time()
+        results = []
         for an in An:
             results.append(self.start(an))
         end = time.time()
