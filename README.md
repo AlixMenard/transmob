@@ -46,7 +46,8 @@ Paralleled video processing.
 
 Yolo object detection, SORT tracking.\
 Paralleled video processing.\
-Nested Threads for processing (frame processing // tracking)
+Nested Threads for processing (frame processing // tracking) \
+*graph version should not be interrupted before video is fully processed*
 
 ## transmobYT
 
