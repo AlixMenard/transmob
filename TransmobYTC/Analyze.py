@@ -254,7 +254,6 @@ class Analyser:
             f.write(f"@{c_time}, {e_time}, {len(self.lines)}\n")
             for l in self.lines:
                 f.write(f"{l.id} : {l.counter.count()}\n")
-                print(l.counter.count())
 
         for l in self.lines:
             l.cleanse()

@@ -116,7 +116,7 @@ class Fleet:
         people = np.array([self.vehicles[v] for v in self.vehicles if self.vehicles[v]._class == "person" or self.vehicles[v].idbis is not None])
         bikes = np.array([self.vehicles[v] for v in self.vehicles if self.vehicles[v]._class in ["bicycle","motorbike"] and self.vehicles[v].idbis is None])
         if len(people) == 0 or len(bikes) == 0:
-            return 
+            return
         people_gpu = np.array([p.box.xyxy for p in people], dtype=np.int32)
         bikes_gpu = np.array([b.box.xyxy for b in bikes], dtype=np.int32)
         people_gpu = cuda.to_device(people_gpu)
