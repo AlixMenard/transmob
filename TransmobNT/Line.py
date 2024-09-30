@@ -119,23 +119,23 @@ class Counter:
     def cleanse(self):
         self.crossed.clear()
         self.uncrossed.clear()
-    
-    def count(self, classes=None, include_none:bool = False):
+
+    def count(self, classes=None, include_none: bool = False):
         if classes is None:
             classes = []
-        if not classes :
+        if not classes:
             uniques = list(set([v._class for v in self.crossed]))
             dir_in = {}
             for u in uniques:
-                dir_in[u] = sum([1 for v in self.crossed if v._class == u])
-            
+                dir_in[u] = sum([1 for v in self.crossed if v._class == u and v.oldid is None])
+
             uniques = list(set([v._class for v in self.uncrossed]))
             dir_out = {}
             for u in uniques:
-                dir_out[u] = sum([1 for v in self.uncrossed if v._class == u])
+                dir_out[u] = sum([1 for v in self.uncrossed if v._class == u and v.oldid is None])
             if not include_none:
-                if None in dir_in:dir_in.pop(None)
-                if None in dir_out:dir_out.pop(None)
+                if None in dir_in: dir_in.pop(None)
+                if None in dir_out: dir_out.pop(None)
             return [dir_in, dir_out]
 
     def add(self, v : Vehicle, direction : int = 0):
