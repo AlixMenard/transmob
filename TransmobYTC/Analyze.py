@@ -219,6 +219,7 @@ class Analyser:
 
             if cv2.waitKey(1) & 0xFF == 13:
                 del self.cap
+                cv2.destroyAllWindows()
                 break
             if self.graph:
                 for l in self.lines:
