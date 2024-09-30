@@ -79,5 +79,5 @@ Les vidéos peuvent être analysées par 2 images à la fois. Sur de la qualité
 - [ ] Traiter person + bicycle -> bicycle uniquement (idem avec motorbikes)
 - [ ] &emsp;└> Faire tourner sur CUDA avec Numba
 - [X] &emsp;&emsp;&emsp;└> banc de test pour l'efficacité de numba
-- [ ] Essayer parallélisation interne des vidéos sur YTC
+- [ ] ~Essayer parallélisation interne des vidéos sur YTC~ *La parallélisation n'est pas compatible avec CUDA*
 - [ ] Analyse directionnelle
