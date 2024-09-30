@@ -10,9 +10,10 @@ else:
 
 def process_benchmark_accuracy():
     yt = "YT" if not cudab else "YTC"
+    print(yt)
     processes = {"Classique" : None, "NT" : None, yt : None}
 
-    f = r"C:\Users\alixm\Desktop\transmob\videos\1x1min"
+    f = r"C:\Users\Utilisateur\Desktop\transmob\videos\1x1min"
 
     processes["Classique"], lines = vp.accuracy(f, cores =4)
     processes["NT"], _ = vpNT.accuracy(f, 3, lines)

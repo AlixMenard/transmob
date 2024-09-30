@@ -131,7 +131,7 @@ def accuracy(folder, cores, lines = None):
     for m in models:
         print("\n"*3)
         print(f"Model size : {m}")
-        p = Playlist(folder, model=f"weights/yolov8{m}.pt", cores = cores)
+        p = Playlist(folder, model=f"weights/yolov8{m}.pt", cores = cores, frame_nb = 1)
         if not lines is None:
             p.initialise(lines)
         else:
