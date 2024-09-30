@@ -242,6 +242,8 @@ class Analyser:
                     cv2.putText(frame, f'{v.id} ({v._class})', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
                                 (255, 255, 0), 2)
 
+            self.fleet.watch_bikes()
+
             # Display the frame with bounding boxes and lines
             if self.graph:
                 for l in self.lines:
