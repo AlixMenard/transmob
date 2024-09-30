@@ -112,7 +112,7 @@ class Fleet:
         l = [self.vehicles[v].avg_spd for v in self.vehicles if self.vehicles[v]._class == _class and not np.isnan(self.vehicles[v].avg_spd)]
         return np.average(l) if l else None, np.std(l) if l else None
 
-    def watch_bikes(self, frame):
+    def watch_bikes(self):
         people = np.array([self.vehicles[v] for v in self.vehicles if self.vehicles[v]._class == "person" or self.vehicles[v].idbis is not None])
         bikes = np.array([self.vehicles[v] for v in self.vehicles if self.vehicles[v]._class in ["bicycle","motorbike"] and self.vehicles[v].idbis is None])
         people_gpu = np.array([p.box.xyxy for p in people], dtype=np.int32)
