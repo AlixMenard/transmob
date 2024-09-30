@@ -22,10 +22,8 @@ class Line:
         self.end = (x2, y2)
         self.p3 = (x3,y3)
         dx, dy = abs(x2-x1), abs(y2-y1)
-        self.bounds = [x1-0.1*dx, x2+0.1*dx, min(y1, y2)-0.1*dy, max(y1, y2)+0.1*dy]
-        dx = x2-x1
-        dy = y2-y1
         self.length = np.sqrt(dx**2 + dy**2)
+        self.bounds = [x1-0.1*self.length, x2+0.1*self.length, min(y1, y2)-0.1*self.length, max(y1, y2)+0.1*self.length]
 
         #! ax + by + c = 0
         if dx == 0:
