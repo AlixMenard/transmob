@@ -122,7 +122,7 @@ class Fleet:
         threads_per_block = 512
         blocks_per_grid = 512
         overlaps_gpu = cuda.device_array((people_gpu.shape[0], bikes_gpu.shape[0]), dtype=np.bool_)
-        overlap[blocks_per_grid, threads_per_block](people, bikes, IoU)
+        overlap[blocks_per_grid, threads_per_block](people, bikes, overlaps_gpu)
         cuda.synchronize()
         IoU = overlaps_gpu.copy_to_host()
         for i,p in enumerate(people):
