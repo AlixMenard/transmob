@@ -2,7 +2,7 @@ from .Box import Box as vBox
 import numpy as np
 import cv2
 
-def overlap(people:np.array, bikes:np.array, matrix:np.array, frame):
+def overlap(people:np.array, bikes:np.array, matrix:np.array):
     # ! expects np arrays
     for i in range(people.shape[0]):
         for j in range(bikes.shape[0]):

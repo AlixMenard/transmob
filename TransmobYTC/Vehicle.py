@@ -1,22 +1,29 @@
 from .Box import Box as vBox
 from typing import Dict, List
 import numpy as np
+from .box_overlap import *
 
 class Vehicle:
 
-    def __init__(self, id:int, box:vBox, _class:str, conf:float, frame:int, fleet):
-        self.id : int = id
+    def __init__(self, id: int, box: vBox, _class: str, conf: float, frame: int, fleet):
+        self.id: int = id
+        self.idbis = self.classbis = self.oldid = None
         self.fleet = fleet
-        self.crossed : List[int] = []
-        self.hist_conf : List[(str, float)] = []
-        self._class : str = _class 
-        self.conf : float = conf
-        self.box : vBox = box
+        self.crossed: List[int] = []
+        self.hist_conf: List[(str, float)] = []
+        self._class: str = _class
+        self.conf: float = conf
+        self.box: vBox = box
         self.last_frame = frame
-        self.coords : List[int] = [self.box.center]
-        self.speeds : List[float] = []
-    
+        self.coords: List[int] = [self.box.center]
+        self.speeds: List[float] = []
+
     def class_check(self):
+        if self.idbis is not None:
+            self.id = self.idbis
+            self._class = self.classbis
+            return
+
         classes : Dict[str|None, float] = {}
         temp_save = self._class
         for _class, conf in self.hist_conf:
@@ -105,6 +112,27 @@ class Fleet:
         l = [self.vehicles[v].avg_spd for v in self.vehicles if self.vehicles[v]._class == _class and not np.isnan(self.vehicles[v].avg_spd)]
         return np.average(l) if l else None, np.std(l) if l else None
 
+    def watch_bikes(self, frame):
+        people = np.array([self.vehicles[v] for v in self.vehicles if self.vehicles[v]._class == "person" or self.vehicles[v].idbis is not None])
+        bikes = np.array([self.vehicles[v] for v in self.vehicles if self.vehicles[v]._class in ["bicycle","motorbike"] and self.vehicles[v].idbis is None])
+        people_gpu = np.array([p.box.xyxy for p in people], dtype=np.int32)
+        bikes_gpu = np.array([b.box.xyxy for b in bikes], dtype=np.int32)
+        people_gpu = cuda.to_device(people_gpu)
+        bikes_gpu = cuda.to_device(bikes_gpu)
+        threads_per_block = 512
+        blocks_per_grid = 512
+        overlaps_gpu = cuda.device_array((people_gpu.shape[0], bikes_gpu.shape[0]), dtype=np.bool)
+        overlap[blocks_per_grid, threads_per_block](people, bikes, IoU)
+        cuda.synchronize()
+        IoU = overlaps_gpu.copy_to_host()
+        for i,p in enumerate(people):
+            if sum(IoU[i]) == 1:
+                b_id = np.where(IoU[i])[0][0]
+                b = bikes[b_id]
+                p.oldid = p.id
+                p.idbis = b.id
+                p.classbis = b._class
+
     @property
     def ids(self) -> List[int]:
-        return [v[1].id for v in self.vehicles.items()]
+        return self.vehicles.keys()

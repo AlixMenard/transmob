@@ -197,10 +197,6 @@ class Analyser:
             frame_queue.put((count, frame))
             detection_queue.put((detection, class_map))
 
-            if cv2.waitKey(1) & 0xFF == 13:
-                del self.cap
-                break
-
     def tracking_and_post_processing(self, frame_queue, detection_queue):
         """
         Function responsible for tracking and post-processing.
@@ -249,6 +245,12 @@ class Analyser:
                 for l in self.lines:
                     draw_line(frame, l)
                 cv2.imshow("Line setup", frame)
+
+
+
+            if cv2.waitKey(1) & 0xFF == 13:
+                del self.cap
+                break
 
             # Save tracked data every 60 seconds
             time_last_save = count / self.fps - saves * 60
