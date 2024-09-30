@@ -191,13 +191,14 @@ class Analyser:
             confs = results[0].boxes.conf.float().to('cuda')
             boxes = results[0].boxes.xyxy.to('cuda')
 
+            fleet_ids = self.fleet.ids
             for id, classe, conf, box in zip(ids.cpu().tolist(), classes.cpu().tolist(), confs.cpu().tolist(), boxes.cpu().tolist()):
                 class_name = self.class_labels[classe]
                 if not class_name in self.watch_classes:
                     continue
                 x1, y1, x2, y2 = map(int, box)
 
-                fleet_ids = self.fleet.ids
+
                 box = vBox(x1, y1, x2 - x1, y2 - y1)
                 if id in fleet_ids:
                     self.fleet.update_vehicle(id, box, class_name, conf, count)
