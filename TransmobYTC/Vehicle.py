@@ -132,8 +132,6 @@ class Fleet:
                 p.oldid = p.id
                 p.idbis = b.id
                 p.classbis = b._class
-                print(p.__dict__)
-                print(b.__dict__)
 
     @property
     def ids(self) -> List[int]:
