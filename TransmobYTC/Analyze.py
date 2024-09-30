@@ -221,7 +221,6 @@ class Analyser:
 
             if cv2.waitKey(1) & 0xFF == 13:
                 del self.cap
-                cv2.destroyAllWindows()
                 break
             if self.graph:
                 for l in self.lines:
@@ -241,6 +240,7 @@ class Analyser:
             c_time = self.get_start_time()
         c_time_str = str_time(c_time)
         self.save(c_time_str, c_time + time_last_save, [])
+        cv2.destroyAllWindows()
         #for l in self.lines:
         #    print(l.counter.count())
         #print(f"Done : {self.url}")

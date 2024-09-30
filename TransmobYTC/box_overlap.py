@@ -13,12 +13,10 @@ def overlap(people, bikes, matrix):
             xmin2, ymin2, xmax2, ymax2 = bikes[j]
             dx2, dy2 = xmax2 - xmin2, ymax2 - ymin2
 
-            ymin1 += int(dy1 / 2)
-            xmin2 += int(dx2 / 5)
-            xmax2 -= int(dx2 / 5)
-            ymax2 -= int(dy2 / 3)
-            # cv2.rectangle(frame, (xmin1, ymin1), (xmax1, ymax1), (0,255,0), 2)
-            # cv2.rectangle(frame, (xmin2, ymin2), (xmax2, ymax2), (0,255,0), 2)
+            ymin1 += dy1 / 2
+            xmin2 += dx2 / 5
+            xmax2 -= dx2 / 5
+            ymax2 -= dy2 / 3
 
             ixmin = max(xmin1, xmin2)
             iymin = max(ymin1, ymin2)
@@ -30,4 +28,4 @@ def overlap(people, bikes, matrix):
             S2 = (xmax2 - xmin2) * (ymax2 - ymin2)
             I = width * height
             U = S1 + S2 - I
-            matrix[i, j] = I / U > 0.6
+            matrix[i, j] = I / U
