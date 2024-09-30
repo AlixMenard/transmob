@@ -125,9 +125,9 @@ class Fleet:
         overlap[blocks_per_grid, threads_per_block](people_gpu, bikes_gpu, overlaps_gpu)
         cuda.synchronize()
         IoU = overlaps_gpu.copy_to_host()
-        print(IoU)
         for i,p in enumerate(people):
             if sum(IoU[i]) == 1:
+                print(IoU)
                 b_id = np.where(IoU[i])[0][0]
                 b = bikes[b_id]
                 p.oldid = p.id
