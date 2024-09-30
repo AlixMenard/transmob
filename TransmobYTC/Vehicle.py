@@ -127,8 +127,8 @@ class Fleet:
         IoU = overlaps_gpu.copy_to_host()
         for i,p in enumerate(people):
             if sum(IoU[i]) == 1:
-                print(IoU)
                 b_id = np.where(IoU[i])[0][0]
+                print(b_id, IoU[i])
                 b = bikes[b_id]
                 p.oldid = p.id
                 p.idbis = b.id
