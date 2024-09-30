@@ -192,11 +192,11 @@ class Analyser:
                         detection = np.vstack((detection, entry))
 
                 tracked = self.tracker.update(detection)
+                ids = self.fleet.ids
                 for t in tracked:
                     x1, y1, x2, y2, id = map(int, t)
                     class_name, conf = dic_search(class_map, (x1, y1, x2, y2))
 
-                    ids = self.fleet.ids
                     if id in ids:
                         box = vBox(x1, y1, x2 - x1, y2 - y1)
                         self.fleet.update_vehicle(id, box, class_name, conf, count)
@@ -217,7 +217,7 @@ class Analyser:
                         cv2.putText(frame, f'{v.id} ({v._class})', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
                                     (255, 255, 0), 2)
 
-            #self.fleet.watch_bikes()
+            self.fleet.watch_bikes(frame)
 
             if cv2.waitKey(1) & 0xFF == 13:
                 del self.cap

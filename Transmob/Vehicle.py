@@ -7,7 +7,7 @@ class Vehicle:
 
     def __init__(self, id:int, box:vBox, _class:str, conf:float, frame:int, fleet):
         self.id : int = id
-        self.idbis = self.classbis = None
+        self.idbis = self.classbis = self.oldid = None
         self.fleet = fleet
         self.crossed : List[int] = []
         self.hist_conf : List[(str, float)] = []
@@ -59,7 +59,7 @@ class Vehicle:
         self.hist_conf.append((_class, conf))
         self.hist_conf = self.hist_conf[:15]
 
-        if _class != self._class:
+        if _class != self._class or self._class == "person":
             self.class_check()
 
     def close_speed(self, _class):
@@ -68,6 +68,13 @@ class Vehicle:
             return self.avg_spd >= avg - 2*std and self.avg_spd <= avg + 2*std
         else:
             return False
+
+    @property
+    def get_id(self):
+        if self.oldid is None:
+            return self.id
+        else:
+            return self.oldid
 
     @property
     def is_fast(self):
@@ -113,14 +120,16 @@ class Fleet:
         l = [self.vehicles[v].avg_spd for v in self.vehicles if self.vehicles[v]._class == _class and not np.isnan(self.vehicles[v].avg_spd)]
         return np.average(l) if l else None, np.std(l) if l else None
 
-    def watch_bikes(selfself):
-        people = np.array([self.vehicles[v] for v in self.vehicles if self.vehicles[v]._class == "person"])
-        bikes = np.array([self.vehicles[v] for v in self.vehicles if self.vehicles[v]._class in ["bicycle","motorbike"]])
+    def watch_bikes(self, frame):
+        people = np.array([self.vehicles[v] for v in self.vehicles if self.vehicles[v]._class == "person" or self.vehicles[v].idbis is not None])
+        bikes = np.array([self.vehicles[v] for v in self.vehicles if self.vehicles[v]._class in ["bicycle","motorbike"] and self.vehicles[v].idbis is None])
         IoU = np.zeros((people.shape[0], bikes.shape[0]))
-        overlap(people, bikes, IoU)
+        overlap(people, bikes, IoU, frame)
         for i,p in enumerate(people):
             if sum(IoU[i]) == 1:
-                b = np.where(IoU)[0]
+                b_id = np.where(IoU[i])[0][0]
+                b = bikes[b_id]
+                p.oldid = p.id
                 p.idbis = b.id
                 p.classbis = b._class
 
@@ -128,4 +137,4 @@ class Fleet:
 
     @property
     def ids(self) -> List[int]:
-        return [v[1].id for v in self.vehicles.items()]
+        return self.vehicles.keys()
