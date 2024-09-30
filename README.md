@@ -80,5 +80,5 @@ Videos can be processed every 2 frames to speed up. On low quality, every frame 
 - [ ] &emsp;└> running on CUDA with Numba
 - [X] &emsp;&emsp;&emsp;└> benchmark numba's efficiency
 - [ ] ~Try nested thread on YTC~ *Threading doesn't work with CUDA*
-- [ ] Screenshot passinvehicles
+- [ ] Screenshot passing vehicles
 - [ ] Directional process
