@@ -46,7 +46,8 @@ Analyse en parallèle des vidéos.
 
 Detection d'objet par YOLO, suivi par SORT.\
 Analyse en parallèle des vidéos.\
-Parallélisation interne des vidéos (detection // suivi)
+Parallélisation interne des vidéos (detection // suivi) \
+*graph version should not be interrupted before video is fully processed*
 
 ## transmobYT
 
