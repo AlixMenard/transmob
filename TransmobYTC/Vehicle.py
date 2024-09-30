@@ -58,7 +58,7 @@ class Vehicle:
         self.hist_conf.append((_class, conf))
         self.hist_conf = self.hist_conf[:15]
 
-        if _class != self._class:
+        if _class != self._class or self._class == "person":
             self.class_check()
 
     def close_speed(self, _class):
