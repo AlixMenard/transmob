@@ -97,10 +97,12 @@ class Line:
         return self.bounds[0]<=x<=self.bounds[1] and self.bounds[2]<=y<=self.bounds[3]
 
     def cross(self, v : Vehicle):
+        crossed = False
         x, y = v.box.center
         x, y = x-self.center[0], y-self.center[1]
         _, p = self.proj(x, y)
         if v.id in self.vehicles and (p * self.vehicles[v.id]<0 or p ==0):
+            crossed = True
             if self.vehicles[v.id]<0:
                 self.counter.add(v, direction = 0)
                 v.cross(self.id)
@@ -108,6 +110,7 @@ class Line:
                 self.counter.add(v, direction = 1)
                 v.cross(-self.id)
         self.vehicles[v.id] = p
+        return crossed
 
 
 class Counter:

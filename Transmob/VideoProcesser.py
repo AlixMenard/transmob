@@ -39,12 +39,14 @@ def format_dur(duration):
     return duration
 
 class Playlist:
-    def __init__(self, folder:str, cores:int = 2, model:str="weights/yolov8n.pt", watch_classes=None, frame_nb:int = 2, graph = False):
+    def __init__(self, folder:str, cores:int = 2, model:str="weights/yolov8n.pt", watch_classes=None, frame_nb:int = 2,
+                 graph = False, screenshots = False):
         if watch_classes is None:
             watch_classes = ["car", "truck", "motorbike", "bus", "bicycle", "person"]
         self.folder = folder
         self.model = model
         self.graph = graph
+        self.screenshots = screenshots
         self.watch_classes = watch_classes
         self.files : List[str] = [f for f in os.listdir(self.folder) if f[-4:].lower() in [".mp4", ".mts", ".lrv", ".avi"]]
         self.cores = min(cores, len(self.files))
@@ -76,8 +78,13 @@ class Playlist:
         if os.path.exists(f"{self.folder}/product"):
             shutil.rmtree(f"{self.folder}/product")
         os.mkdir(f"{self.folder}/product")
+        if self.screenshots:
+            if os.path.isdir(rf"{self.folder}/product/screens"):
+                shutil.rmtree(rf"{self.folder}/product/screens")
+            os.mkdir(f"{self.folder}/product/screens")
         for f in self.files:
-            an = Analyser(self.folder, f, graph=self.graph, model=self.model, watch_classes=self.watch_classes, frame_nb=self.frame_nb)
+            an = Analyser(self.folder, f, graph=self.graph, model=self.model, watch_classes=self.watch_classes,
+                          frame_nb=self.frame_nb, screenshots=self.screenshots)
             if lines is not None: an.starter(lines[f])
             else: an.starter()
             self.analysers[f] = an

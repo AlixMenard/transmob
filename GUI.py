@@ -126,6 +126,15 @@ def setup_window():
     graph_f = tk.Radiobutton(root, text = "False", variable = graphb, value = False)
     graph_f.grid(row = 6, column = 6, columnspan = 2)
 
+    # ? screen option
+    screenb = tk.BooleanVar(value=False)
+    screen_l = tk.Label(root, text = "Take screenshots")
+    screen_l.grid(row = 7, column = 0, columnspan = 4)
+    screen_t = tk.Radiobutton(root, text = "True", variable = screenb, value = True)
+    screen_t.grid(row = 7, column = 4, columnspan = 2)
+    screen_f = tk.Radiobutton(root, text = "False", variable = screenb, value = False)
+    screen_f.grid(row = 7, column = 6, columnspan = 2)
+
     # ! Validation
     def start():
         root.destroy()
@@ -137,14 +146,15 @@ def setup_window():
             case "YT":
                 Playlist = vpYT.Playlist
             
-        P = Playlist(entry_var.get(), cores=core_nb.get(), model=f"weights/yolov8{model_letter.get()}.pt", watch_classes=classes, graph = graphb.get())
+        P = Playlist(entry_var.get(), cores=core_nb.get(), model=f"weights/yolov8{model_letter.get()}.pt",
+                     watch_classes=classes, graph = graphb.get(), screenshots = screenb.get())
         P.initialise()
         results = P.play()
         result_window(results)
 
     def create_bt():
         val_bt = tk.Button(root, text="Start", command=start)
-        val_bt.grid(row = 7, column=0, columnspan=8, pady=10, padx=5)
+        val_bt.grid(row = 8, column=0, columnspan=8, pady=10, padx=5)
 
     # Bind the entry widget to accept file drops
     root.drop_target_register(DND_FILES)
