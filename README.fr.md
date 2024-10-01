@@ -78,8 +78,8 @@ Les vidéos peuvent être analysées par 2 images à la fois. Sur de la qualité
 - [X] Support CUDA
 - [X] Banc de test (modèle *x* déterminé par inférence)
 - [x] Traiter person + bicycle -> bicycle uniquement (idem avec motorbikes)
-- [x] &emsp;└> Faire tourner sur CUDA avec Numba
-- [X] &emsp;&emsp;&emsp;└> banc de test pour l'efficacité de numba
+  - [x] └> Faire tourner sur CUDA avec Numba
+    - [X] └> banc de test pour l'efficacité de numba
 - [x] ~Essayer parallélisation interne des vidéos sur YTC~ *La parallélisation n'est pas compatible avec CUDA*
 - [X] Capture d'écran des véhicules comptés pour chaque processus
 - [ ] Analyse directionnelle
