@@ -28,4 +28,4 @@ def overlap(people:np.array, bikes:np.array, matrix:np.array):
             S2 = (xmax2 - xmin2) * (ymax2 - ymin2)
             I = width * height
             U = S1 + S2 - I
-            matrix[i,j] = I/U > 0.6
+            matrix[i,j] = I / U > 0.6 or I / S1 > 0.7 or I / S2 > 0.7
