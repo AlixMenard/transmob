@@ -71,7 +71,7 @@ def str_time(_time):
 class Analyser:
 
     def __init__(self, folder, name, model="weights/yolov8n.pt", graph: bool = False, threshold: float = 0.25,
-                 watch_classes=None, verbose:bool=False, frame_nb:int = 2):
+                 watch_classes=None, verbose:bool=False, frame_nb:int = 2, screenshots = False):
         if watch_classes is None:
             watch_classes = ["car", "truck", "motorbike", "bus", "bicycle", "person"]
         if verbose: print("Initialising analyser...")
@@ -83,6 +83,7 @@ class Analyser:
         self.threshold = threshold
         self.watch_classes = watch_classes
         self.graph = graph
+        self.screenshots = screenshots
         self.mask = None
         self.length = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
         self.fps = int(self.cap.get(cv2.CAP_PROP_FPS))
@@ -198,7 +199,9 @@ class Analyser:
                 for l in self.lines:
                     x, y = box.center
                     if l.inbound(x, y):
-                        l.cross(self.fleet.get(id))
+                        crossed = l.cross(self.fleet.get(id))
+                        if crossed and self.screenshots:
+                            self.screen(frame, box.xyxy, id)
                         color = (255, 0, 0)
 
                 if self.graph:
@@ -247,6 +250,13 @@ class Analyser:
             l.cleanse()
 
         self.fleet.cleanse(tracked_ids)
+
+    def screen(self, frame, box, id):
+        x1, y1, x2, y2 = map(int, box)
+        roi = frame[y1:y2, x1:x2]
+        file_name = fr'{self.folder}/product/screens/{str_time(self.get_start_time())}_{id}.jpg'
+        #print(file_name)
+        cv2.imwrite(file_name, roi)
 
     def create_line(self, frame):
 
