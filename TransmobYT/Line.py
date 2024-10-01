@@ -35,18 +35,15 @@ class Line:
             self.b = 1
             self.c = - y1 - self.a*x1
 
-        lg = np.sqrt(self.a**2+self.b**2)
         
-        self.vec = (-self.b/lg, self.a/lg)
-        self.normal = (-self.a/lg, -self.b/lg)
+        self.vec = np.array([self.end[0] - self.start[0], self.end[1] - self.start[1]])
+        self.vec = self.vec / np.linalg.norm(self.vec)
+        self.normal = np.array([-self.vec[1], self.vec[0]])
+        
 
-        #! Matrice de chanement de base P = [vec^t, normal^t]
-        self.P = np.array([[self.vec[0], self.normal[0]],
-                           [self.vec[1], self.normal[1]]])
-        
-        self.Pt = np.linalg.inv(self.P)
-        x3, y3 = x3-self.center[0], y3-self.center[1]
-        x3, y3 = map(int, np.dot(self.Pt, np.array([x3, y3])))
+        x, y = self.p3
+        p_vec = np.array([x - self.center[0], y - self.center[1]])
+        y3 = np.dot(p_vec, self.normal)
         self.direction = y3/abs(y3)
 
         self.mask_bound()
@@ -83,13 +80,15 @@ class Line:
         return [min_x1, min_y1, max_x2, max_y2]
 
 
-    def proj(self, x, y):
-        x, y = map(int, np.dot(self.Pt, np.array([x, y])))
+    def proj(self, p):
+        x, y = p
+        p_vec = np.array([x - self.center[0], y - self.center[1]])
+        x = np.dot(p_vec, self.vec)
+        y = np.dot(p_vec, self.normal)
         y *= self.direction
         return x, y
     
     def unproj(self, x, y):
-        y *= self.direction
         x, y = map(int, np.dot(self.P, np.array([x, y])))
         return x, y
     
@@ -99,8 +98,7 @@ class Line:
     def cross(self, v : Vehicle):
         crossed = False
         x, y = v.box.center
-        x, y = x-self.center[0], y-self.center[1]
-        _, p = self.proj(x, y)
+        _, p = self.proj((x, y))
         if v.id in self.vehicles and (p * self.vehicles[v.id]<0 or p ==0):
             crossed = True
             if self.vehicles[v.id]<0:
