@@ -158,6 +158,7 @@ class Analyser:
                 #! Double frame
                 succ, frame = self.cap.read()
                 succ2, frame2 = self.cap.read()
+                count += 2
                 if not succ:
                     #print("corrupted frame")
                     if not succ2:
@@ -165,15 +166,14 @@ class Analyser:
                             break
                         continue
                     frame = frame2
-                count += 2
             elif self.frame_nb == 1:
                 #! Single frame
                 succ, frame = self.cap.read()
+                count += 1
                 if not succ:
                     if count >= self.length:
                         break
                     continue
-                count += 1
 
             if not self.mask is None:
                 frame = cv2.bitwise_and(frame, self.mask)
