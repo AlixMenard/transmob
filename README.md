@@ -27,7 +27,7 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 - Drag&Drop the folder containing the videos to process (**every** video will be processed, make sure to eliminate duplicates, even with different extension, like "file.mp4" and "file.lrv")
 - Choose the fitting options
   - Process (explained below)
-  - Frame number : 1, each frame will be processed, 2, one in two frames will be processed (twice as fast, heavily not recommended in case of low quality video)
+  - Frame number : 1, each frame will be processed, 2, one in two frames will be processed (twice as fast, reduces detection rate, heavily not recommended in case of low quality video)
   - YOLO model : bigger models will be better, but slower in most cases. With CUDA support the slow-down is negligible and always using the model of size *x* is highly recommended
   - Classes : Vehicle types to count, the others will be ignored. If pedestrians (*person*) are monitored, *bicycle* and *motorbike* can't be ignored.
   - Number of cores dedicated to the process. If the computer has 10 physical cores or more, the recommendations are *Classic (4)*, *Nested Threads (3)* and *YallO (4)*.
