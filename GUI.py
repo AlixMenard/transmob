@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter.ttk import Label
 import os
+import signal
+import traceback
 
 os.environ["OPENCV_LOG_LEVEL"] = "OFF"
 import torch
@@ -16,6 +18,11 @@ if not torch.cuda.is_available():
 else:
     bcuda = True
     import TransmobYTC.VideoProcesser as vpYT
+
+def signal_handler(sig, frame):
+    print("Caught signal:", sig)
+    print("Stack trace:")
+    traceback.print_stack(frame)
 
 
 def setup_window():
