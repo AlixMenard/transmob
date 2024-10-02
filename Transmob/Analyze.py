@@ -1,7 +1,7 @@
 import os
 import shutil
 
-os.environ["OPENCV_LOG_LEVEL"] = "SILENT"
+os.environ["OPENCV_LOG_LEVEL"] = "OFF"
 
 from .Vehicle import Fleet
 from .Box import Box as vBox
