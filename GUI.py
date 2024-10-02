@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter.ttk import Label
 import os
 
-os.environ["OPENCV_LOG_LEVEL"] = "SILENT"
+os.environ["OPENCV_LOG_LEVEL"] = "OFF"
 import torch
 
 from PIL.ImageColor import colormap
