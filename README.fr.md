@@ -27,7 +27,7 @@ Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de
 - Glissez et déposez le dossier contenant les vidéos à analyser (**chaque** fichier sera analysé, pensez à supprimer les duplicata, comme ceux avec différentes extensions, comme "fichier.mp4" et "fichier.lrv")
 - Choissisez les options que vous voulez :
   - Process (explained below)
-  - Frame number : 1, chaque image se analysée, 2,une image sur deux sera analysée (deux fois plus rapide, très fortement déconseillé pour les vidéos avec une qualité d'image basse)
+  - Frame number : 1, chaque image se analysée, 2,une image sur deux sera analysée (deux fois plus rapide, réduis le taux de détetion, très fortement déconseillé pour les vidéos avec une qualité d'image basse)
   - YOLO model : les modèles plus gros sont plus précis, mais considérablement plus lent dans le plupart des cas. Avec le support CUDA, le ralentissement lié à la taille du modèle est négligeable et toujours utiliser le modèle de taille *x* est fortement conseillé. 
   - Classes : Types de véhicules à compter, Les autre seront ignorés. Si les piétons (*person*) sont comptés, les vélos et motocylettes (*bicycle* and *motorbike*) ne peuvent pas être ignorés.
   - Number of cores : Nombre de cœurs dédiés au programme. Si l'ordinateur possède 10 cœurs physiques ou plus, les recommendations sont *Classic (4)*, *Nested Threads (3)* and *YallO (4)*.
