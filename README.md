@@ -67,11 +67,9 @@ YTC almost doesn't scale based on model size, very efficient, others scale on a 
 Videos can be processed every 2 frames to speed up. On low quality, every frame is necessary.
 
 **models :** (best case, my computer)
-- n : half-time with double framing
-- s :
-- m : 
-- l :
-- x : slightly faster than real time with double framing
+From lightest to heaviest : *n*, *s*, *m*, *l*, *x*. \
+*m* and above reach perfect detection on single frame with YT and YTC, while *n* is around ~95% and *s* is estimated above 97%. \
+With double frame, models are located between 80% and 95% (estimate of max), with the best performance for *l*.
 
 ### todo
 - [x] file sorting for better core workload share 
