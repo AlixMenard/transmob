@@ -146,7 +146,7 @@ class Analyser:
         c_time = None
         self.cap = cv2.VideoCapture(self.url)
         time_last_save = saves = count = 0
-        print(f"File : {self.url} - {self.fps} FPS - {int(self.length / self.fps)} seconds")
+        print(f"File : {self.url} - {self.fps} FPS - {int(self.length / self.fps)} seconds", flush = True)
 
         print("start processing")
         while self.cap.isOpened():
@@ -223,10 +223,10 @@ class Analyser:
 
             self.fleet.watch_bikes()
 
-            if cv2.waitKey(1) & 0xFF == 13:
-                del self.cap
-                break
             if self.graph:
+                if cv2.waitKey(1) & 0xFF == 13:
+                    del self.cap
+                    break
                 for l in self.lines:
                     draw_line(frame, l)
                 cv2.imshow("Line setup", frame)
