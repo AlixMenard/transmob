@@ -92,7 +92,7 @@ class Playlist:
         end_time = time.time()
         process_duration = end_time - start_time
         d = vidduration(an.url)
-        print(f"{an.name} ({format_dur(d)}) lasted {format_dur(process_duration)}")
+        print(f"{an.name} ({format_dur(d)}) lasted {format_dur(process_duration)}", flush = True)
         return d
 
     def play(self):
