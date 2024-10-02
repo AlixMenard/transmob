@@ -67,11 +67,9 @@ YTC n'est que peu affecté en temps par la taille du modèle utilisé, les autre
 Les vidéos peuvent être analysées par 2 images à la fois. Sur de la qualité basse, à éviter.
 
 **Modèles :** 
-- n : 
-- s :
-- m : 
-- l :
-- x :
+Du plus léger au plus lourd : *n*, *s*, *m*, *l*, *x*. \
+*m* et supérieurs offrent une detection parfaite en simple frame sur les versions YT et YTC, tandis que *n* est à ~95% et *s* est estimé au dessus de 97%. \
+En double frame, les modèles se situent entre 80% et 95% (estimation max), avec la meilleur performance pour *l*.
 
 ### A faire
 - [x] Organisation des fichiers pour un ordre de traitemetn optimisé 
