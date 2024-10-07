@@ -9,7 +9,7 @@ Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github
 - git
 ### Optionnal
 If the computer has a [CUDA compatible graphic card](https://en.wikipedia.org/wiki/CUDA#GPUs_supported), you need to download and install [NVIDIA CUDA toolkit](https://developer.nvidia.com/cuda-downloads).\
-During the next step, after installing the required modules, you need to uninstall pytorch modules (`pip uninstall torch torchvision torchaudio`) and re-install it with CUDA support on the [Pytorch Website](https://pytorch.org/get-started/locally/). Select the *Stable* version, the correct OS, *pip*, *python* and a *CUDA version*, then copy and execute the command given by the website.\
+During the next step, after installing the required modules, you need to uninstall pytorch modules (`pip uninstall torch torchvision torchaudio`) and re-install it with CUDA support on the [Pytorch Website](https://pytorch.org/get-started/locally/). Select the *Stable* version, the correct OS, *pip*, *python* and a *CUDA SDK version* ([see here for graphic card/version compatibility](https://en.wikipedia.org/wiki/CUDA#GPUs_supported)), then copy and execute the command given by the website.\
 A CUDA compatible graphic card is highly recommended for increased speed performances.
 
 ### Install
