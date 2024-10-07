@@ -37,11 +37,11 @@ def setup_window():
     root = TkinterDnD.Tk()
 
     #? Processer used
-    L = tk.Label(root, text = "Processing scheme : ")
+    L = tk.Label(root, text = "Processes : ")
     L.grid(row = 0, column = 0, columnspan = 2,  pady=20, padx=5)
-    process = tk.StringVar(value = "NT")
-    T = tk.Radiobutton(root, text = "Classic", variable = process, value = "Classic")
-    TNT = tk.Radiobutton(root, text = "Nested Threads", variable = process, value = "NT")
+    process = tk.StringVar(value = "YT")
+    T = tk.Radiobutton(root, text = "Classique", variable = process, value = "Classic")
+    TNT = tk.Radiobutton(root, text = "Parallélisation imbriquée", variable = process, value = "NT")
     TYT = tk.Radiobutton(root, text = "YAllO"+(" (CUDA)" if bcuda else ""), variable = process, value = "YT")
     T.grid(row = 0, column = 2, columnspan = 2, pady=20, padx=5)
     TNT.grid(row = 0, column = 4, columnspan = 2, pady=20, padx=5)
@@ -56,15 +56,15 @@ def setup_window():
     entry_var = tk.StringVar()
 
     # Create an Entry widget to show the dropped file path
-    entry_l = tk.Label(root, text = "Path to the folder : ")
+    entry_l = tk.Label(root, text = "Chemin vers le fichier : ")
     entry_l.grid(row = 1, column = 0, columnspan = 4, pady=20, padx=5)
     entry = tk.Entry(root, textvariable=entry_var, width=50)
     entry.grid(row = 1, column = 4, columnspan = 4, pady=20, padx=5)
 
     #Processing settings
     #? Frame_nb
-    frame_nb = tk.IntVar(value = 2)
-    frame_l = tk.Label(root, text = "Frame speed : ")
+    frame_nb = tk.IntVar(value = 1)
+    frame_l = tk.Label(root, text = "Nombre de frames : ")
     frame_l.grid(row = 2, column = 0, columnspan = 4, pady=10, padx=5)
     frame_nb_rb1 = tk.Radiobutton(root, text="1", variable=frame_nb, value=1)
     frame_nb_rb1.grid(row = 2, column = 4, columnspan = 2, pady=10, padx=5)
@@ -72,8 +72,8 @@ def setup_window():
     frame_nb_rb2.grid(row = 2, column = 6, columnspan = 2, pady=10, padx=5)
 
     #? model
-    model_letter = tk.StringVar(value = "m")
-    model_l = tk.Label(root, text = "AI model : ")
+    model_letter = tk.StringVar(value = "x")
+    model_l = tk.Label(root, text = "Model YOLO : ")
     model_l.grid(row = 3, column = 0, columnspan = 3, pady=20, padx=5)
     model_rb1 = tk.Radiobutton(root, text="n", variable=model_letter, value="n")
     model_rb1.grid(row = 3, column = 3, pady=10, padx=5)
@@ -103,7 +103,7 @@ def setup_window():
             if var.get():
                 classes.append(item)
 
-    checkbox_label = tk.Label(root, text="Select classes :")
+    checkbox_label = tk.Label(root, text="Types de véhicules :")
     checkbox_label.grid(row=4, column=0, columnspan = 2, pady=10, padx=5)
     checkboxes_func = []
     for idx, item in enumerate(items):
@@ -120,7 +120,7 @@ def setup_window():
             return True
         return False
     core_nb = tk.IntVar(value=recommended_cores[process.get()])
-    core_l = tk.Label(root, text = "Number of cores")
+    core_l = tk.Label(root, text = "Nombre de coeurs")
     core_l.grid(row = 5, column = 0, columnspan= 4, pady=10, padx=5)
     vcmd = (root.register(validate_input), '%P')
     core_entry = tk.Entry(root, textvariable = core_nb, width=10, validate="key", validatecommand=vcmd)
@@ -128,20 +128,20 @@ def setup_window():
 
     # ? graph option
     graphb = tk.BooleanVar(value=False)
-    graph_l = tk.Label(root, text = "With video")
+    graph_l = tk.Label(root, text = "Avec vidéo")
     graph_l.grid(row = 6, column = 0, columnspan = 4)
-    graph_t = tk.Radiobutton(root, text = "True", variable = graphb, value = True)
+    graph_t = tk.Radiobutton(root, text = "Oui", variable = graphb, value = True)
     graph_t.grid(row = 6, column = 4, columnspan = 2)
-    graph_f = tk.Radiobutton(root, text = "False", variable = graphb, value = False)
+    graph_f = tk.Radiobutton(root, text = "Non", variable = graphb, value = False)
     graph_f.grid(row = 6, column = 6, columnspan = 2)
 
     # ? screen option
     screenb = tk.BooleanVar(value=False)
-    screen_l = tk.Label(root, text = "Take screenshots")
+    screen_l = tk.Label(root, text = "Avec captures d'écran")
     screen_l.grid(row = 7, column = 0, columnspan = 4)
-    screen_t = tk.Radiobutton(root, text = "True", variable = screenb, value = True)
+    screen_t = tk.Radiobutton(root, text = "Oui", variable = screenb, value = True)
     screen_t.grid(row = 7, column = 4, columnspan = 2)
-    screen_f = tk.Radiobutton(root, text = "False", variable = screenb, value = False)
+    screen_f = tk.Radiobutton(root, text = "Non", variable = screenb, value = False)
     screen_f.grid(row = 7, column = 6, columnspan = 2)
 
     # ! Validation
@@ -162,7 +162,7 @@ def setup_window():
         result_window(results)
 
     def create_bt():
-        val_bt = tk.Button(root, text="Start", command=start)
+        val_bt = tk.Button(root, text="Valider", command=start)
         val_bt.grid(row = 8, column=0, columnspan=8, pady=10, padx=5)
 
     # Bind the entry widget to accept file drops
@@ -174,13 +174,13 @@ def setup_window():
 def result_window(results):
     vidd, procd, diff = results
     root = tk.Tk()
-    L = tk.Label(root, text="Results")
+    L = tk.Label(root, text="Résultats")
     L.pack()
-    L1 = tk.Label(root, text = f"Total video time   : {vp.format_dur(vidd)}")
+    L1 = tk.Label(root, text = f"Temps total de vidéo   : {vp.format_dur(vidd)}")
     L1.pack()
-    L2 = tk.Label(root, text = f"Total process time : {vp.format_dur(procd)}")
+    L2 = tk.Label(root, text = f"Temps total d'analyse  : {vp.format_dur(procd)}")
     L2.pack()
-    L3 = tk.Label(root, text = f"Difference : {diff}%")
+    L3 = tk.Label(root, text = f"Différence : {diff}%")
     L3.pack()
 
     def gosetup():
