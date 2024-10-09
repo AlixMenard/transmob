@@ -5,8 +5,8 @@ Langues : [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.
 
 ## Installation
 ### Prérequis
-- Python >= 3.12
-- git
+- [Python >= 3.12](https://www.python.org/downloads/)
+- [git](https://git-scm.com/downloads/win)
 ### Optionnel
 Si l'ordinateur a une [carte graphique compatible avec CUDA](https://en.wikipedia.org/wiki/CUDA#GPUs_supported), il faut télécharger et installer [NVIDIA CUDA toolkit](https://developer.nvidia.com/cuda-downloads).\
 Durant la prochaine étape, après avoir installé les librairies requises, il faut désinstaller les librairies pytorch par défaut (`pip uninstall torch torchvision torchaudio`) et les ré-installer avec le support de CUDA sur le [site de PyTorch](https://pytorch.org/get-started/locally/). Sélectionnez la version *Stable*, votre système d'exploitation, *pip*, *python* et une *version de CUDA* ([voir compatibilité version/carte graphique ici](https://en.wikipedia.org/wiki/CUDA#GPUs_supported)), puis copier et exécuter la commande donnée par le site.\
