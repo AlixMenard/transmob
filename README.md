@@ -38,6 +38,12 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 - Once no more video is shown, the setup is over and the program will process every video on its own. Do not open the `results.txt` during the process, as it could prevent the program from writing the result and freeze it. \
 *Note : If python commands such as `py GUI.py` do not work, try replacing `py` with `python` (e.g. `python GUI.py`)*
 
+### Good practice
+- folder and file names must not include spaces and special characters
+- On complex intersections, such as roundabouts, make sure to place the lines such that vehicles engaged in the intersection and passing by a line will not be considered as passing the lines
+- Be sure to cover the whole potential crossing area, especially around crosswalks where people might walk around and not exactly on
+- MP4 and LRV will give the same results, as the model scales the resolution down before processing. However, LRV files are much lighter on the CPU and the memory.
+
 ## transmob
 
 Yolo object detection, SORT tracking.\
