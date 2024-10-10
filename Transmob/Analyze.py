@@ -129,7 +129,7 @@ class Analyser:
             cv2.imshow("Line setup", frame)
             self.create_line(frame)
 
-            self.strt = self.get_start_time()
+            self.get_start_time()
             self.end = time_1(self.strt + int(self.length / self.fps))
 
             if not lines is None or (cv2.waitKey(0) & 0xFF == 13):
@@ -150,17 +150,18 @@ class Analyser:
         time_L.grid(row = 0, column = 0, columnspan = 2)
         def validate():
             self.strt = c_time
+            root.destroy()
         val_b = tk.Button(root, text="Valider", command=validate)
         val_b.grid(row = 2, column = 0)
 
-        date_label = tk.Label(root, text="Entrez la date et l'heure si changement :\n(jj/mm/yyyy hh:mm)")
+        date_label = tk.Label(root, text="Entrez la date et l'heure si changement :\n(yyyy-mm-dd hh:mm)")
         date_label.grid(row=1, column=0)
         date_entry = tk.Entry(root, width=20)
         date_entry.grid(row=1, column=1)
         def change():
             date_str = date_entry.get()
             try:
-                user_datetime = datetime.strptime(date_str, "%d/%m/%Y %H:%M")
+                user_datetime = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
                 self.strt = user_datetime.timestamp()
                 root.destroy()
             except ValueError:
@@ -168,6 +169,7 @@ class Analyser:
         chg_b = tk.Button(root, text="Changer", command=change)
         chg_b.grid(row=2, column=1)
         root.mainloop()
+        print("exited", self.strt)
 
     def process(self):
         c_time = None
