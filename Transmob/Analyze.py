@@ -169,7 +169,6 @@ class Analyser:
         chg_b = tk.Button(root, text="Changer", command=change)
         chg_b.grid(row=2, column=1)
         root.mainloop()
-        print("exited", self.strt)
 
     def process(self):
         c_time = None
