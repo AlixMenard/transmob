@@ -127,11 +127,11 @@ class Analyser:
             cv2.imshow("Line setup", frame)
             self.create_line(frame)
 
-            strt = self.get_start_time()
-            end = time_1(strt + int(self.length / self.fps))
+            self.strt = self.get_start_time()
+            self.end = time_1(self.strt + int(self.length / self.fps))
 
             if not lines is None or (cv2.waitKey(0) & 0xFF == 13):
-                f_name = f"{self.folder}/product/{str_time(strt)}-{str_time(end)[11:]}.jpg"
+                f_name = f"{self.folder}/product/{str_time(self.strt)}-{str_time(self.end)[11:]}.jpg"
                 #print(f_name)
                 cv2.imwrite(f_name, frame)
                 #print("saved")
@@ -259,7 +259,7 @@ class Analyser:
             time_last_save = count / self.fps - saves * 60
             if time_last_save > 60:
                 if not c_time:
-                    c_time = self.get_start_time()
+                    c_time = self.strt
                 c_time_str = str_time(c_time)
                 self.save(c_time_str, c_time + time_last_save, tracked)
                 c_time += time_last_save
@@ -268,7 +268,7 @@ class Analyser:
 
         # Save final result if c_time wasn't set
         if not c_time:
-            c_time = self.get_start_time()
+            c_time = self.strt
         c_time_str = str_time(c_time)
         self.save(c_time_str, c_time + time_last_save, [])
 
@@ -319,7 +319,7 @@ class Analyser:
     def screen(self, frame, box, id):
         x1, y1, x2, y2 = map(int, box)
         roi = frame[y1:y2, x1:x2]
-        file_name = fr'{self.folder}/product/screens/{str_time(self.get_start_time())}_{id}.jpg'
+        file_name = fr'{self.folder}/product/screens/{str_time(self.strt)}_{id}.jpg'
         #print(file_name)
         cv2.imwrite(file_name, roi)
 
