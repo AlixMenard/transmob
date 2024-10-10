@@ -36,7 +36,7 @@ class Vehicle:
         self._class = max(zip(classes.values(), classes.keys()))[1]
         if self._class is None and not temp_save is None:
             self._class = temp_save
-        if self._class == "person" and (self.is_fast or self.close_speed("car")):
+        if self._class == "person" and self.is_fast:
             self._class = "scooter"
 
     def cross(self, id:int):

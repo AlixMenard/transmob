@@ -37,7 +37,7 @@ class Vehicle:
         if self._class is None and not temp_save is None:
             self._class = temp_sav
 
-        if self._class == "person" and (self.is_fast or self.close_speed("car")):
+        if self._class == "person" and self.is_fast:
             self._class = "scooter"
 
     def cross(self, id:int):
