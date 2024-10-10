@@ -13,6 +13,8 @@ from .sort import Sort
 from ultralytics import YOLO
 from typing import List
 import time
+import tkinter as tk
+from datetime import datetime
 
 
 # ? First try at box connection, either too slow (often) or incorrect and leaving objects unclassed
@@ -142,7 +144,30 @@ class Analyser:
     def get_start_time(self):
         c_time = os.path.getmtime(self.url) - int(self.length / self.fps)
         c_time = time_1(c_time)
-        return c_time
+        strtime = str_time(c_time)
+        root = tk.Tk()
+        time_L = tk.Label(root, text=f"Heure de début de la vidéo : {strtime}")
+        time_L.grid(row = 0, column = 0, columnspan = 2)
+        def validate():
+            self.strt = c_time
+        val_b = tk.Button(root, text="Valider", command=validate)
+        val_b.grid(row = 2, column = 0)
+
+        date_label = tk.Label(root, text="Entrez la date et l'heure si changement :\n(jj/mm/yyyy hh:mm)")
+        date_label.grid(row=1, column=0)
+        date_entry = tk.Entry(root, width=20)
+        date_entry.grid(row=1, column=1)
+        def change():
+            date_str = date_entry.get()
+            try:
+                user_datetime = datetime.strptime(date_str, "%d/%m/%Y %H:%M")
+                self.strt = user_datetime.timestamp()
+                root.destroy()
+            except ValueError:
+                date_entry.delete(0, tk.END)
+        chg_b = tk.Button(root, text="Changer", command=change)
+        chg_b.grid(row=2, column=1)
+        root.mainloop()
 
     def process(self):
         c_time = None
