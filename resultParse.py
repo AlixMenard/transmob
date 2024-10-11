@@ -64,11 +64,12 @@ class Parser:
 
     def make_csv(self):
         columns = ["car", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
-        with open(self.save_path, "w") as f:
+        with open(self.save_path[:-3]+"csv", "w") as f:
             f.write("date,time,line,sense," + ",".join(columns) + "\n")
             for q in self.timelapse:
                 for l in q.count:
-                    line = [q.start.strftime("%Y/%m/%d"), q.start.strftime("%Hh%M")+q.end.strftime("-%Hh%M"), str(l)]
+                    #Standard ISO formatting apparently
+                    line = [q.start.strftime("%Y-%m-%d"), q.start.strftime("%Hh%M")+q.end.strftime("-%Hh%M"), str(l)]
                     for col in columns:
                         line0 = line1 = line[:]
                         line0 += [str(q.count[l][0][col]) if col in q.count[l][0] else "0" for col in columns]
