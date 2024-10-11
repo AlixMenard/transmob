@@ -53,7 +53,7 @@ class Parser:
         
         timelapse.sort()
         self.timelapse = timelapse[:]
-        self.save()
+        self.make_csv()
         
     def save(self):
         with open(self.save_path, "w") as f:
@@ -61,6 +61,20 @@ class Parser:
                 f.write(f"{q.start} - {q.end} - {len(q.count)}\n")
                 for line in q.count:
                     f.write(f"{line}:{q.pretty_count(line)}\n")
+
+    def make_csv(self):
+        columns = ["car", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
+        with open(self.save_path, "w") as f:
+            f.write("date,time,line,sense," + ",".join(columns) + "\n")
+            for q in self.timelapse:
+                for l in q.count:
+                    line = [q.start.strftime("%Y/%m/%d"), q.start.strftime("%Hh%M")+q.end.strftime("-%Hh%M"), str(l)]
+                    for col in columns:
+                        line0 = line1 = line[:]
+                        line0 += [str(q.count[l][0][col]) if col in q.count[l][0] else "0" for col in columns]
+                        line1 += [str(q.count[l][1][col]) if col in q.count[l][1] else "0" for col in columns]
+                    f.write(",".join(line0) + "\n")
+                    f.write(",".join(line1) + "\n")
 
 @total_ordering
 class Quarter:
