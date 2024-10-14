@@ -47,7 +47,6 @@ class Playlist:
         self.watch_classes = watch_classes
         self.files : List[str] = [f for f in os.listdir(self.folder) if f[-4:].lower() in [".mp4", ".mts", ".lrv", ".avi"]]
         self.cores = min(cores, len(self.files))
-        self.sort_files()
         self.analysers : Dict[str, Analyser|None] = {f:None for f in self.files}
         self.frame_nb = frame_nb
 
@@ -85,6 +84,7 @@ class Playlist:
             if lines is not None: an.starter(lines[f])
             else: an.starter()
             self.analysers[f] = an
+        self.sort_files()
 
     def start(self, an:Analyser):
         start_time = time.time()
