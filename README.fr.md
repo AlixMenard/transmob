@@ -1,5 +1,5 @@
 # transmob
-Suivi vidéo de véhicule basé sur [YOLOv8](https://github.com/ultralytics/ultralytics) \
+Suivi vidéo de véhicule basé sur [YOLOv11](https://github.com/ultralytics/ultralytics) \
 Langues : [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/AlixMenard/transmob/blob/main/README.fr.md)
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/AlixMenard/transmob/blob/main/README.md)
 
