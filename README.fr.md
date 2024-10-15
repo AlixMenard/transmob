@@ -1,5 +1,5 @@
 # transmob
-Suivi vidéo de véhicule basé [YOLOv8](https://github.com/ultralytics/ultralytics) \
+Suivi vidéo de véhicule basé sur [YOLOv8](https://github.com/ultralytics/ultralytics) \
 Langues : [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/AlixMenard/transmob/blob/main/README.fr.md)
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/AlixMenard/transmob/blob/main/README.md)
 
@@ -34,6 +34,7 @@ Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de
   - With video : Si oui, la vidéo sera affichée durant son traitement. Cela ralentit considérablement le processus. C'est en revanche très utile pour juger de l'efficacité de détection d'un modèle sur une vidéo dont vous n'êtes pas certain.e de la qualité.
 - Start
 - La première image de chaque vidéo sera montrée, successivement, pour créer les lignes de comptage. Il faut 3 clics pour créer une ligne : les 2 premiers clics définissent les points de début et de fin de la ligne, le 3e clic défini la direction de comptage. A une intersection, Il est recommendé d'effectuer le 3e clic au milieu de l'intersection. **/!\\** *les 2 premiers clics définissant la ligne à travers laquelle les véhicules seront comptés, ils doivent être précis pour ne pas rater de véhicule ou en compter trop. Cependant, la précision du 3e clic n'a aucune importance. Si plusieurs lignes sont placées, l'ordre doit rester le même sur toutes les vidéos.*
+- Avec la première image, une fenêtre pop-up sera affichée pour vérifier la date de départ de la vidéo. Le programme montrera la date de création de la vidéo en première proposition, Que vous pouvez confirmer avec "Valider". Si cette date n'est pas correcte, vous pouvez taper la date réelle, au format (aaaa-MM-jj hh:mm), puis cliquer sur "Changer".
 - Après avoir défini toutes les lignes sur l'image, pressez `Entrée` pour valider, et répéter pour chaque vidéo.
 - Quand plus aucune vidéo n'est montrée, le paramétrage est terminé et le programme va analyser toutes les vidéos. Ne pas ouvrir le fichier `results.txt`durant le processus, cela pourrait empêcher le prgoramme d'écrire le résultat et le bloquer. \
 *Note : Si les commandes python comme `py GUI.py` ne marchent pas, remplacez `py` par `python` (e.g. `python GUI.py`)*
