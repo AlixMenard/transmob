@@ -16,7 +16,7 @@ torch==2.4.1
 torchvision==0.19.1
 tqdm==4.66.5
 typing_extensions==4.12.2
-ultralytics==8.2.94
+ultralytics
 ultralytics-thop==2.0.6
 urllib3==2.2.3
 filterpy

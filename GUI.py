@@ -155,7 +155,7 @@ def setup_window():
             case "YT":
                 Playlist = vpYT.Playlist
             
-        P = Playlist(entry_var.get(), cores=core_nb.get(), model=f"weights/yolov8{model_letter.get()}.pt",
+        P = Playlist(entry_var.get(), cores=core_nb.get(), model=f"weights/yolov11{model_letter.get()}.pt",
                      watch_classes=classes, graph = graphb.get(), screenshots = screenb.get())
         P.initialise()
         results = P.play()
