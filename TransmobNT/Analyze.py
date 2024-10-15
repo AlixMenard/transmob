@@ -102,7 +102,7 @@ class Analyser:
         if verbose: print("Tracker loaded...")
         self.class_labels = [
             "person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat",
-            "traffic light", "fire hydrant", "stop sign", "parking meter", "bench",
+            "traffic light", "fire hydrant", "stop sign", "parking meter", "bench", "bird",
             "cat", "dog", "horse", "sheep", "cow", "elephant", "bear", "zebra", "giraffe",
             "backpack", "umbrella", "handbag", "tie", "suitcase", "frisbee", "skis", "snowboard", "sports ball", "kite",
             "baseball bat", "baseball glove", "skateboard", "surfboard", "tennis racket",
