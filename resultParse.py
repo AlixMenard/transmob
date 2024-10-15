@@ -71,9 +71,10 @@ class Parser:
                     #Standard ISO formatting apparently
                     line = [q.start.strftime("%Y-%m-%d"), q.start.strftime("%Hh%M")+q.end.strftime("-%Hh%M"), str(l)]
                     for col in columns:
-                        line0 = line1 = line[:]
-                        line0 += [str(q.count[l][0][col]) if col in q.count[l][0] else "0" for col in columns]
-                        line1 += [str(q.count[l][1][col]) if col in q.count[l][1] else "0" for col in columns]
+                        line0 = line[:]
+                        line1 = line[:]
+                        line0 += ["0"] + [str(q.count[l][0][col]) if col in q.count[l][0] else "0" for col in columns]
+                        line1 += ["1"] + [str(q.count[l][1][col]) if col in q.count[l][1] else "0" for col in columns]
                     f.write(",".join(line0) + "\n")
                     f.write(",".join(line1) + "\n")
 
