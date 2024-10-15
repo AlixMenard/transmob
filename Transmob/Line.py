@@ -96,7 +96,7 @@ class Line:
 
     def cross(self, v : Vehicle):
         crossed = False
-        x, y = v.box.center
+        x, y = v.box.cross_point
         _, p = self.proj((x, y))
         if v.id in self.vehicles and (p * self.vehicles[v.id]<0 or p ==0):
             crossed = True

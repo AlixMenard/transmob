@@ -15,7 +15,7 @@ class Vehicle:
         self.conf: float = conf
         self.box: vBox = box
         self.last_frame = frame
-        self.coords: List[int] = [self.box.center]
+        self.coords: List[int] = [self.box.cross_point]
         self.speeds: List[float] = []
 
     def class_check(self):
@@ -54,7 +54,7 @@ class Vehicle:
 
         self.box = box
         self.last_frame = frame
-        self.coords.append(self.box.center)
+        self.coords.append(self.box.cross_point)
         self.hist_conf.append((_class, conf))
         self.hist_conf = self.hist_conf[:15]
 
