@@ -74,7 +74,7 @@ def str_time(_time):
 
 class Analyser:
 
-    def __init__(self, folder, name, model="weights/yolov8n.pt", graph: bool = False, threshold: float = 0.1,
+    def __init__(self, folder, name, model="weights/yolov8n.pt", graph: bool = False, threshold: float = 0.05,
                  watch_classes=None, verbose:bool=False, frame_nb:int = 2, screenshots = False):
         if watch_classes is None:
             watch_classes = ["car", "truck", "motorbike", "bus", "bicycle", "person"]

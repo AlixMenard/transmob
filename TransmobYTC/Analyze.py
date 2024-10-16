@@ -209,7 +209,7 @@ class Analyser:
                 # Transfer back to CPU
                 frame = gpu_result.cpu().numpy()
 
-            results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device=0, conf=0.1)
+            results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device=0, conf=0.05)
             try:
                 ids = results[0].boxes.id.int().to('cuda')
             except:
