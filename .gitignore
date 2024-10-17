@@ -3,3 +3,4 @@ videos/
 **/yolo11x.pt
 **/__pycache__/
 .idea/
+**/datasets/**
