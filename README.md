@@ -20,10 +20,14 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 - Install the necessary packages : `pip install -r requirements.txt`\
 \* This will install the yolo models of sizes *n*, *s*, *m* and *l*. On the first time you ask the program to use the model of size *x*, it will be automatically downloaded before processing.
 
-### Use
+### Start option 1
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
 - Navigate to the git repository (at *<previous_path>/transmob*)
 - Execute `py GUI.py`
+### Start option 2
+- Go to the *transmob* folder.
+- Run "start.vbs"
+### Use
 - Drag&Drop the folder containing the videos to process (**every** video will be processed, make sure to eliminate duplicates, even with different extension, like "file.mp4" and "file.lrv")
 - Choose the fitting options
   - Process (explained below)
