@@ -113,7 +113,7 @@ class Analyser:
         self.fleet = Fleet()
         if verbose: print("Analyser initiated.")
 
-    def starter(self, lines: (List[Line], List) = None):
+    def starter(self, lines: (List[Line], List) = None, trust_time = False):
         if lines:
             self.lines = lines[0]
             self.mask = lines[1]
@@ -127,7 +127,9 @@ class Analyser:
             cv2.imshow("Line setup", frame)
             self.create_line(frame)
 
-            self.get_start_time()
+            ret = False
+            if not trust_time:
+                ret = self.get_start_time()
             self.end = time_1(self.strt + int(self.length / self.fps))
 
             if not lines is None or (cv2.waitKey(0) & 0xFF == 13):
@@ -139,7 +141,10 @@ class Analyser:
                 del self.cap
                 break
 
+            return ret
+
     def get_start_time(self):
+        ret = False
         c_time = os.path.getmtime(self.url) - int(self.length / self.fps)
         c_time = time_1(c_time)
         strtime = str_time(c_time)
@@ -148,6 +153,7 @@ class Analyser:
         time_L.grid(row = 0, column = 0, columnspan = 2)
         def validate():
             self.strt = c_time
+            ret = True
             root.destroy()
         val_b = tk.Button(root, text="Valider", command=validate)
         val_b.grid(row = 2, column = 0)
@@ -157,6 +163,7 @@ class Analyser:
         date_entry = tk.Entry(root, width=20)
         date_entry.grid(row=1, column=1)
         def change():
+            ret = False
             date_str = date_entry.get()
             try:
                 user_datetime = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
@@ -167,6 +174,7 @@ class Analyser:
         chg_b = tk.Button(root, text="Changer", command=change)
         chg_b.grid(row=2, column=1)
         root.mainloop()
+        return ret
 
     def process(self):
         c_time = None

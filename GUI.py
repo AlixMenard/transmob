@@ -146,6 +146,15 @@ def setup_window():
     screen_f = tk.Radiobutton(root, text = "Non", variable = screenb, value = False)
     screen_f.grid(row = 7, column = 6, columnspan = 2)
 
+    # ? 1 only setup option
+    onesetupb = tk.BooleanVar(value=False)
+    screen_l = tk.Label(root, text = "Un seul setup")
+    screen_l.grid(row = 8, column = 0, columnspan = 4)
+    screen_t = tk.Radiobutton(root, text = "Oui", variable = onesetupb, value = True)
+    screen_t.grid(row = 8, column = 4, columnspan = 2)
+    screen_f = tk.Radiobutton(root, text = "Non", variable = onesetupb, value = False)
+    screen_f.grid(row = 8, column = 6, columnspan = 2)
+
     # ! Validation
     def start():
         root.destroy()
@@ -158,14 +167,14 @@ def setup_window():
                 Playlist = vpYT.Playlist
             
         P = Playlist(entry_var.get().strip('"{}'), cores=core_nb.get(), model=f"weights/yolo11{model_letter.get()}.pt",
-                     watch_classes=classes, graph = graphb.get(), screenshots = screenb.get())
+                     watch_classes=classes, graph = graphb.get(), screenshots = screenb.get(), onesetup = onesetupb.get())
         P.initialise()
         results = P.play()
         result_window(results)
 
     def create_bt():
         val_bt = tk.Button(root, text="Valider", command=start)
-        val_bt.grid(row = 8, column=0, columnspan=8, pady=10, padx=5)
+        val_bt.grid(row = 9, column=0, columnspan=8, pady=10, padx=5)
 
     # Bind the entry widget to accept file drops
     root.drop_target_register(DND_FILES)

@@ -37,7 +37,7 @@ def format_dur(duration):
 
 class Playlist:
     def __init__(self, folder:str, cores:int = 2, model:str="weights/yolov8n.pt", watch_classes=None, frame_nb:int = 2,
-                 graph = False, screenshots = False):
+                 graph = False, screenshots = False, onesetup = False):
         if watch_classes is None:
             watch_classes = ["car", "truck", "motorbike", "bus", "bicycle", "person"]
         self.folder = folder
@@ -49,6 +49,7 @@ class Playlist:
         self.cores = min(cores, len(self.files))
         self.analysers : Dict[str, Analyser|None] = {f:None for f in self.files}
         self.frame_nb = frame_nb
+        self.onesetup = onesetup
 
     def sort_files(self):
         durations = {f:int(vidduration(self.folder+"/"+f)) for f in self.files}
@@ -71,6 +72,7 @@ class Playlist:
         self.files = [f[0] for f in final_order]
 
     def initialise(self, lines=None):
+        trust = False
         if os.path.exists(f"{self.folder}/product"):
             shutil.rmtree(f"{self.folder}/product")
         os.mkdir(f"{self.folder}/product")
@@ -81,8 +83,12 @@ class Playlist:
         for f in self.files:
             an = Analyser(self.folder, f, graph=self.graph, model=self.model, watch_classes=self.watch_classes,
                           frame_nb=self.frame_nb, screenshots=self.screenshots)
-            if lines is not None: an.starter(lines[f])
-            else: an.starter()
+            if lines is not None:
+                trust = an.starter(lines, trust_time=trust) or trust
+            else:
+                trust = an.starter(trust_time=trust) or trust
+            if self.onesetup:
+                lines = an.get_lines()
             self.analysers[f] = an
         self.sort_files()
 

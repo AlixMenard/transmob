@@ -5,3 +5,4 @@ videos/
 .idea/
 **/datasets/**
 **/runs/**
+**/vans_dataset/**
