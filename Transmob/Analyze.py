@@ -1,7 +1,8 @@
 import os
 import shutil
 
-os.environ["OPENCV_LOG_LEVEL"] = "OFF"
+os.environ["OPENCV_LOG_LEVEL"] = "DEBUG"
+os.environ["OPENCV_FFMPEG_READ_ATTEMPTS"] = "8192"
 
 from .Vehicle import Fleet
 from .Box import Box as vBox
@@ -144,7 +145,7 @@ class Analyser:
 
         return ret
 
-    def get_start_time(self, trsut_time):
+    def get_start_time(self, trust_time):
         global ret
         ret = False
         c_time = os.path.getmtime(self.url) - int(self.length / self.fps)
