@@ -130,8 +130,7 @@ class Analyser:
             self.create_line(frame)
 
             ret = False
-            if not trust_time:
-                ret = self.get_start_time()
+            ret = self.get_start_time(trust_time)
             self.end = time_1(self.strt + int(self.length / self.fps))
 
             if not lines is None or (cv2.waitKey(0) & 0xFF == 13):
@@ -144,10 +143,14 @@ class Analyser:
                 break
         return ret
 
-    def get_start_time(self):
+    def get_start_time(self, trust_time):
+        global ret
         ret = False
         c_time = os.path.getmtime(self.url) - int(self.length / self.fps)
         c_time = time_1(c_time)
+        if trust_time:
+            self.strt = c_time
+            return True
         strtime = str_time(c_time)
         root = tk.Tk()
         time_L = tk.Label(root, text=f"Heure de début de la vidéo : {strtime}")
