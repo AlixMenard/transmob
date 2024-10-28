@@ -26,7 +26,7 @@ Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de
 - Exécutez `py GUI.py`
 ### Méthode lancement 2
 - Allez dans le dossier *transmob*
-- Lancez "start.vbs"
+- Lancez "start.vbs". Arès le premier lancement, un raccourci sera disponible sur le Bureau pour y accéder plus facilement".
 ### Usage
 - Glissez et déposez le dossier contenant les vidéos à analyser (**chaque** fichier sera analysé, pensez à supprimer les duplicata, comme ceux avec différentes extensions, comme "fichier.mp4" et "fichier.lrv")
 - Choissisez les options que vous voulez :
