@@ -1,7 +1,7 @@
 import os
 import shutil
 
-os.environ["OPENCV_LOG_LEVEL"] = "DEBUG"
+os.environ["OPENCV_LOG_LEVEL"] = "OFF"
 os.environ["OPENCV_FFMPEG_READ_ATTEMPTS"] = "8192"
 
 from .Vehicle import Fleet
