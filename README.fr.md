@@ -20,10 +20,14 @@ Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de
 - Installez les librairies nécessaires : `pip install -r requirements.txt`\
 \* Ces étapes vont aussi installer les models YOLOv8 de tailles *n*, *s*, *m* et *l*. La première fois que vous demanderez au programme d'utiliser le modèle de taille *x*, il le téléchargera automatiquement avant de commencer.
 
-### Usage
+### Méthode lancement 1
 - Ouvrez un powershell/commandline shell : win+r, tapez "powershell" ou "cmd", puis `Entrée`
 - Naviguez jusqu'au dépôt (à *<chemin_précédent>/transmob*)
 - Exécutez `py GUI.py`
+### Méthode lancement 2
+- Allez dans le dossier *transmob*
+- Lancez "start.vbs"
+### Usage
 - Glissez et déposez le dossier contenant les vidéos à analyser (**chaque** fichier sera analysé, pensez à supprimer les duplicata, comme ceux avec différentes extensions, comme "fichier.mp4" et "fichier.lrv")
 - Choissisez les options que vous voulez :
   - Process (explained below)
