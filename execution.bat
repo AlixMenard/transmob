@@ -1,5 +1,5 @@
 @echo off
-set "GUI.py"
+set "script_path=GUI.py"
 set "desired_ultralytics_version=8.3.24"
 
 py -m pip install --upgrade pip 2>nul
