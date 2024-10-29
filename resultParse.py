@@ -120,7 +120,8 @@ class Quarter:
                 self.count[line][sense][k] += int(count[sense][k]*ratio)
 
 if __name__ == "__main__":
-    file = input()
+    file = input("Fichier : ")
+    file = file.strip('"{}')
     s = file[:-4] + "2" + file[-4:]
     P = Parser(file, s)
     P.parse()
