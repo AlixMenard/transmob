@@ -1,5 +1,6 @@
 import os
 import shutil
+from copy import deepcopy
 
 os.environ["OPENCV_LOG_LEVEL"] = "OFF"
 os.environ["OPENCV_FFMPEG_READ_ATTEMPTS"] = "8192"
@@ -124,17 +125,22 @@ class Analyser:
         succ, frame = self.cap.read()
         while not succ:
             succ, frame = self.cap.read()
+        save_frame = deepcopy(frame)
+
+        ret = False
+        ret = self.get_start_time(trust_time)
+
         while 1:
+            frame = deepcopy(save_frame)
             for l in self.lines:
                 draw_line(frame, l)
             cv2.imshow("Line setup", frame)
             self.create_line(frame)
 
-            ret = False
-            ret = self.get_start_time(trust_time)
             self.end = time_1(self.strt + int(self.length / self.fps))
 
-            if not lines is None or (cv2.waitKey(0) & 0xFF == 13):
+            key = cv2.waitKey(0) & 0xFF
+            if not lines is None or (key == 13):
                 f_name = f"{self.folder}/product/{str_time(self.strt)}-{str_time(self.end)[11:]}.jpg"
                 #print(f_name)
                 cv2.imwrite(f_name, frame)
@@ -142,6 +148,8 @@ class Analyser:
                 cv2.destroyAllWindows()
                 del self.cap
                 break
+            elif key == 8:
+                print("cancel")
 
         return ret
 

@@ -1,5 +1,9 @@
 @echo off
 set "GUI.py"
+set "desired_ultralytics_version=8.3.24"
+
+py -m pip install --upgrade pip 2>nul
+py -m pip install ultralytics==%desired_ultralytics_version% --upgrade 2>nul
 
 REM Check if torch is installed in the 'py' launcher
 py -c "import torch" 2>nul

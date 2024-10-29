@@ -4,8 +4,6 @@ import os
 import signal
 import traceback
 
-os.system("pip install --upgrade pip")
-os.system("pip install --upgrade ultralytics")
 os.environ["OPENCV_LOG_LEVEL"] = "OFF"
 import torch
 
