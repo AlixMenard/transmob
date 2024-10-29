@@ -65,7 +65,7 @@ class Parser:
     def make_csv(self):
         columns = ["car", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
         with open(self.save_path[:-3]+"csv", "w") as f:
-            f.write("date,time,line,sense," + ",".join(columns) + "\n")
+            f.write("date,time,line,sens," + ",".join(columns) + "\n")
             for q in self.timelapse:
                 for l in q.count:
                     #Standard ISO formatting apparently
