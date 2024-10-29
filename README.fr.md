@@ -92,6 +92,8 @@ En double frame, les modèles se situent entre 80% et 95% (estimation max), avec
     - [X] └> banc de test pour l'efficacité de numba
 - [x] ~Essayer parallélisation interne des vidéos sur YTC~ *La parallélisation n'est pas compatible avec CUDA*
 - [X] Capture d'écran des véhicules comptés pour chaque processus
+- [X] Paramétrage rapide en cas de vidéos avec le même PDV
+- [ ] Annuler la création d'une ligne en cas d'erreur
 - [ ] Analyse directionnelle
 
 ### Mentions légales
