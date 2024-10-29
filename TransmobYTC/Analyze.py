@@ -156,6 +156,7 @@ class Analyser:
         time_L = tk.Label(root, text=f"Heure de début de la vidéo : {strtime}")
         time_L.grid(row = 0, column = 0, columnspan = 2)
         def validate():
+            global ret
             self.strt = c_time
             ret = True
             root.destroy()
@@ -167,6 +168,7 @@ class Analyser:
         date_entry = tk.Entry(root, width=20)
         date_entry.grid(row=1, column=1)
         def change():
+            global ret
             ret = False
             date_str = date_entry.get()
             try:
