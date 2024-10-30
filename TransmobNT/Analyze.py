@@ -1,4 +1,5 @@
 import os
+from copy import deepcopy
 
 os.environ["OPENCV_LOG_LEVEL"] = "OFF"
 os.environ["OPENCV_FFMPEG_READ_ATTEMPTS"] = "8192"
@@ -117,24 +118,34 @@ class Analyser:
         if verbose: print("Analyser initiated.")
 
     def starter(self, lines: (List[Line], List) = None, trust_time = False):
+        should_pass = False
         if lines:
             self.lines = lines[0]
             self.mask = lines[1]
+            should_pass = True
         self.cap = cv2.VideoCapture(self.url)
         succ, frame = self.cap.read()
         while not succ:
             succ, frame = self.cap.read()
+        save_frame = deepcopy(frame)
+
+        ret = False
+        ret = self.get_start_time(trust_time)
+
         while 1:
+            frame = deepcopy(save_frame)
             for l in self.lines:
                 draw_line(frame, l)
+            for p in self.points:
+                cv2.circle(frame, p, radius=1, color=(0, 0, 255), thickness=3)
             cv2.imshow("Line setup", frame)
             self.create_line(frame)
 
-            ret = False
-            ret = self.get_start_time(trust_time)
             self.end = time_1(self.strt + int(self.length / self.fps))
 
-            if not lines is None or (cv2.waitKey(0) & 0xFF == 13):
+            if not should_pass:
+                key = cv2.waitKey(0) & 0xFF
+            if not lines is None or key == 13:
                 f_name = f"{self.folder}/product/{str_time(self.strt)}-{str_time(self.end)[11:]}.jpg"
                 #print(f_name)
                 cv2.imwrite(f_name, frame)
@@ -142,6 +153,12 @@ class Analyser:
                 cv2.destroyAllWindows()
                 del self.cap
                 break
+            elif not lines is None or key == 8:
+                if self.points:
+                    self.points.pop()
+                elif self.lines:
+                    self.lines.pop().del_line()
+
         return ret
 
     def get_start_time(self, trust_time):
@@ -374,6 +391,9 @@ class Analyser:
                     cv2.imshow("Line setup", frame)
                     self.points = []
                     self.create_mask(frame)
+                for p in self.points:
+                    cv2.circle(frame, p, radius=1, color=(0, 0, 255), thickness=3)
+                cv2.imshow("Line setup", frame)
 
         cv2.setMouseCallback("Line setup", click_event, param=frame)
 

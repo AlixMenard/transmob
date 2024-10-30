@@ -157,7 +157,8 @@ class Analyser:
                 if self.points:
                     self.points.pop()
                 elif self.lines:
-                    self.lines.pop()
+                    self.lines.pop().del_line()
+
 
         return ret
 
@@ -339,8 +340,6 @@ class Analyser:
                 for p in self.points:
                     cv2.circle(frame, p, radius=1, color=(0, 0, 255), thickness=3)
                 cv2.imshow("Line setup", frame)
-
-        cv2.setMouseCallback("Line setup", click_event, param=frame)
 
         cv2.setMouseCallback("Line setup", click_event, param=frame)
 

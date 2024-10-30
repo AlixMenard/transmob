@@ -108,7 +108,7 @@ class Playlist:
             if lines is not None:
                 trust = an.starter(lines, trust_time=trust) or trust
             else:
-                trust = an.starter(trust_time=trusts) or trust
+                trust = an.starter(trust_time=trust) or trust
             if self.onesetup:
                 lines = an.get_lines()
             self.analysers[f] = an
