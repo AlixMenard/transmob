@@ -334,9 +334,11 @@ class Analyser:
                     self.lines.append(Line(self.points[0][0], self.points[0][1], self.points[1][0], self.points[1][1],
                                            self.points[2][0], self.points[2][1]))
                     draw_line(frame, self.lines[-1])
-                    cv2.imshow("Line setup", frame)
                     self.points = []
                     self.create_mask(frame)
+                for p in self.points:
+                    cv2.circle(frame, p, radius=1, color=(0, 0, 255), thickness=3)
+                cv2.imshow("Line setup", frame)
 
         cv2.setMouseCallback("Line setup", click_event, param=frame)
 

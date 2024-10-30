@@ -159,7 +159,6 @@ class Analyser:
                 elif self.lines:
                     self.lines.pop().del_line()
 
-
         return ret
 
     def get_start_time(self, trust_time):
