@@ -5,6 +5,8 @@ from typing import Dict, List
 class Line:
 
     nb_lines = 0
+    def del_line(self):
+        Line.nb_lines -= 1
 
     def __init__(self, x1, y1, x2, y2, x3, y3):
 
