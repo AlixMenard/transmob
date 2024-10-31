@@ -27,6 +27,7 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 ### Start option 2
 - Go to the *transmob* folder.
 - Run "start.vbs". After the first use, a shortcut will be created on the Desktop for easier access.
+- The process will update, then start, no worries if it is a little long.
 ### Use
 - Drag&Drop the folder containing the videos to process (**every** video will be processed, make sure to eliminate duplicates, even with different extension, like "file.mp4" and "file.lrv")
 - Choose the fitting options
@@ -93,7 +94,7 @@ With double frame, models are located between 80% and 95% (estimate of max), wit
 - [x] ~Try nested thread on YTC~ *Threading doesn't work with CUDA*
 - [X] Screenshot passing vehicles on all processes
 - [X] Fast setup for multiple pictures with same POV
-- [ ] Cancel line creation if mistake made
+- [X] Cancel line creation if mistake made
 - [ ] Directional process
 
 
