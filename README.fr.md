@@ -27,6 +27,7 @@ Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de
 ### Méthode lancement 2
 - Allez dans le dossier *transmob*
 - Lancez "start.vbs". Arès le premier lancement, un raccourci sera disponible sur le Bureau pour y accéder plus facilement".
+- Le programme va se lancer puis se mettre à jour. Pas de panique si le lancement est un peu long.
 ### Usage
 - Glissez et déposez le dossier contenant les vidéos à analyser (**chaque** fichier sera analysé, pensez à supprimer les duplicata, comme ceux avec différentes extensions, comme "fichier.mp4" et "fichier.lrv")
 - Choissisez les options que vous voulez :
