@@ -5,7 +5,7 @@ Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github
 
 ## Installation
 ### Pre-requisite
-- [Python >= 3.12](https://www.python.org/downloads/)
+- [Python = 3.12]([https://www.python.org/downloads/](https://www.python.org/downloads/release/python-3127/))
 - [git](https://git-scm.com/downloads/win)
 ### Optionnal
 If the computer has a [CUDA compatible graphic card](https://en.wikipedia.org/wiki/CUDA#GPUs_supported), you need to download and install [NVIDIA CUDA toolkit](https://developer.nvidia.com/cuda-downloads).\
