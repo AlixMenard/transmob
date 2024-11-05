@@ -35,7 +35,7 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
   - Frame number : 1, each frame will be processed, 2, one in two frames will be processed (twice as fast, reduces detection rate, heavily not recommended in case of low quality video)
   - YOLO model : bigger models will be better, but slower in most cases. With CUDA support the slow-down is negligible and always using the model of size *x* is highly recommended
   - Classes : Vehicle types to count, the others will be ignored. If pedestrians (*person*) are monitored, *bicycle* and *motorbike* can't be ignored.
-  - Number of cores dedicated to the process. If the computer has 10 physical cores or more, the recommendations are *Classic (4)*, *Nested Threads (3)* and *YallO (4)*. **/!\\** With CUDA, the numberof core is irrelevant.
+  - Number of cores dedicated to the process. If the computer has 10 physical cores or more, the recommendations are *Classic (4)*, *Nested Threads (3)* and *YallO (4)*. **/!\\** With CUDA, the number of cores is irrelevant.
   - With video : If yes, the videos will be displayed as they are treated. This considerably slows down the process. It is however useful to test the quality of detection of a model size if you are unsure about the picture quality.
   - One setup : If yes, only the first video of the folder will be shown to trace the counting lines. Every other video will have the exact same lines.
 - Start
