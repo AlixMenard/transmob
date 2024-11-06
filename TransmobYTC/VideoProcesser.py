@@ -40,6 +40,9 @@ class Playlist:
                  graph = False, screenshots = False, onesetup = False):
         if watch_classes is None:
             watch_classes = ["car", "truck", "motorbike", "bus", "bicycle", "person"]
+        self.playlists = None
+        if all([os.path.isdir(rf"{folder}/{s}") for s in os.listdir(folder)]):
+            self.playlists = [Playlist(rf"{folder}/{s}", cores, model, watch_classes, frame_nb, graph, screenshots, onesetup) for s in os.listdir(folder)]
         self.folder = folder
         self.model = model
         self.graph = graph
@@ -72,6 +75,10 @@ class Playlist:
         self.files = [f[0] for f in final_order]
 
     def initialise(self, lines=None):
+        if self.playlists is not None:
+            for p in self.playlists:
+                p.initialise(lines)
+            return
         trust = False
         if os.path.exists(f"{self.folder}/product"):
             shutil.rmtree(f"{self.folder}/product")
@@ -102,6 +109,14 @@ class Playlist:
         return d
 
     def play(self):
+        if self.playlists is not None:
+            video_d, process_dur = 0, 0
+            for p in self.playlists:
+                video_d2, process_dur2, _ = p.play()
+                video_d += video_d2
+                process_dur += process_dur2
+            diff = round(100 * (process_dur / video_d) - 100, 2) if process_dur < video_d else round(100 * (process_dur / video_d) - 100, 2)
+            return video_d, process_dur, diff
         An = [self.analysers[f] for f in self.files]
         start = time.time()
         results = []
