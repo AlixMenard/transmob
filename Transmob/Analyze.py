@@ -310,13 +310,13 @@ class Analyser:
             for l in self.lines:
                 f.write(f"{l.id} : {l.counter.count()}\n")
 
-        for l in self.lines:
-            l.cleanse()
         keep_ids = []
         for t in tracked:
             _, _, _, _, id = map(int, t)
             keep_ids.append(id)
         self.fleet.cleanse(keep_ids)
+        for l in self.lines:
+            l.cleanse(keep_ids)
 
     def screen(self, frame, box, id):
         x1, y1, x2, y2 = map(int, box)

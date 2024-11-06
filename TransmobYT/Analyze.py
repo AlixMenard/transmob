@@ -302,7 +302,7 @@ class Analyser:
                 f.write(f"{l.id} : {l.counter.count()}\n")
 
         for l in self.lines:
-            l.cleanse()
+            l.cleanse(tracked_ids)
 
         self.fleet.cleanse(tracked_ids)
 

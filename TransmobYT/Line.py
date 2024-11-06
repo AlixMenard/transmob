@@ -60,8 +60,8 @@ class Line:
                         ]
         self.maskbound = list(map(int, self.maskbound))
 
-    def cleanse(self):
-        self.counter.cleanse()
+    def cleanse(self, still_tracked):
+        self.counter.cleanse(still_tracked)
 
     @staticmethod
     def get_total_bounding_box(lines:List["Line"]):
@@ -118,8 +118,12 @@ class Counter:
     def __init__(self):
         self.crossed : List[Vehicle] = []
         self.uncrossed : List[Vehicle] = []
+        self.previous_c : List[Vehicle] = []
+        self.previous_unc : List[Vehicle] = []
     
-    def cleanse(self):
+    def cleanse(self, still_tracked):
+        self.previous_c = [v for v in self.crossed if v.id in still_tracked]
+        self.previous_unc = [v for v in self.uncrossed if v.id in still_tracked]
         self.crossed.clear()
         self.uncrossed.clear()
 
@@ -142,7 +146,7 @@ class Counter:
             return [dir_in, dir_out]
 
     def add(self, v : Vehicle, direction : int = 0):
-        if v.id in [i.id for i in self.crossed]+[i.id for i in self.uncrossed]:
+        if v.id in [i.id for i in self.crossed]+[i.id for i in self.uncrossed]+[i.id for i in self.previous_c]+[i.id for i in self.previous_unc]:
             return
         if not direction:
             #print(f"cross {v._class} ({v.id})")
