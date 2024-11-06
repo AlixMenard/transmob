@@ -285,7 +285,7 @@ class Analyser:
                 color = (255, 255, 0)
                 for l in self.lines:
                     x, y = box.center
-                    if l.inbound(x, y):
+                    if l.inbound(x, y, self.fleet.get(id)):
                         crossed = l.cross(self.fleet.get(id))
                         if crossed and self.screenshots:
                             self.screen(frame, box.xyxy, id)

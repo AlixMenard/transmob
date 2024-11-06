@@ -15,6 +15,7 @@ class Line:
         Line.nb_lines += 1
         self.counter = Counter()
         self.vehicles : Dict[int, float] = {}
+        self.still_close : Dict[int, Vehicle] = {}
 
         if x1>x2:
             x1, x2 = x2, x1
@@ -94,15 +95,22 @@ class Line:
         x, y = map(int, np.dot(self.P, np.array([x, y])))
         return x, y
     
-    def inbound(self, x, y):
-        return self.bounds[0]<=x<=self.bounds[1] and self.bounds[2]<=y<=self.bounds[3]
+    def inbound(self, x:int, y:int, v:Vehicle):
+        close = self.bounds[0]<=x<=self.bounds[1] and self.bounds[2]<=y<=self.bounds[3]
+        if not close and v.id in self.still_close:
+            self.still_close.pop(v.id)
+        return close
 
     def cross(self, v : Vehicle):
         crossed = False
         x, y = v.box.cross_point
         _, p = self.proj((x, y))
         if v.id in self.vehicles and (p * self.vehicles[v.id]<0 or p ==0):
+            if v.id in self.still_close:
+                self.vehicles[v.id] = p
+                return crossed
             crossed = True
+            self.still_close[v.id] = v
             if self.vehicles[v.id]<0:
                 self.counter.add(v, direction = 0)
                 v.cross(self.id)
