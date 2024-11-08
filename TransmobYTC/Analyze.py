@@ -129,7 +129,7 @@ class Analyser:
 
         print(trust_time, end = ", ", flush = True)
         ret = self.get_start_time(trust_time)
-        r2 = ret
+        r2 = deepcopy(ret)
         print(r2, end = ", ", flush = True)
 
         while 1:
@@ -159,7 +159,7 @@ class Analyser:
                 elif self.lines:
                     self.lines.pop().del_line()
 
-            print(r2, end = ", ", flush = True)
+            print(r2, flush = True)
             return ret
 
     def get_start_time(self, trust_time):
