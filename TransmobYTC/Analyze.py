@@ -127,8 +127,9 @@ class Analyser:
             succ, frame = self.cap.read()
         save_frame = deepcopy(frame)
 
-        print(trust_time)
+        print(trust_time, end = ", ")
         ret = self.get_start_time(trust_time)
+        print(ret, end = ", ")
 
         while 1:
             frame = deepcopy(save_frame)
@@ -157,7 +158,7 @@ class Analyser:
                 elif self.lines:
                     self.lines.pop().del_line()
 
-            print(ret)
+            print(ret, end = ", ")
             return ret
 
     def get_start_time(self, trust_time):
