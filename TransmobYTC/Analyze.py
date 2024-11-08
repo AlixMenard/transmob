@@ -129,6 +129,7 @@ class Analyser:
 
         ret = False
         ret = self.get_start_time(trust_time)
+        print(ret)
 
         while 1:
             frame = deepcopy(save_frame)
