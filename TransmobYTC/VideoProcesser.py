@@ -88,6 +88,7 @@ class Playlist:
                 shutil.rmtree(rf"{self.folder}/product/screens")
             os.mkdir(f"{self.folder}/product/screens")
         for f in self.files:
+            print(trust)
             an = Analyser(self.folder, f, graph=self.graph, model=self.model, watch_classes=self.watch_classes,
                           frame_nb=self.frame_nb, screenshots=self.screenshots)
             if lines is not None:
