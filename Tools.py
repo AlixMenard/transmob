@@ -12,9 +12,10 @@ def window():
 
     #!todo : make rename
     def rename():
-        pass
+        import tools.videoRename as vr
+        root.destroy()
+        vr.window()
     bt_rename = tk.Button(root, text = "Renommer vidéos", command=rename)
-    bt_rename.config(state="disabled")
     bt_rename.grid(column=1, row=0, pady=10, padx=5)
 
     root.mainloop()
