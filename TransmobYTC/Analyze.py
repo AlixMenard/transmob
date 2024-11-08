@@ -162,6 +162,7 @@ class Analyser:
             return ret
 
     def get_start_time(self, trust_time):
+        global ret
         ret = False
         c_time = os.path.getmtime(self.url) - int(self.length / self.fps)
         c_time = time_1(c_time)
