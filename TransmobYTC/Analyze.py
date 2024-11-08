@@ -127,10 +127,7 @@ class Analyser:
             succ, frame = self.cap.read()
         save_frame = deepcopy(frame)
 
-        print(trust_time, end = ", ", flush = True)
         ret = self.get_start_time(trust_time)
-        r2 = deepcopy(ret)
-        print(r2, end = ", ", flush = True)
 
         while 1:
             frame = deepcopy(save_frame)
@@ -159,8 +156,7 @@ class Analyser:
                 elif self.lines:
                     self.lines.pop().del_line()
 
-            print(r2, flush = True)
-            return ret
+        return ret
 
     def get_start_time(self, trust_time):
         global ret
