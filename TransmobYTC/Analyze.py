@@ -197,6 +197,7 @@ class Analyser:
         chg_b = tk.Button(root, text="Changer", command=change)
         chg_b.grid(row=2, column=1)
         root.mainloop()
+        print("in get time : ", ret)
         return ret
 
     def process(self):
