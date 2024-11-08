@@ -127,9 +127,8 @@ class Analyser:
             succ, frame = self.cap.read()
         save_frame = deepcopy(frame)
 
-        ret = False
+    
         ret = self.get_start_time(trust_time)
-        print(ret)
 
         while 1:
             frame = deepcopy(save_frame)
