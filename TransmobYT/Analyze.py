@@ -166,6 +166,7 @@ class Analyser:
             return True
         strtime = str_time(c_time)
         root = tk.Tk()
+        root.title(f"{self.name}")
         time_L = tk.Label(root, text=f"Heure de début de la vidéo : {strtime}")
         time_L.grid(row = 0, column = 0, columnspan = 2)
         def validate():
