@@ -1,5 +1,7 @@
 import tkinter as tk
 
+end = False
+
 def window():
     root = tk.Tk()
 
@@ -15,9 +17,17 @@ def window():
         import tools.videoRename as vr
         root.destroy()
         vr.window()
+
     bt_rename = tk.Button(root, text = "Renommer vidéos", command=rename)
     bt_rename.grid(column=1, row=0, pady=10, padx=5)
 
+    def on_closing():
+        global end
+        end = True
+        root.destroy()
+
+    root.protocol("WM_DELETE_WINDOW", on_closing)
     root.mainloop()
 
-window()
+while not end:
+    window()
