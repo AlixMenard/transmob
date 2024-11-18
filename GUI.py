@@ -147,7 +147,7 @@ def setup_window():
     screen_f.grid(row = 7, column = 6, columnspan = 2)
 
     # ? 1 only setup option
-    onesetupb = tk.BooleanVar(value=False)
+    onesetupb = tk.BooleanVar(value=True)
     screen_l = tk.Label(root, text = "Un seul setup")
     screen_l.grid(row = 8, column = 0, columnspan = 4)
     screen_t = tk.Radiobutton(root, text = "Oui", variable = onesetupb, value = True)
