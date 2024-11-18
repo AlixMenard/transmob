@@ -269,7 +269,7 @@ class Analyser:
                     if l.inbound(x, y, self.fleet.get(id)):
                         crossed = l.cross(self.fleet.get(id))
                         if crossed and self.screenshots:
-                            self.screen(frame, box.xyxy, id)
+                            self.screen(frame, box.xyxy, id, class_name, c_time)
                         color = (255, 0, 0)
 
                 if self.graph:
@@ -320,10 +320,10 @@ class Analyser:
 
         self.fleet.cleanse(tracked_ids)
 
-    def screen(self, frame, box, id):
+    def screen(self, frame, box, id, class_name, c_time):
         x1, y1, x2, y2 = map(int, box)
         roi = frame[y1:y2, x1:x2]
-        file_name = fr'{self.folder}/product/screens/{str_time(self.strt)}_{id}.jpg'
+        file_name = fr'{self.folder}/product/screens/{str_time(time_5(c_time))}_{id}_{class_name}.jpg'
         #print(file_name)
         cv2.imwrite(file_name, roi)
 
