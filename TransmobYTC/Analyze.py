@@ -323,6 +323,8 @@ class Analyser:
     def screen(self, frame, box, id, class_name, c_time):
         x1, y1, x2, y2 = map(int, box)
         roi = frame[y1:y2, x1:x2]
+        if not c_time:
+            c_time = self.strt
         file_name = fr'{self.folder}/product/screens/{str_time(time_5(c_time))}_{id}_{class_name}.jpg'
         #print(file_name)
         cv2.imwrite(file_name, roi)
