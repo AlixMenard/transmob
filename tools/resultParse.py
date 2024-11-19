@@ -7,6 +7,9 @@ from typing import List
 import ast
 import tkinter as tk
 from tkinterdnd2 import TkinterDnD, DND_FILES
+import os
+
+from torch.distributions import Pareto
 
 
 class Parser:
@@ -19,6 +22,13 @@ class Parser:
         self.path = path
     
     def parse(self):
+        if self.path[-4:] != '.txt':
+            if os.path.isfile(self.path):
+                for filename in os.listdir(self.path):
+                    P = Parser(fr"{self.path}/{filename}")
+                    P.parse()
+            return
+
         with open(self.path, "r") as f:
             quarters = f.read().split("@")[1:]
         dates = set(q[:10] for q in quarters)
