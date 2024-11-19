@@ -1,4 +1,4 @@
-@echo off
+@echo on
 set "script_path=GUI.py"
 set "desired_ultralytics_version=8.3.24"
 
