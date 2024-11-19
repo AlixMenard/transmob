@@ -1,6 +1,6 @@
 @echo on
 set "script_path=GUI.py"
-set "desired_ultralytics_version=8.3.24"
+set "desired_ultralytics_version=8.3.33"
 
 py -m pip install --upgrade pip 2>nul
 py -m pip install ultralytics==%desired_ultralytics_version% --upgrade 2>nul
