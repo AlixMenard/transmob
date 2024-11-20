@@ -4,8 +4,6 @@ import os
 import signal
 import traceback
 
-#Je modifie SAHI
-
 os.environ["OPENCV_LOG_LEVEL"] = "OFF"
 import torch
 
