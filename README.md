@@ -103,3 +103,5 @@ With double frame, models are located between 80% and 95% (estimate of max), wit
 As Yolo is under an [AGPL-3.0 License](https://firebasestorage.googleapis.com/v0/b/ultralytics-public-site.appspot.com/o/license%2FAGPL-3.0-Software-License.pdf?alt=media), so is this work. In shortterms, it can be used for commercial reasons inside the company's area, and cannot be a hosted service available to public or private users. In such case, the whole source code has to be made available to the users.
 
 This project used the [COCO dataset](https://cocodataset.org/#home) and the additional [Maryam Mahmood](https://universe.roboflow.com/maryam-mahmood-6hoeq/vans/dataset/3) van dataset to further train the YOLO model.
+
+The object detection uses [SAHI method](https://pypi.org/project/sahi/).
