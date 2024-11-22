@@ -23,7 +23,7 @@ class Parser:
     
     def parse(self):
         if self.path[-4:] != '.txt':
-            if os.path.isfile(self.path):
+            if os.path.isdir(self.path):
                 for filename in os.listdir(self.path):
                     P = Parser(fr"{self.path}/{filename}")
                     P.parse()
