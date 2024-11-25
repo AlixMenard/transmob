@@ -76,6 +76,12 @@ CUDA usage prevents paralleled processing, serialized is de facto used.
 
 ### Performances
 **Precision :** transmob == transmobNT < transmobYT == transmobYTC \
+
+**Discrimination of vans vs cars & trucks :** 
+- Standalone model, retrained with COCO and additional data on vans, performs poorly (84% of vans are still categorized as car/truck). The original COCO dataset might already contain several vans listed as one or the other, and/or the additional van dataset is too scarce in comparison to COCO dataset. 
+- Additional model, trained specifically on vans dataset, recognizes with high conficence vans, allowing for a confidence comparison between the original detection on yolo11 and the second detection with this model. 
+*Accuracy evaluated manually on a 26 minutes video, as the training validation repeatedly failed for the model, set of 70 vehicles*
+
 **Speed :** transmobYTC >> transmobYT > transmobNT >= transmob \
 YTC almost doesn't scale based on model size, very efficient, others scale on a q\~=1.3 ratio \
 Videos can be processed every 2 frames to speed up. On low quality, every frame is necessary.
