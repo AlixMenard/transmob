@@ -76,6 +76,12 @@ L'usage de CUDA empêche la parallèlisation des vidéos qui sont de facto analy
 
 ### Performances
 **Précision :** transmob == transmobNT < transmobYT == transmobYTC \
+
+**Distinction camionette vs voiture/camion :** 
+- Modèle unique, entrainé sur COCO et un ensemble de données supplémentaire,mauvaises performannces (84% des camionettes sont toujours catégorisées en voiture/camion). COCO contient peut être déjà des camionnettes listées comme voiture ou camion, et/ou les données additionnelles sont insuffisantes face à COCO. 
+- Modèle additionnel, entrainé spécifiquement sur les données de camionnettes, les reconnait avec une haute confiance, ce qui permet une comparaison de confiance entre la détection orginale et celle faite par le modèle secondaire. 
+*Précision évaluée manuellement sur une vidéo de 26 minutes, car la validation de l'entraînement a échoué à plusieurs reprises, 70 vehicules*
+
 **Rapidité :** transmobYTC >> transmobYT > transmobNT >= transmob \
 YTC n'est que peu affecté en temps par la taille du modèle utilisé, les autres processus sont affectés par un ratio q\~=1.3  \
 Les vidéos peuvent être analysées par 2 images à la fois. Sur de la qualité basse, à éviter.
