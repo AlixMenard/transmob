@@ -49,7 +49,7 @@ Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de
 - Les noms des fichiers et des dossiers ne doivent pas contenir d'espace ou de caractères spéciaux
 - Pour des intersections complexes, comme des carrefours giratoires, placez les lignes de manières à ce qu'un véhicule engagé circulant proche de la ligne ne puisse pas la traverser sans quitter l'intersection
 - Pensez à bien couvrir l'ensemble de la zone de passage, en particulier pour les passages piétons, pour lesquels les piétons peuvent traverser autour plutôt que sur le passage exactement
-- Les fichiers MP4 et LRV donnent les même résultats, car YOLO réduit la qualité de l'image avant de l'analyser.Cependant, les fichiers LRV sont bien plus légers sur le processeur et la mémoire de l'ordinateur.
+- ~Les fichiers MP4 et LRV donnent les même résultats, car YOLO réduit la qualité de l'image avant de l'analyser.Cependant, les fichiers LRV sont bien plus légers sur le processeur et la mémoire de l'ordinateur.~ Les fichiers MP4 ont une meilleure robustesse face à la compressionque les fichiers LRV face à la décompresseion, et obtiennent de meilleurs résultats avec SAHI.
 
 ## transmob
 
