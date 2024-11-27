@@ -8,6 +8,9 @@ class Line:
     def del_line(self):
         Line.nb_lines -= 1
 
+    def set_nb_lines(selfself, n):
+        Line.nb_lines = n
+
     def __init__(self, x1, y1, x2, y2, x3, y3):
 
         self.maskbound = None
