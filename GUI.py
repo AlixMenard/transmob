@@ -159,7 +159,6 @@ def setup_window():
     screen_f = tk.Radiobutton(root, text = "Non", variable = onesetupb, value = False)
     screen_f.grid(row = 8, column = 6, columnspan = 2)
 
-    one_setup(onesetupb)
     def one_setup(osb):
         if osb.get():
             validation_l = tk.Label(root, text = "Valider les lignes")
@@ -172,6 +171,7 @@ def setup_window():
             for widget in root.grid_slaves():
                 if widget.grid_info()["row"] == 9:
                     widget.destroy()
+    one_setup(onesetupb)
 
     # ! Validation
     def start():
