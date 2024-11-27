@@ -117,12 +117,12 @@ class Analyser:
         self.fleet = Fleet()
         if verbose: print("Analyser initiated.")
 
-    def starter(self, lines: (List[Line], List) = None, trust_time = False):
+    def starter(self, lines: (List[Line], List) = None, trust_time = False, sp = True):
         should_pass = False
         if lines:
             self.lines = lines[0]
             self.mask = lines[1]
-            should_pass = True
+            should_pass = sp
         self.cap = cv2.VideoCapture(self.url)
         succ, frame = self.cap.read()
         while not succ:

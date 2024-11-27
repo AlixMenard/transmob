@@ -185,7 +185,7 @@ def setup_window():
                 Playlist = vpYT.Playlist
             
         P = Playlist(entry_var.get().strip('"{}'), cores=core_nb.get(), model=f"weights/yolo11{model_letter.get()}.pt",
-                     watch_classes=classes, graph = graphb.get(), screenshots = screenb.get(), onesetup = onesetupb.get())
+                     watch_classes=classes, graph = graphb.get(), screenshots = screenb.get(), onesetup = onesetupb.get(), validation = validationb.get())
         P.initialise()
         results = P.play()
         result_window(results)
