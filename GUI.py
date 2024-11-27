@@ -4,6 +4,8 @@ import os
 import signal
 import traceback
 
+from pyparsing import one_of
+
 os.environ["OPENCV_LOG_LEVEL"] = "OFF"
 import torch
 
@@ -148,12 +150,28 @@ def setup_window():
 
     # ? 1 only setup option
     onesetupb = tk.BooleanVar(value=True)
+    onesetupb.trace("w", lambda *x: one_setup(onesetupb))
+    validationb = tk.BooleanVar(value=False)
     screen_l = tk.Label(root, text = "Un seul setup")
     screen_l.grid(row = 8, column = 0, columnspan = 4)
     screen_t = tk.Radiobutton(root, text = "Oui", variable = onesetupb, value = True)
     screen_t.grid(row = 8, column = 4, columnspan = 2)
     screen_f = tk.Radiobutton(root, text = "Non", variable = onesetupb, value = False)
     screen_f.grid(row = 8, column = 6, columnspan = 2)
+
+    one_setup(onesetupb)
+    def one_setup(osb):
+        if osb.get():
+            validation_l = tk.Label(root, text = "Valider les lignes")
+            validation_l.grid(row = 9, column = 0, columnspan = 4)
+            validation_t = tk.Radiobutton(root, text = "Oui", variable = validationb, value = True)
+            validation_t.grid(row = 9, column = 4, columnspan = 2)
+            validation_f = tk.Radiobutton(root, text = "Non", variable = validationb, value = False)
+            validation_f.grid(row = 9, column = 6, columnspan = 2)
+        else:
+            for widget in root.grid_slaves():
+                if widget.grid_info()["row"] == 9:
+                    widget.destroy()
 
     # ! Validation
     def start():
@@ -174,7 +192,7 @@ def setup_window():
 
     def create_bt():
         val_bt = tk.Button(root, text="Valider", command=start)
-        val_bt.grid(row = 9, column=0, columnspan=8, pady=10, padx=5)
+        val_bt.grid(row = 10, column=0, columnspan=8, pady=10, padx=5)
 
     # Bind the entry widget to accept file drops
     root.drop_target_register(DND_FILES)
