@@ -101,7 +101,6 @@ class Playlist:
             if self.onesetup:
                 lines = an.get_lines()
             self.analysers[f] = an
-
         self.sort_files()
 
     def start(self, an:Analyser):
