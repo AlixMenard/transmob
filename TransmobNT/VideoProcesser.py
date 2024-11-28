@@ -59,12 +59,12 @@ def format_dur(duration):
 
 class Playlist:
     def __init__(self, folder:str, cores:int = 2, model:str="weights/yolov8n.pt", watch_classes=None, frame_nb:int = 2,
-                 graph = False, screenshots = False, onesetup = False):
+                 graph = False, screenshots = False, onesetup = False, validation = False):
         if watch_classes is None:
             watch_classes = ["car", "truck", "motorbike", "bus", "bicycle", "person"]
         self.playlists = None
         if all([os.path.isdir(rf"{folder}/{s}") for s in os.listdir(folder)]):
-            self.playlists = [Playlist(rf"{folder}/{s}", cores, model, watch_classes, frame_nb, graph, screenshots, onesetup) for s in os.listdir(folder)]
+            self.playlists = [Playlist(rf"{folder}/{s}", cores, model, watch_classes, frame_nb, graph, screenshots, onesetup, validation) for s in os.listdir(folder)]
         self.folder = folder
         self.model = model
         self.graph = graph
@@ -75,6 +75,7 @@ class Playlist:
         self.analysers : Dict[str, Analyser|None] = {f:None for f in self.files}
         self.frame_nb = frame_nb
         self.onesetup = onesetup
+        self.validation = validation
 
     def sort_files(self):
         durations = {f:int(vidduration(self.folder+"/"+f)) for f in self.files}
@@ -113,7 +114,7 @@ class Playlist:
             an = Analyser(self.folder, f, graph=self.graph, model=self.model, watch_classes=self.watch_classes,
                           frame_nb=self.frame_nb, screenshots=self.screenshots)
             if lines is not None:
-                trust = an.starter(lines, trust_time=trust) or trust
+                trust = an.starter(lines, trust_time=trust, sp = not self.validation) or trust
             else:
                 trust = an.starter(trust_time=trust) or trust
             if self.onesetup:
