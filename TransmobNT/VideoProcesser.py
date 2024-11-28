@@ -71,6 +71,7 @@ class Playlist:
         self.screenshots = screenshots
         self.watch_classes = watch_classes
         self.files : List[str] = [f for f in os.listdir(self.folder) if f[-4:].lower() in [".mp4", ".mts", ".lrv", ".avi"]]
+        self.files.reverse()
         self.cores = min(cores, len(self.files))
         self.analysers : Dict[str, Analyser|None] = {f:None for f in self.files}
         self.frame_nb = frame_nb
