@@ -44,7 +44,7 @@ class Playlist:
         self.playlists = None
         if all([os.path.isdir(rf"{folder}/{s}") for s in os.listdir(folder)]):
             self.playlists = [
-                Playlist(rf"{folder}/{s}", cores, model, watch_classes, frame_nb, graph, screenshots, onesetup) for s in os.listdir(folder)]
+                Playlist(rf"{folder}/{s}", cores, model, watch_classes, frame_nb, graph, screenshots, onesetup, validation) for s in os.listdir(folder)]
         self.folder = folder
         self.model = model
         self.graph = graph
