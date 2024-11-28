@@ -14,20 +14,23 @@ git pull
 REM Check if torch is installed in the 'py' launcher
 py -c "import torch" 2>nul
 if not errorlevel 1 (
+    cls
     echo Running script with 'py'...
     py "%script_path%"
-    pause
-    exit /b
+    goto :end
 )
 
 REM Check if torch is installed in the 'python' command
 python -c "import torch" 2>nul
 if not errorlevel 1 (
+    cls
     echo Running script with 'python'...
     python "%script_path%"
-    pause
-    exit /b
+    goto :end
 )
 
 echo Neither 'py' nor 'python' has torch installed. Please install torch and try again.
+
+:end
+echo Script finished. Press any key to exit...
 pause

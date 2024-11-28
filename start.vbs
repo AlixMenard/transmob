@@ -14,5 +14,5 @@ If Not CreateObject("Scripting.FileSystemObject").FileExists(ShortcutPath) Then
 End If
 
 ' Run the batch file in hidden mode
-WshShell.Run chr(34) & "execution.bat" & Chr(34), 0
+WshShell.Run chr(34) & "execution.bat" & Chr(34), 1
 Set WshShell = Nothing
