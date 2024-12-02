@@ -120,9 +120,9 @@ class Analyser:
     def starter(self, lines: (List[Line], List) = None, trust_time = False, sp = True):
         should_pass = False
         if lines:
-            self.lines = lines[0]
+            self.lines = deepcopy(lines[0])
             self.lines[0].set_nb_lines(len(self.lines))
-            self.mask = lines[1]
+            self.mask = deepcopy(lines[1])
             should_pass = sp
         self.cap = cv2.VideoCapture(self.url)
         succ, frame = self.cap.read()
