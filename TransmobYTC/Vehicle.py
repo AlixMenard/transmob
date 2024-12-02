@@ -2,10 +2,11 @@ from .Box import Box as vBox
 from typing import Dict, List
 import numpy as np
 from .box_overlap import *
+from ultralytics import YOLO
 
 class Vehicle:
 
-    def __init__(self, id: int, box: vBox, _class: str, conf: float, frame: int, fleet):
+    def __init__(self, id: int, box: vBox, _class: str, conf: float, frame_t: int, fleet:"Fleet"):
         self.id: int = id
         self.idbis = self.classbis = self.oldid = None
         self.fleet = fleet
@@ -14,7 +15,7 @@ class Vehicle:
         self._class: str = _class
         self.conf: float = conf
         self.box: vBox = box
-        self.last_frame = frame
+        self.last_frame = frame_t
         self.coords: List[int] = [self.box.cross_point]
         self.speeds: List[float] = []
 
@@ -31,7 +32,7 @@ class Vehicle:
                 classes[_class] += conf
             else:
                 classes[_class] = conf
-        if len(classes.keys())<1 and None in classes.keys():
+        if len(classes.keys())>1 and None in classes.keys():
             classes.pop(None)
         self._class = max(zip(classes.values(), classes.keys()))[1]
         if self._class is None and not temp_save is None:
@@ -42,8 +43,8 @@ class Vehicle:
     def cross(self, id:int):
         self.crossed.append(id)
 
-    def update(self, box:vBox, _class:str, conf:float, frame:int):
-        dt = frame - self.last_frame
+    def update(self, box:vBox, _class:str, conf:float, frame_t:int, frame = None):
+        dt = frame_t - self.last_frame
         x1,y1 = self.box.center
         x2,y2 = box.center
         dx  = x2-x1
@@ -53,10 +54,22 @@ class Vehicle:
         self.speeds = self.speeds[0:15]
 
         self.box = box
-        self.last_frame = frame
+        self.last_frame = frame_t
         self.coords.append(self.box.cross_point)
         self.hist_conf.append((_class, conf))
         self.hist_conf = self.hist_conf[:15]
+
+        if _class == "truck":
+            results = self.fleet.onlyvans(frame, device=0, verbose=False)
+            classes = results[0].boxes.cls.int().cpu().tolist()
+            confs = results[0].boxes.conf.float().cpu().tolist()
+            if len(confs)<1:
+                return
+            else:
+                c, cls = confs[0], classes[0]
+                if c >= conf:
+                    self.hist_conf[-1] = (cls, "car")
+                _class = "car"
 
         if _class != self._class or self._class == "person":
             self.class_check()
@@ -83,17 +96,19 @@ class Vehicle:
 
 class Fleet:
 
-    def __init__(self):
+    def __init__(self, model_size):
         self.vehicles: Dict[int, Vehicle] = {}
+        self.onlyvans = YOLO(fr"weights/vans{model_size}.pt")
+        self.onlyvans = self.onlyvans.cuda()
     
     def add_vehicle(self, id:int, box:vBox, _class:str, conf:float, frame:int):
         v = Vehicle(id, box, _class, conf, frame, self)
         self.vehicles[id] = v
     
-    def update_vehicle(self, id:int, box:vBox, _class:str, conf:float, frame:int) -> None:
+    def update_vehicle(self, id:int, box:vBox, _class:str, conf:float, frame_t:int, frame = None) -> None:
         if id in self.ids:
             v = self.vehicles[id]
-            v.update(box, _class, conf, frame)
+            v.update(box, _class, conf, frame_t, frame)
     
     def cleanse(self, ids:List[int]):
         temp = self.vehicles.keys()
