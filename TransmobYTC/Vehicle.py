@@ -60,7 +60,7 @@ class Vehicle:
         self.hist_conf = self.hist_conf[:15]
 
         if _class == "truck":
-            results = self.fleet.onlyvans(frame, device=0)
+            results = self.fleet.onlyvans(frame, device=0, verbose=False)
             classes = results[0].boxes.cls.int().cpu().tolist()
             confs = results[0].boxes.conf.float().cpu().tolist()
             if len(confs)<1:
