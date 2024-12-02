@@ -68,7 +68,7 @@ class Vehicle:
             else:
                 c, cls = confs[0], classes[0]
                 if c >= conf:
-                    self.hist_conf[-1] = (cls, "car")
+                    self.hist_conf[-1] = ("car", c)
                 _class = "car"
 
         if _class != self._class or self._class == "person":
