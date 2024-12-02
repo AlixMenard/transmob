@@ -156,7 +156,7 @@ class Counter:
             return [dir_in, dir_out]
 
     def add(self, v : Vehicle, direction : int = 0):
-        if v.id in [i.id for i in self.crossed]+[i.id for i in self.uncrossed]:
+        if [i.id for i in self.crossed]+[i.id for i in self.uncrossed]+[i.id for i in self.previous_c]+[i.id for i in self.previous_unc]:
             return
         if not direction:
             #print(f"cross {v._class} ({v.id})")

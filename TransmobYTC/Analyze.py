@@ -112,7 +112,7 @@ class Analyser:
             "remote", "keyboard", "cell phone", "microwave", "oven", "toaster", "sink", "refrigerator", "book",
             "clock", "vase", "scissors", "teddy bear", "hair drier", "toothbrush"]
         self.watch_classes_ids = [self.class_labels.index(c) for c in self.watch_classes]
-        self.fleet = Fleet()
+        self.fleet = Fleet(model[-4])
         if verbose: print("Analyser initiated.")
 
     def starter(self, lines: (List[Line], List) = None, trust_time = False, sp = True):
@@ -260,7 +260,10 @@ class Analyser:
 
                 box = vBox(x1, y1, x2 - x1, y2 - y1)
                 if id in fleet_ids:
-                    self.fleet.update_vehicle(id, box, class_name, conf, count)
+                    truck_frame = None
+                    if class_name == "truck":
+                        truck_frame = frame[y1:y2, x1:x2]
+                    self.fleet.update_vehicle(id, box, class_name, conf, count, truck_frame)
                 else:
                     self.fleet.add_vehicle(id, box, class_name, conf, count)
 
