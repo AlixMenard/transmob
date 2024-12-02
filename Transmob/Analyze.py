@@ -117,19 +117,19 @@ class Analyser:
         self.fleet = Fleet()
         if verbose: print("Analyser initiated.")
 
-    def starter(self, lines: (List[Line], List) = None, trust_time = False):
+    def starter(self, lines: (List[Line], List) = None, trust_time = False, sp = True):
         should_pass = False
         if lines:
-            self.lines = lines[0]
-            self.mask = lines[1]
-            should_pass = True
+            self.lines = deepcopy(lines[0])
+            self.lines[0].set_nb_lines(len(self.lines))
+            self.mask = deepcopy(lines[1])
+            should_pass = sp
         self.cap = cv2.VideoCapture(self.url)
         succ, frame = self.cap.read()
         while not succ:
             succ, frame = self.cap.read()
         save_frame = deepcopy(frame)
 
-        ret = False
         ret = self.get_start_time(trust_time)
 
         while 1:
@@ -145,7 +145,7 @@ class Analyser:
 
             if not should_pass:
                 key = cv2.waitKey(0) & 0xFF
-            if not lines is None or key == 13:
+            if (not lines is None and should_pass) or key == 13:
                 f_name = f"{self.folder}/product/{str_time(self.strt)}-{str_time(self.end)[11:]}.jpg"
                 #print(f_name)
                 cv2.imwrite(f_name, frame)
@@ -153,7 +153,7 @@ class Analyser:
                 cv2.destroyAllWindows()
                 del self.cap
                 break
-            elif not lines is None or key == 8:
+            elif (not lines is None and not should_pass) or key == 8:
                 if self.points:
                     self.points.pop()
                 elif self.lines:
@@ -265,7 +265,7 @@ class Analyser:
 
                     color = (255, 255, 0)
                     for l in self.lines:
-                        x, y = box.center
+                        x, y = box.cross_point
                         if l.inbound(x, y, self.fleet.get(id)):
                             crossed = l.cross(self.fleet.get(id))
                             if crossed and self.screenshots:

@@ -31,7 +31,7 @@ class Vehicle:
                 classes[_class] += conf
             else:
                 classes[_class] = conf
-        if len(classes.keys())<1 and None in classes.keys():
+        if len(classes.keys())>1 and None in classes.keys():
             classes.pop(None)
         self._class = max(zip(classes.values(), classes.keys()))[1]
         if self._class is None and not temp_save is None:

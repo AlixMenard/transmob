@@ -112,15 +112,16 @@ class Analyser:
             "remote", "keyboard", "cell phone", "microwave", "oven", "toaster", "sink", "refrigerator", "book",
             "clock", "vase", "scissors", "teddy bear", "hair drier", "toothbrush"]
         self.watch_classes_ids = [self.class_labels.index(c) for c in self.watch_classes]
-        self.fleet = Fleet()
+        self.fleet = Fleet(model[-4])
         if verbose: print("Analyser initiated.")
 
-    def starter(self, lines: (List[Line], List) = None, trust_time = False):
+    def starter(self, lines: (List[Line], List) = None, trust_time = False, sp = True):
         should_pass = False
         if lines:
-            self.lines = lines[0]
-            self.mask = lines[1]
-            should_pass = True
+            self.lines = deepcopy(lines[0])
+            self.lines[0].set_nb_lines(len(self.lines))
+            self.mask = deepcopy(lines[1])
+            should_pass = sp
         self.cap = cv2.VideoCapture(self.url)
         succ, frame = self.cap.read()
         while not succ:
@@ -142,7 +143,7 @@ class Analyser:
 
             if not should_pass:
                 key = cv2.waitKey(0) & 0xFF
-            if not lines is None or key == 13:
+            if (not lines is None and should_pass) or key == 13:
                 f_name = f"{self.folder}/product/{str_time(self.strt)}-{str_time(self.end)[11:]}.jpg"
                 #print(f_name)
                 cv2.imwrite(f_name, frame)
@@ -150,7 +151,7 @@ class Analyser:
                 cv2.destroyAllWindows()
                 del self.cap
                 break
-            elif not lines is None or key == 8:
+            elif (not lines is None and not should_pass) or key == 8:
                 if self.points:
                     self.points.pop()
                 elif self.lines:
@@ -259,13 +260,16 @@ class Analyser:
 
                 box = vBox(x1, y1, x2 - x1, y2 - y1)
                 if id in fleet_ids:
-                    self.fleet.update_vehicle(id, box, class_name, conf, count)
+                    truck_frame = None
+                    if class_name == "truck":
+                        truck_frame = frame[y1:y2, x1:x2]
+                    self.fleet.update_vehicle(id, box, class_name, conf, count, truck_frame)
                 else:
                     self.fleet.add_vehicle(id, box, class_name, conf, count)
 
                 color = (255, 255, 0)
                 for l in self.lines:
-                    x, y = box.center
+                    x, y = box.cross_point
                     if l.inbound(x, y, self.fleet.get(id)):
                         crossed = l.cross(self.fleet.get(id))
                         if crossed and self.screenshots:

@@ -23,7 +23,7 @@ class Parser:
     
     def parse(self):
         if self.path[-4:] != '.txt':
-            if os.path.isfile(self.path):
+            if os.path.isdir(self.path):
                 for filename in os.listdir(self.path):
                     P = Parser(fr"{self.path}/{filename}")
                     P.parse()
@@ -77,7 +77,7 @@ class Parser:
     def make_csv(self):
         columns = ["car", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
         with open(self.save_path[:-3]+"csv", "w") as f:
-            f.write("date,time,line,sens," + ";".join(columns) + "\n")
+            f.write("date;time;line;sens;" + ";".join(columns) + "\n")
             for q in self.timelapse:
                 for l in q.count:
                     #Standard ISO formatting apparently
@@ -87,8 +87,8 @@ class Parser:
                         line1 = line[:]
                         line0 += ["0"] + [str(q.count[l][0][col]) if col in q.count[l][0] else "0" for col in columns]
                         line1 += ["1"] + [str(q.count[l][1][col]) if col in q.count[l][1] else "0" for col in columns]
-                    f.write(",".join(line0) + "\n")
-                    f.write(",".join(line1) + "\n")
+                    f.write(";".join(line0) + "\n")
+                    f.write(";".join(line1) + "\n")
 
 @total_ordering
 class Quarter:

@@ -49,7 +49,7 @@ Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de
 - Les noms des fichiers et des dossiers ne doivent pas contenir d'espace ou de caractères spéciaux
 - Pour des intersections complexes, comme des carrefours giratoires, placez les lignes de manières à ce qu'un véhicule engagé circulant proche de la ligne ne puisse pas la traverser sans quitter l'intersection
 - Pensez à bien couvrir l'ensemble de la zone de passage, en particulier pour les passages piétons, pour lesquels les piétons peuvent traverser autour plutôt que sur le passage exactement
-- Les fichiers MP4 et LRV donnent les même résultats, car YOLO réduit la qualité de l'image avant de l'analyser.Cependant, les fichiers LRV sont bien plus légers sur le processeur et la mémoire de l'ordinateur.
+- ~Les fichiers MP4 et LRV donnent les même résultats, car YOLO réduit la qualité de l'image avant de l'analyser.Cependant, les fichiers LRV sont bien plus légers sur le processeur et la mémoire de l'ordinateur.~ Les fichiers MP4 ont une meilleure robustesse face à la compressionque les fichiers LRV face à la décompresseion, et obtiennent de meilleurs résultats avec SAHI.
 
 ## transmob
 
@@ -76,6 +76,13 @@ L'usage de CUDA empêche la parallèlisation des vidéos qui sont de facto analy
 
 ### Performances
 **Précision :** transmob == transmobNT < transmobYT == transmobYTC \
+
+**Distinction camionette vs voiture/camion :** 
+- Modèle unique, entrainé sur COCO et un ensemble de données supplémentaire,mauvaises performannces (84% des camionettes sont toujours catégorisées en voiture/camion). COCO contient peut être déjà des camionnettes listées comme voiture ou camion, et/ou les données additionnelles sont insuffisantes face à COCO. 
+- Modèle additionnel, entrainé spécifiquement sur les données de camionnettes, les reconnait avec une haute confiance, ce qui permet une comparaison de confiance entre la détection orginale et celle faite par le modèle secondaire. 
+*Précision évaluée manuellement sur une vidéo de 26 minutes, car la validation de l'entraînement a échoué à plusieurs reprises, 70 vehicules*
+*Cela ne reclasse pas tous les véhicules incorrectement classés en camion*
+
 **Rapidité :** transmobYTC >> transmobYT > transmobNT >= transmob \
 YTC n'est que peu affecté en temps par la taille du modèle utilisé, les autres processus sont affectés par un ratio q\~=1.3  \
 Les vidéos peuvent être analysées par 2 images à la fois. Sur de la qualité basse, à éviter.
@@ -103,4 +110,4 @@ YOLO étant sous [license AGPL-3.0](https://firebasestorage.googleapis.com/v0/b/
 
 Ce projet a utilisé [les donnéesde COCO](https://cocodataset.org/#home) ainsi que de [Maryam Mahmood](https://universe.roboflow.com/maryam-mahmood-6hoeq/vans/dataset/3) pour entrainer plus en profondeur le modèle YOLO.
 
-La détection d'objet utilise la [méthode SAHI](https://pypi.org/project/sahi/).
+La détection d'objet utilise la [méthode SAHI](https://pypi.org/project/sahi/) et leur suivi repose sur [BoT-SORT](https://github.com/NirAharon/BoT-SORT).

@@ -1,6 +1,7 @@
 videos/
 **/yolov8x.pt
 **/yolo11x.pt
+**/vansx.pt
 **/__pycache__/
 .idea/
 **/datasets/**
