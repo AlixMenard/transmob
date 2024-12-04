@@ -50,7 +50,7 @@ class Line:
         x, y = self.p3
         p_vec = np.array([x - self.center[0], y - self.center[1]])
         y3 = np.dot(p_vec, self.normal)
-        self.direction = y3/abs(y3)
+        self.direction = np.sign(y3) if y3 != 0 else 0
 
         self.mask_bound()
 
