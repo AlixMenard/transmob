@@ -173,8 +173,7 @@ class Playlist:
         p = cls(parent, cores=data["cores"], model=data["model"], watch_classes=data["watch_classes"], frame_nb=data["frame_nb"],
                 graph=data["graph"], screenshots=data["screenshots"], onesetup=data["onesetup"], validation=data["validation"])
 
-
-        if all([os.path.isdir(rf"{parent}/{s}") for s in os.listdir(parent)]):
+        if all([os.path.isdir(rf"{parent}/{s}") for s in os.listdir(parent) if s != "playlist.json"]):
             p.playlists = [cls.load(rf"{parent}/{s}") for s in os.listdir(parent)]
 
         del data
