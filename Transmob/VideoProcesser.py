@@ -124,6 +124,7 @@ class Playlist:
         if self.playlists is not None:
             video_d, process_dur = 0, 0
             for p in self.playlists:
+                print(f"Start playing {p} :")
                 if type(p) == str:
                     p = Playlist.load(p)
                 video_d2, process_dur2, _ = p.play()
@@ -136,6 +137,8 @@ class Playlist:
         start = time.time()
         with multiprocessing.Pool(processes=self.cores) as pool:
             results = pool.map(self.start, An)
+            pool.close()
+            pool.join()
         end = time.time()
         video_d = sum(results)
         process_dur = end-start
