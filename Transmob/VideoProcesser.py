@@ -87,7 +87,7 @@ class Playlist:
             [p.dump() for p in self.playlists]
             for i in range(len(self.playlists)):
                 del self.playlists[0]
-            self.playlists = [rf"{folder}/{s}" for s in os.listdir(folder) if s != "playlist.json"]
+            self.playlists = [rf"{self.folder}/{s}" for s in os.listdir(self.folder) if s != "playlist.json"]
             return
         trust = False
         if os.path.exists(f"{self.folder}/product"):
