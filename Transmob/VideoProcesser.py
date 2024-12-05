@@ -1,6 +1,7 @@
 import multiprocessing
 import shutil
 from typing import Dict
+import json
 
 from torch.cuda import graph
 
@@ -138,6 +139,51 @@ class Playlist:
         for f in self.files:
             lines[f] = self.analysers[f].get_lines()
         return lines
+
+    def dump(self, parent = None):
+        if parent is None:
+            parent = self.folder
+
+        data = {}
+
+        data["watch_classes"] = self.watch_classes
+        data["folder"] = self.folder
+        data["model"] = self.model
+        data["graph"] = self.graph
+        data["screenshots"] = self.screenshots
+        data["cores"] = self.cores
+        data["frame_nb"] = self.frame_nb
+        data["onesetup"] = self.onesetup
+        data["validation"] = self.validation
+
+        with open(rf"{parent}/playlist.json", "w") as f:
+            json.dump(data, f, indent=3)
+        del data
+        if self.playlists is None:
+            for file in self.analysers:
+                self.analysers[file].dump()
+        else:
+            for p in self.playlists:
+                p.dump()
+
+    @classmethod
+    def load(cls, parent):
+        data = json.load(open(fr"{parent}/playlist.json", "r"))
+
+        p = cls(parent, cores=data["cores"], model=data["model"], watch_classes=data["watch_classes"], frame_nb=data["frame_nb"],
+                graph=data["graph"], screenshots=data["screenshots"], onesetup=data["onesetup"], validation=data["validation"])
+
+
+        if all([os.path.isdir(rf"{folder}/{s}") for s in os.listdir(folder)]):
+            self.playlists = [Playlist.load(rf"{parent}/{s}") for s in os.listdir(folder)]
+
+
+
+
+
+
+
+
 
 def models_trials(folder, cores, lines = None):
     #! Growth factors :
