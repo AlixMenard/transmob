@@ -174,8 +174,11 @@ class Playlist:
                 graph=data["graph"], screenshots=data["screenshots"], onesetup=data["onesetup"], validation=data["validation"])
 
 
-        if all([os.path.isdir(rf"{folder}/{s}") for s in os.listdir(folder)]):
-            self.playlists = [Playlist.load(rf"{parent}/{s}") for s in os.listdir(folder)]
+        if all([os.path.isdir(rf"{parent}/{s}") for s in os.listdir(parent)]):
+            p.playlists = [cls.load(rf"{parent}/{s}") for s in os.listdir(parent)]
+
+        del data
+        return p
 
 
 
