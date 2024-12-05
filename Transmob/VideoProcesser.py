@@ -174,7 +174,7 @@ class Playlist:
         else:
             for p in self.playlists:
                 if type(p) == str:
-                    p = Playlist.load(rf"{parent}/{p}")
+                    p = Playlist.load(rf"{p}")
                 p.dump()
                 del p
 
