@@ -1,6 +1,7 @@
 import multiprocessing
 import shutil
 from typing import Dict
+import json
 
 from torch.cuda import graph
 
@@ -44,8 +45,8 @@ class Playlist:
         if watch_classes is None:
             watch_classes = ["car", "truck", "motorbike", "bus", "bicycle", "person"]
         self.playlists = None
-        if all([os.path.isdir(rf"{folder}/{s}") for s in os.listdir(folder)]):
-            self.playlists = [Playlist(rf"{folder}/{s}", cores, model, watch_classes, frame_nb, graph, screenshots, onesetup, validation) for s in os.listdir(folder)]
+        if all([os.path.isdir(rf"{folder}/{s}") for s in os.listdir(folder) if s != "playlist.json"]):
+            self.playlists = [Playlist(rf"{folder}/{s}", cores, model, watch_classes, frame_nb, graph, screenshots, onesetup, validation) for s in os.listdir(folder) if s != "playlist.json"]
         self.folder = folder
         self.model = model
         self.graph = graph
@@ -83,6 +84,10 @@ class Playlist:
         if self.playlists is not None:
             for p in self.playlists:
                 p.initialise(lines)
+            [p.dump() for p in self.playlists]
+            for i in range(len(self.playlists)):
+                del self.playlists[0]
+            self.playlists = [rf"{self.folder}/{s}" for s in os.listdir(self.folder) if s != "playlist.json"]
             return
         trust = False
         if os.path.exists(f"{self.folder}/product"):
@@ -105,6 +110,8 @@ class Playlist:
         self.sort_files()
 
     def start(self, an:Analyser):
+        if type(an) == str:
+            an = Analyser.load(self.folder, an)
         start_time = time.time()
         an.process()
         end_time = time.time()
@@ -117,15 +124,24 @@ class Playlist:
         if self.playlists is not None:
             video_d, process_dur = 0, 0
             for p in self.playlists:
+                print(f"Start playing {p} :")
+                if type(p) == str:
+                    p = Playlist.load(p)
                 video_d2, process_dur2, _ = p.play()
                 video_d += video_d2
                 process_dur += process_dur2
+                del p
             diff = round(100 * (process_dur / video_d) - 100, 2) if process_dur < video_d else round(100 * (process_dur / video_d) - 100, 2)
             return video_d, process_dur, diff
-        An = [self.analysers[f] for f in self.files]
+        An = [self.analysers[f] if self.analysers[f] is not None else f for f in self.files]
         start = time.time()
         with multiprocessing.Pool(processes=self.cores) as pool:
             results = pool.map(self.start, An)
+            print("here")
+            pool.close()
+            print("there")
+            pool.join()
+            print("here")
         end = time.time()
         video_d = sum(results)
         process_dur = end-start
@@ -138,6 +154,57 @@ class Playlist:
         for f in self.files:
             lines[f] = self.analysers[f].get_lines()
         return lines
+
+    def dump(self, parent = None):
+        if parent is None:
+            parent = self.folder
+
+        data = {}
+
+        data["watch_classes"] = self.watch_classes
+        data["folder"] = self.folder
+        data["model"] = self.model
+        data["graph"] = self.graph
+        data["screenshots"] = self.screenshots
+        data["cores"] = self.cores
+        data["frame_nb"] = self.frame_nb
+        data["onesetup"] = self.onesetup
+        data["validation"] = self.validation
+
+        with open(rf"{parent}/playlist.json", "w") as f:
+            json.dump(data, f, indent=3)
+        del data
+        if self.playlists is None:
+            for file in self.analysers:
+                if self.analysers[file] is not None:
+                        self.analysers[file].dump()
+        else:
+            for p in self.playlists:
+                if type(p) == str:
+                    p = Playlist.load(rf"{p}")
+                p.dump()
+                del p
+
+    @classmethod
+    def load(cls, parent):
+        data = json.load(open(fr"{parent}/playlist.json", "r"))
+
+        p = cls(parent, cores=data["cores"], model=data["model"], watch_classes=data["watch_classes"], frame_nb=data["frame_nb"],
+                graph=data["graph"], screenshots=data["screenshots"], onesetup=data["onesetup"], validation=data["validation"])
+
+        if all([os.path.isdir(rf"{parent}/{s}") for s in os.listdir(parent) if s != "playlist.json"]):
+            p.playlists = [rf"{parent}/{s}" for s in os.listdir(parent) if s != "playlist.json"]
+
+        del data
+        return p
+
+
+
+
+
+
+
+
 
 def models_trials(folder, cores, lines = None):
     #! Growth factors :
