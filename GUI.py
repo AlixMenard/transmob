@@ -118,7 +118,7 @@ def setup_window():
         checkbox.grid(row=4, column=idx+2, pady=10, padx=5)
     update_classes("")
 
-    #? core nb
+    """#? core nb
     def validate_input(value_if_allowed):
         if value_if_allowed.isdigit() or value_if_allowed == "":
             return True
@@ -128,7 +128,7 @@ def setup_window():
     core_l.grid(row = 5, column = 0, columnspan= 4, pady=10, padx=5)
     vcmd = (root.register(validate_input), '%P')
     core_entry = tk.Entry(root, textvariable = core_nb, width=10, validate="key", validatecommand=vcmd)
-    core_entry.grid(row = 5, column = 4, columnspan= 6, pady=10, padx=5)
+    core_entry.grid(row = 5, column = 4, columnspan= 6, pady=10, padx=5)"""
 
     # ? graph option
     graphb = tk.BooleanVar(value=False)
