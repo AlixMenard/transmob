@@ -396,7 +396,7 @@ class Analyser:
 
     @classmethod
     def load(cls, parent, name):
-        data = json.load(open(f"{parent}/cache/{name[:-4]}.json", "r"))
+        data = json.load(open(fr"{parent}/cache/{name[:-4]}.json", "r"))
         an = cls(parent, name, model=data["model"], graph=data["graph"], threshold=data["threshold"], watch_classes=data["watch_classes"],
                  frame_nb=data["frame_nb"], screenshots=data["screenshots"])
         an.strt = data["strt"]
