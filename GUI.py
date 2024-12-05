@@ -12,8 +12,8 @@ import torch
 from PIL.ImageColor import colormap
 from pandas.io.sas.sas_constants import column_label_length_offset
 from tkinterdnd2 import TkinterDnD, DND_FILES
-import Transmob.VideoProcesser as vp
-import TransmobNT.VideoProcesser as vpNT
+#import Transmob.VideoProcesser as vp
+#import TransmobNT.VideoProcesser as vpNT
 if not torch.cuda.is_available():
     import TransmobYT.VideoProcesser as vpYT
     bcuda = False
@@ -38,7 +38,7 @@ def setup_window():
     # Initialize the main window with drag-and-drop support
     root = TkinterDnD.Tk()
 
-    #? Processer used
+    """#? Processer used
     L = tk.Label(root, text = "Processes : ")
     L.grid(row = 0, column = 0, columnspan = 2,  pady=20, padx=5)
     process = tk.StringVar(value = "YT")
@@ -47,7 +47,7 @@ def setup_window():
     TYT = tk.Radiobutton(root, text = "YAllO"+(" (CUDA)" if bcuda else ""), variable = process, value = "YT")
     T.grid(row = 0, column = 2, columnspan = 2, pady=20, padx=5)
     TNT.grid(row = 0, column = 4, columnspan = 2, pady=20, padx=5)
-    TYT.grid(row = 0, column = 6, columnspan = 2, pady=20, padx=5)
+    TYT.grid(row = 0, column = 6, columnspan = 2, pady=20, padx=5)"""
 
     recommended_cores = {"Classic" : 5, "NT" : 4, "YT" : 3}
 
@@ -176,13 +176,7 @@ def setup_window():
     # ! Validation
     def start():
         root.destroy()
-        match process.get():
-            case "Classic":
-                Playlist = vp.Playlist
-            case "NT":
-                Playlist = vpNT.Playlist
-            case "YT":
-                Playlist = vpYT.Playlist
+        Playlist = vpYT.Playlist
             
         P = Playlist(entry_var.get().strip('"{}'), cores=core_nb.get(), model=f"weights/yolo11{model_letter.get()}.pt",
                      watch_classes=classes, graph = graphb.get(), screenshots = screenb.get(), onesetup = onesetupb.get(), validation = validationb.get())
