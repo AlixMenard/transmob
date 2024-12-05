@@ -303,7 +303,6 @@ class Analyser:
             c_time = self.strt
         c_time_str = str_time(c_time)
         self.save(c_time_str, c_time + time_last_save, [])
-        cv2.destroyAllWindows()
 
     def save(self, c_time, e_time, tracked):
 
