@@ -15,11 +15,11 @@ from tkinterdnd2 import TkinterDnD, DND_FILES
 #import Transmob.VideoProcesser as vpYT
 #import TransmobNT.VideoProcesser as vpYTNT
 if not torch.cuda.is_available():
-    import TransmobYT.VideoProcesser as vpYTYT
+    import TransmobYT.VideoProcesser as vpYT
     bcuda = False
 else:
     bcuda = True
-    import TransmobYTC.VideoProcesser as vpYTYT
+    import TransmobYTC.VideoProcesser as vpYT
 
 def signal_handler(sig, frame):
     print("Caught signal:", sig)
@@ -176,7 +176,7 @@ def setup_window():
     # ! Validation
     def start():
         root.destroy()
-        Playlist = vpYTYT.Playlist
+        Playlist = vpYT.Playlist
             
         P = Playlist(entry_var.get().strip('"{}'), model=f"weights/yolo11{model_letter.get()}.pt",
                      watch_classes=classes, graph = graphb.get(), screenshots = screenb.get(), onesetup = onesetupb.get(), validation = validationb.get())
