@@ -12,14 +12,14 @@ import torch
 from PIL.ImageColor import colormap
 from pandas.io.sas.sas_constants import column_label_length_offset
 from tkinterdnd2 import TkinterDnD, DND_FILES
-#import Transmob.VideoProcesser as vp
-#import TransmobNT.VideoProcesser as vpNT
+#import Transmob.VideoProcesser as vpYT
+#import TransmobNT.VideoProcesser as vpYTNT
 if not torch.cuda.is_available():
-    import TransmobYT.VideoProcesser as vpYT
+    import TransmobYT.VideoProcesser as vpYTYT
     bcuda = False
 else:
     bcuda = True
-    import TransmobYTC.VideoProcesser as vpYT
+    import TransmobYTC.VideoProcesser as vpYTYT
 
 def signal_handler(sig, frame):
     print("Caught signal:", sig)
@@ -176,7 +176,7 @@ def setup_window():
     # ! Validation
     def start():
         root.destroy()
-        Playlist = vpYT.Playlist
+        Playlist = vpYTYT.Playlist
             
         P = Playlist(entry_var.get().strip('"{}'), model=f"weights/yolo11{model_letter.get()}.pt",
                      watch_classes=classes, graph = graphb.get(), screenshots = screenb.get(), onesetup = onesetupb.get(), validation = validationb.get())
@@ -199,9 +199,9 @@ def result_window(results):
     root = tk.Tk()
     L = tk.Label(root, text="Résultats")
     L.pack()
-    L1 = tk.Label(root, text = f"Temps total de vidéo   : {vp.format_dur(vidd)}")
+    L1 = tk.Label(root, text = f"Temps total de vidéo   : {vpYT.format_dur(vidd)}")
     L1.pack()
-    L2 = tk.Label(root, text = f"Temps total d'analyse  : {vp.format_dur(procd)}")
+    L2 = tk.Label(root, text = f"Temps total d'analyse  : {vpYT.format_dur(procd)}")
     L2.pack()
     L3 = tk.Label(root, text = f"Différence : {diff}%")
     L3.pack()
