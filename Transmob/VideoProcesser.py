@@ -47,10 +47,6 @@ class Playlist:
         self.playlists = None
         if all([os.path.isdir(rf"{folder}/{s}") for s in os.listdir(folder) if s != "playlist.json"]):
             self.playlists = [Playlist(rf"{folder}/{s}", cores, model, watch_classes, frame_nb, graph, screenshots, onesetup, validation) for s in os.listdir(folder) if s != "playlist.json"]
-            [p.dump() for p in self.playlists]
-            for i in range(len(self.playlists)):
-                del self.playlists[0]
-            self.playlists = [rf"{folder}/{s}" for s in os.listdir(folder) if s != "playlist.json"]
         self.folder = folder
         self.model = model
         self.graph = graph
@@ -88,6 +84,10 @@ class Playlist:
         if self.playlists is not None:
             for p in self.playlists:
                 p.initialise(lines)
+            [p.dump() for p in self.playlists]
+            for i in range(len(self.playlists)):
+                del self.playlists[0]
+            self.playlists = [rf"{folder}/{s}" for s in os.listdir(folder) if s != "playlist.json"]
             return
         trust = False
         if os.path.exists(f"{self.folder}/product"):
