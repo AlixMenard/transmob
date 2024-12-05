@@ -137,8 +137,11 @@ class Playlist:
         start = time.time()
         with multiprocessing.Pool(processes=self.cores) as pool:
             results = pool.map(self.start, An)
+            print("here")
             pool.close()
+            print("there")
             pool.join()
+            print("here")
         end = time.time()
         video_d = sum(results)
         process_dur = end-start
