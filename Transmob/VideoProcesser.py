@@ -45,7 +45,7 @@ class Playlist:
         if watch_classes is None:
             watch_classes = ["car", "truck", "motorbike", "bus", "bicycle", "person"]
         self.playlists = None
-        if all([os.path.isdir(rf"{folder}/{s}") for s in os.listdir(folder)]):
+        if all([os.path.isdir(rf"{folder}/{s}") for s in os.listdir(folder) if s != "playlist.json"]):
             self.playlists = [Playlist(rf"{folder}/{s}", cores, model, watch_classes, frame_nb, graph, screenshots, onesetup, validation) for s in os.listdir(folder)]
         self.folder = folder
         self.model = model
