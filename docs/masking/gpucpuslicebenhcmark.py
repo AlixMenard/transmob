@@ -6,7 +6,7 @@ from ultralytics import YOLO
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
-file = r"C:\Users\guest_l5dyhea\Desktop\transmob\videos\1x1min\2165-155327596_tiny.mp4"
+file = r"C:\Users\Utilisateur\Desktop\transmob\videos\Fait_Aix 1_15' _piétons.mp4"
 
 cpu_slice_times = []
 gpu_slice_times = []
@@ -14,33 +14,38 @@ gpu_bitand_times = []
 
 
 def create_mask(x1:int, y1:int, x2:int, y2:int):
-    height, width = 640, 360
+    height, width = 720, 1280
     mask = np.zeros((height, width), dtype=np.uint8)
 
     cv2.rectangle(mask, (x1, y1), (x2, y2), color=255, thickness=cv2.FILLED)
 
-    cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)
+    mask = np.stack([mask]*3, axis = -1)
     return mask
 
-for i in range(100):
-    print(f"{i}/100", end = "\r")
+for i in range(50):
+    print(f"{i}/50 : ", end ="", flush=True)
     width, height = np.random.random(size=2)
-    # 640, 360
-    x1 = np.randint(0,640*width)
-    x2 = x1 + int(640*width)
-    y1 = np.randint(0,360*height)
-    y2 = x1 + int(360*height)
+    # 1280, 720
+    x1 = np.random.randint(0,1280*width)
+    x2 = x1 + int(1280*width)
+    y1 = np.random.randint(0,720*height)
+    y2 = x1 + int(720*height)
 
     cap = cv2.VideoCapture(file)
-    model = YOLO(r"C:\Users\guest_l5dyhea\Desktop\transmob\weights\yolo11x.pt")
+    model = YOLO(r"C:\Users\Utilisateur\Desktop\transmob\weights\yolo11x.pt")
     model.to(device)
     mask = create_mask(x1,y1,x2,y2)
 
+
+    print(f"GPU &", end =" | ", flush=True)
     t0 = time.time()
-    while cap.isOpened():
+    count = 0
+    while cap.isOpened() and count <200:
         succ, frame = cap.read()
         if not succ:
             continue
+        count += 1
+        #print(frame.shape, mask.shape)
         gpu_frame = torch.from_numpy(frame).cuda()
         gpu_mask = torch.from_numpy(mask).cuda()
 
@@ -49,18 +54,21 @@ for i in range(100):
 
         # Transfer back to CPU
         frame = gpu_result.cpu().numpy()
-        res = model.predict(frame)
+        res = model.predict(frame, verbose = False)
+        cv2.waitKey(0)
     gpu_bitand_times.append(time.time()-t0)
 
+    del cap
     cap = cv2.VideoCapture(file)
-    model = YOLO(r"C:\Users\guest_l5dyhea\Desktop\transmob\weights\yolo11x.pt")
-    model.to(device)
 
+    print(f"GPU slice", end=" | ", flush=True)
     t0 = time.time()
-    while cap.isOpened():
+    count = 0
+    while cap.isOpened() and count <100:
         succ, frame = cap.read()
         if not succ:
             continue
+        count += 1
         gpu_frame = torch.from_numpy(frame).cuda()
 
         # Slice directly on GPU
@@ -68,20 +76,30 @@ for i in range(100):
 
         # Transfer back to CPU
         frame = sliced_gpu_frame.cpu().numpy()
-        res = model.predict(frame)
+        res = model.predict(frame, verbose = False)
+        cv2.waitKey(0)
     gpu_slice_times.append(time.time()-t0)
 
+    del cap
     cap = cv2.VideoCapture(file)
-    model = YOLO(r"C:\Users\guest_l5dyhea\Desktop\transmob\weights\yolo11x.pt")
-    model.to(device)
 
+    print("CPU slice", flush=True)
     t0 = time.time()
-    while cap.isOpened():
+    count = 0
+    while cap.isOpened() and count <100:
         succ, frame = cap.read()
         if not succ:
             continue
+        count += 1
 
         sliced_frame = frame[y1:y2, x1:x2]
 
-        res = model.predict(sliced_frame)
+        res = model.predict(sliced_frame, verbose = False)
+        cv2.waitKey(0)
     cpu_slice_times.append(time.time()-t0)
+
+    del cap
+
+print(f"GPU & : {np.mean(gpu_bitand_times)}, {np.std(gpu_bitand_times)}")
+print(f"GPU slice : {np.mean(gpu_slice_times)}, {np.std(gpu_slice_times)}")
+print(f"CPU slice : {np.mean(cpu_slice_times)}, {np.std(cpu_slice_times)}")
