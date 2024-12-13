@@ -18,6 +18,7 @@ Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de
 - Exécutez `git clone https://github.com/AlixMenard/transmob`
 - Allez dans le dépôt : `cd transmob`
 - Installez les librairies nécessaires : `pip install -r requirements.txt`\
+- FastReID n'est plus à jour, des modifications sont nécessaires. Trouvez le dossier d'installation (généralement `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages` et remplacez le dossier **fastreid** par [celui-ci](https://github.com/AlixMenard/fastreid) (décompressez le avant). il faut aussi télécharger le [modèle FastReId](#FastReId) et le placer dans le dossier FastReId_config. \
 \* Ces étapes vont aussi installer les models YOLOv8 de tailles *n*, *s*, *m* et *l*. La première fois que vous demanderez au programme d'utiliser le modèle de taille *x*, il le téléchargera automatiquement avant de commencer.
 
 ### Méthode lancement 1
@@ -111,3 +112,5 @@ YOLO étant sous [license AGPL-3.0](https://firebasestorage.googleapis.com/v0/b/
 Ce projet a utilisé [les donnéesde COCO](https://cocodataset.org/#home) ainsi que de [Maryam Mahmood](https://universe.roboflow.com/maryam-mahmood-6hoeq/vans/dataset/3) pour entrainer plus en profondeur le modèle YOLO.
 
 La détection d'objet utilise la [méthode SAHI](https://pypi.org/project/sahi/) et leur suivi repose sur [BoT-SORT](https://github.com/NirAharon/BoT-SORT).
+<a name="FastReId"></a>
+Le suivi de véhicule est amélioré avec [FastReId](https://github.com/JDAI-CV/fast-reid) (Modèle disponible [ici](https://github.com/JDAI-CV/fast-reid/releases/download/v0.1.1/vehicleid_bot_R50-ibn.pth))
