@@ -20,4 +20,7 @@ ultralytics
 ultralytics-thop==2.0.6
 urllib3==2.2.3
 filterpy
-numba
+faiss-cpu==1.9.0.post1
+fastreid==1.4.0  --no-deps
+onnxruntime==1.20.1
+yacs==0.1.8
