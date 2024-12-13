@@ -1,6 +1,7 @@
 import multiprocessing
 import shutil
 from typing import Dict
+import json
 
 from .Analyze import *
 
@@ -130,7 +131,7 @@ class Playlist:
                 del p
             diff = round(100 * (process_dur / video_d) - 100, 2) if process_dur < video_d else round(100 * (process_dur / video_d) - 100, 2)
             return video_d, process_dur, diff
-        An = [self.analysers[f] for f in self.files]
+        An = [self.analysers[f] if self.analysers[f] is not None else f for f in self.files]
         start = time.time()
         with multiprocessing.Pool(processes=self.cores) as pool:
             results =pool.map(self.start, An)
