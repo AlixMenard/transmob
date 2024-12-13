@@ -267,7 +267,7 @@ class Analyser:
                 if id in fleet_ids:
                     truck_frame = None
                     if class_name == "truck":
-                        truck_frame = frame[y1:y2, x1:x2]
+                        truck_frame = frame[y1-dy:y2-dy, x1-dx:x2-dx]
                     self.fleet.update_vehicle(id, box, class_name, conf, count, truck_frame)
                 else:
                     self.fleet.add_vehicle(id, box, class_name, conf, count)
