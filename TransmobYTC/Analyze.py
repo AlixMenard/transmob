@@ -256,6 +256,11 @@ class Analyser:
                 if not class_name in self.watch_classes:
                     continue
                 x1, y1, x2, y2 = map(int, box)
+                dx, dy = self.mask[:2]
+                x1-=dx
+                x2-=dx
+                y1-=dy
+                y2-=dy
 
 
                 box = vBox(x1, y1, x2 - x1, y2 - y1)
