@@ -55,10 +55,15 @@ def dic_search(dic: dict, tupl: tuple):
     return "", 0
 
 
-def draw_line(frame, line, color = (255, 255, 0), thickness = 3):
-    cv2.line(frame, line.start, line.end, color, thickness=thickness)
-    cv2.line(frame, line.center, line.p3, color, thickness=thickness)
-    cv2.putText(frame, f'{line.id}', line.end, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2)
+def draw_line(frame, line, mask, color = (255, 255, 0), thickness = 3):
+    x1, y1, x2, y2 = mask
+    strt = line.start[0]-x1, line.start[1]-y1
+    end = line.end[0]-x1, line.end[1]-y1
+    center = line.center[0]-x1, line.center[1]-y1
+    p3 = line.p3[0]-x1, line.p3[1]-y1
+    cv2.line(frame, strt, end, color, thickness=thickness)
+    cv2.line(frame, center, p3, color, thickness=thickness)
+    cv2.putText(frame, f'{line.id}', end, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2)
 
 
 def time_5(_time):
@@ -284,7 +289,7 @@ class Analyser:
                     del self.cap
                     break
                 for l in self.lines:
-                    draw_line(frame, l)
+                    draw_line(frame, l, self.mask)
                 cv2.imshow("Line setup", frame)
 
             time_last_save = count / self.fps - saves * 60
