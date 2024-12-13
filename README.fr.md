@@ -111,4 +111,4 @@ YOLO étant sous [license AGPL-3.0](https://firebasestorage.googleapis.com/v0/b/
 Ce projet a utilisé [les donnéesde COCO](https://cocodataset.org/#home) ainsi que de [Maryam Mahmood](https://universe.roboflow.com/maryam-mahmood-6hoeq/vans/dataset/3) pour entrainer plus en profondeur le modèle YOLO.
 
 La détection d'objet utilise la [méthode SAHI](https://pypi.org/project/sahi/) et leur suivi repose sur [BoT-SORT](https://github.com/NirAharon/BoT-SORT).
-Le suivi de véhicule est amélioré avec [FastReId](https://github.com/JDAI-CV/fast-reid)
+Le suivi de véhicule est amélioré avec [FastReId](https://github.com/JDAI-CV/fast-reid) (Modèle disponible [ici](https://github.com/JDAI-CV/fast-reid/releases/download/v0.1.1/vehicleid_bot_R50-ibn.pth))
