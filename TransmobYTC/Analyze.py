@@ -234,15 +234,8 @@ class Analyser:
                     continue
 
             if self.mask is not None:
-                # Transfer to GPU
-                gpu_frame = torch.from_numpy(frame).cuda()
-                gpu_mask = torch.from_numpy(self.mask).cuda()
-
-                # Perform bitwise_and operation on GPU
-                gpu_result = gpu_frame & gpu_mask
-
-                # Transfer back to CPU
-                frame = gpu_result.cpu().numpy()
+                x1, y1, x2, y2 = self.mask
+                frame = frame[y1:y2, x1:x2]
 
             results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device=0, conf=0.1)
             try:
@@ -354,16 +347,8 @@ class Analyser:
         cv2.setMouseCallback("Line setup", click_event, param=frame)
 
     # noinspection PyTypeChecker
-    def create_mask(self, frame):
-        height, width = frame.shape[:2]
-        mask = np.zeros((height, width), dtype=np.uint8)
-
-        (x1, y1, x2, y2)= map(int, Line.get_total_bounding_box(self.lines))
-        cv2.rectangle(mask, (x1, y1), (x2, y2), color=255, thickness=cv2.FILLED)
-
-        if len(frame.shape) == 3:
-            mask = np.stack([mask] * frame.shape[2], axis=-1)
-        self.mask = mask
+    def create_mask(self):
+        self.mask = map(int, Line.get_total_bounding_box(self.lines))
 
     def get_lines(self):
         return self.lines, self.mask

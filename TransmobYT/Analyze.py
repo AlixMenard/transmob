@@ -227,7 +227,8 @@ class Analyser:
                     continue
 
             if not self.mask is None:
-                frame = cv2.bitwise_and(frame, self.mask)
+                x1, y1, x2, y2 = self.mask
+                frame = frame[y1:y2, x1:x2]
 
             results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device='cpu', conf = 0.1)
             try:
@@ -324,7 +325,7 @@ class Analyser:
                                            self.points[2][0], self.points[2][1]))
                     draw_line(frame, self.lines[-1])
                     self.points = []
-                    self.create_mask(frame)
+                    self.create_mask()
                 for p in self.points:
                     cv2.circle(frame, p, radius=1, color=(0, 0, 255), thickness=3)
                 cv2.imshow("Line setup", frame)
@@ -332,16 +333,8 @@ class Analyser:
         cv2.setMouseCallback("Line setup", click_event, param=frame)
 
     # noinspection PyTypeChecker
-    def create_mask(self, frame):
-        height, width = frame.shape[:2]
-        mask = np.zeros((height, width), dtype=np.uint8)
-
-        (x1, y1, x2, y2)= map(int, Line.get_total_bounding_box(self.lines))
-        cv2.rectangle(mask, (x1, y1), (x2, y2), color=255, thickness=cv2.FILLED)
-
-        if len(frame.shape) == 3:
-            mask = np.stack([mask] * frame.shape[2], axis=-1)
-        self.mask = mask
+    def create_mask(self):
+        self.mask = map(int, Line.get_total_bounding_box(self.lines))
 
     def get_lines(self):
         return self.lines, self.mask
