@@ -7,3 +7,4 @@ videos/
 **/datasets/**
 **/runs/**
 **/vans_dataset/**
+**/vehicleid_bot_R50-ibn.pth
