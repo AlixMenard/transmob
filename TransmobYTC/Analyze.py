@@ -339,7 +339,7 @@ class Analyser:
                                            self.points[2][0], self.points[2][1]))
                     draw_line(frame, self.lines[-1])
                     self.points = []
-                    self.create_mask(frame)
+                    self.create_mask()
                 for p in self.points:
                     cv2.circle(frame, p, radius=1, color=(0, 0, 255), thickness=3)
                 cv2.imshow("Line setup", frame)
