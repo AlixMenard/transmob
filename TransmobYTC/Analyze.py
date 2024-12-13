@@ -348,7 +348,7 @@ class Analyser:
 
     # noinspection PyTypeChecker
     def create_mask(self):
-        self.mask = map(int, Line.get_total_bounding_box(self.lines))
+        self.mask = tuple(map(int, Line.get_total_bounding_box(self.lines)))
 
     def get_lines(self):
         return self.lines, self.mask
