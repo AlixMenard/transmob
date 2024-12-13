@@ -96,6 +96,7 @@ class Analyser:
         self.frame_nb = frame_nb
         del self.cap
         if verbose: print("Video loaded...")
+        self.model = model
         self.yolo = YOLO(model)
         if verbose: print("YOLO loaded...")
         self.class_labels = [
@@ -339,6 +340,53 @@ class Analyser:
     def get_lines(self):
         return self.lines, self.mask
 
+    def dump(self, parent = None):
+        if parent is None:
+            parent = self.folder
+        if not os.path.exists(rf"{parent}/cache"):
+            os.makedirs(rf"{parent}/cache")
+        data = {}
+
+        data["name"] = self.name
+        data["url"] = self.url
+        data["folder"] = self.folder
+        data["threshold"] = self.threshold
+        data["watch_classes"] = self.watch_classes
+        data["graph"] = self.graph
+        data["screenshots"] = self.screenshots
+        data["frame_nb"] = self.frame_nb
+        data["model"] = self.model
+        data["strt"] = self.strt
+        data["end"] = self.end
+
+        data["lines"] = []
+        for l in self.lines:
+            data["lines"].append([])
+            data["lines"][-1].extend(list(l.start))
+            data["lines"][-1].extend(list(l.end))
+            data["lines"][-1].extend(list(l.p3))
+        data["mask"] = self.mask
+
+        with open(rf"{parent}/cache/{self.name[:-4]}.json", "w") as f:
+            json.dump(data, f, indent=4)
+        del data
+
+    @classmethod
+    def load(cls, parent, name):
+        data = json.load(open(fr"{parent}/cache/{name[:-4]}.json", "r"))
+        an = cls(parent, name, model=data["model"], graph=data["graph"], threshold=data["threshold"], watch_classes=data["watch_classes"],
+                 frame_nb=data["frame_nb"], screenshots=data["screenshots"])
+        an.strt = data["strt"]
+        an.end = data["end"]
+        lines = []
+        for l in data["lines"]:
+            x1, y1, x2, y2, x3, y3 = map(int, l)
+            lines.append(Line(x1, y1, x2, y2, x3, y3))
+        an.lines = deepcopy(lines)
+        an.mask = data["mask"]
+
+        del data, lines
+        return an
 
 if __name__ == "__main__":
     import argparse
