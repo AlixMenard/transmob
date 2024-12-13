@@ -18,7 +18,7 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 - Execute `git clone https://github.com/AlixMenard/transmob`
 - Go in the repository : `cd transmob`
 - Install the necessary packages : `pip install -r requirements.txt`\
-- As FastReId is not updated, some modifications are necessary. Find the installation folder (usually `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages` and replace the **fastreid** folder with [this one](https://github.com/AlixMenard/fastreidupdate) (unzip it beforehand).\
+- As FastReId is not updated, some modifications are necessary. Find the installation folder (usually `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages` and replace the **fastreid** folder with [this one](https://github.com/AlixMenard/fastreid) (unzip it beforehand).\
 \* This will install the yolo models of sizes *n*, *s*, *m* and *l*. On the first time you ask the program to use the model of size *x*, it will be automatically downloaded before processing.
 
 
