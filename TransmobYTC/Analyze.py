@@ -378,7 +378,7 @@ class Analyser:
             data["lines"][-1].extend(list(l.start))
             data["lines"][-1].extend(list(l.end))
             data["lines"][-1].extend(list(l.p3))
-        data["mask"] = self.mask.tolist()
+        data["mask"] = self.mask
 
         with open(rf"{parent}/cache/{self.name[:-4]}.json", "w") as f:
             json.dump(data, f, indent=4)
@@ -396,7 +396,7 @@ class Analyser:
             x1, y1, x2, y2, x3, y3 = map(int, l)
             lines.append(Line(x1, y1, x2, y2, x3, y3))
         an.lines = deepcopy(lines)
-        an.mask = np.array(data["mask"], dtype=np.uint8)
+        an.mask = data["mask"]
 
         del data, lines
         return an
