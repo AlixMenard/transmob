@@ -106,6 +106,9 @@ With double frame, models are located between 80% and 95% (estimate of max), wit
 - [X] Screenshot passing vehicles on all processes
 - [X] Fast setup for multiple pictures with same POV
 - [X] Cancel line creation if mistake made
+- [X] Memory efficient playlisting
+- [X] Discriminate SUV (large cars), vans and trucks
+- [ ] Implement ReId to prevent track loss
 - [ ] Directional process
 
 
@@ -117,4 +120,4 @@ This project used the [COCO dataset](https://cocodataset.org/#home) and the addi
 
 The object detection uses [SAHI method](https://pypi.org/project/sahi/) and the object tracking relies on [BoT-SORT](https://github.com/NirAharon/BoT-SORT). 
 <a name="FastReId"></a>
-Vehicle tracking is enhanced with [FastReId](https://github.com/JDAI-CV/fast-reid) (model available [here](https://github.com/JDAI-CV/fast-reid/releases/download/v0.1.1/vehicleid_bot_R50-ibn.pth))
+Vehicle tracking is enhanced with [FastReId](https://github.com/JDAI-CV/fast-reid) (model available [here](https://github.com/JDAI-CV/fast-reid/releases/download/v0.1.1/veriwild_bot_R50-ibn.pth), trained on [VeRi-Wild](https://github.com/PKU-IMRE/VERI-Wild))
