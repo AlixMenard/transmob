@@ -103,9 +103,11 @@ En double frame, les modèles se situent entre 80% et 95% (estimation max), avec
 - [x] ~Essayer parallélisation interne des vidéos sur YTC~ *La parallélisation n'est pas compatible avec CUDA*
 - [X] Capture d'écran des véhicules comptés pour chaque processus
 - [X] Paramétrage rapide en cas de vidéos avec le même PDV
-- [ ] Annuler la création d'une ligne en cas d'erreur
-- [ ] Analyse directionnelle
-
+- [X] Groupement de vidéos efficace en termes de mémoire
+- [X] Distinguer SUV (voitures larges), camionnettes aet camions
+- [ ] Implémenter ReId pour éviter les pertes de suivi
+- [ ] Etude directionnelle
+      
 ### Mentions légales
 YOLO étant sous [license AGPL-3.0](https://firebasestorage.googleapis.com/v0/b/ultralytics-public-site.appspot.com/o/license%2FAGPL-3.0-Software-License.pdf?alt=media), ce code l'est aussi. En termes simples, il peut être utilisé avec un objectif commercial au sein de l'entreprise, mais ne peut pas être utilisé comme service en ligne/hébergé accessible à des utilisateurs publiques ou privés. Dans un tel cas, l'entièreté du code source doit être rendu disponible aux utilisateurs, à moins d'acheter une license entreprise à Ultralytics.
 
@@ -113,4 +115,4 @@ Ce projet a utilisé [les donnéesde COCO](https://cocodataset.org/#home) ainsi 
 
 La détection d'objet utilise la [méthode SAHI](https://pypi.org/project/sahi/) et leur suivi repose sur [BoT-SORT](https://github.com/NirAharon/BoT-SORT).
 <a name="FastReId"></a>
-Le suivi de véhicule est amélioré avec [FastReId](https://github.com/JDAI-CV/fast-reid) (Modèle disponible [ici](https://github.com/JDAI-CV/fast-reid/releases/download/v0.1.1/vehicleid_bot_R50-ibn.pth))
+Le suivi de véhicule est amélioré avec [FastReId](https://github.com/JDAI-CV/fast-reid) (Modèle disponible [ici](https://github.com/JDAI-CV/fast-reid/releases/download/v0.1.1/veriwild_bot_R50-ibn.pth), entrainé sur [VeRi-Wild](https://github.com/PKU-IMRE/VERI-Wild))
