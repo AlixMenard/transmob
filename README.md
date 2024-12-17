@@ -120,4 +120,4 @@ This project used the [COCO dataset](https://cocodataset.org/#home) and the addi
 
 The object detection uses [SAHI method](https://pypi.org/project/sahi/) and the object tracking relies on [BoT-SORT](https://github.com/NirAharon/BoT-SORT). 
 <a name="FastReId"></a>
-Vehicle tracking is enhanced with [FastReId](https://github.com/JDAI-CV/fast-reid) (model available [here](https://github.com/JDAI-CV/fast-reid/releases/download/v0.1.1/veriwild_bot_R50-ibn.pth), trained on [VeRi-Wild](https://github.com/PKU-IMRE/VERI-Wild))
+Vehicle tracking is enhanced with [FastReId](https://github.com/JDAI-CV/fast-reid) (model available [here](https://github.com/JDAI-CV/fast-reid/releases/download/v0.1.1/veriwild_bot_R50-ibn.pth), trained on [VeRi-Wild](https://github.com/PKU-IMRE/VERI-Wild)) (Although not listed on [PWC](https://paperswithcode.com/), FastReId outperforms most methods available on the website on most datasets).
