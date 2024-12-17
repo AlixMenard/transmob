@@ -84,16 +84,18 @@ if __name__ == '__main__':
             features.append(reid(frame[y1:y2, x1:x2]))
         if t_features:
             prox = reid.proxi_matrix(features, t_features[:, 1:])
-        reid_ranks = []
-        for i,id in enumerate(ids):
-            if not id in t_features[:, 0]:
-                continue
-            temp = prox[i]
-            ind = np.where(t_features[:, 0] == id)[0][0]
-            value = temp[ind]
-            temp = np.sort(temp)
-            rank = np.where(temp == value)[0][0]
-            reid_ranks.append(rank)
+            reid_ranks = []
+            for i,id in enumerate(ids):
+                if not id in t_features[:, 0]:
+                    continue
+                temp = prox[i]
+                ind = np.where(t_features[:, 0] == id)[0][0]
+                value = temp[ind]
+                temp = np.sort(temp)
+                rank = np.where(temp == value)[0][0]
+                reid_ranks.append(rank)
+        else:
+            reid_ranks = [-1]*len(ids)
 
         for id, classe, conf, box, rank in zip(ids, classes, confs, boxes, reid_ranks):
             x1, y1, x2, y2 = map(int, box)
