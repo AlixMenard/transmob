@@ -100,7 +100,6 @@ if __name__ == '__main__':
         for id, classe, conf, box, rank in zip(ids, classes, confs, boxes, reid_ranks):
             x1, y1, x2, y2 = map(int, box)
             cv2.rectangle(frame, (x1, y1), (x2, y2), (0,255,0), 2)
-            v = self.fleet.get(id)
             cv2.putText(frame, f'{id} ({rank})', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
                         (0, 255, 0), 2)
 
