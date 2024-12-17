@@ -1,5 +1,8 @@
-﻿lapx==0.5.10.post1
+﻿faiss-cpu==1.9.0.post1
+filterpy
+lapx==0.5.10.post1
 matplotlib==3.9.2
+numba
 numpy==1.26.4
 opencv-python==4.10.0.84
 openpyxl==3.1.5
@@ -9,8 +12,12 @@ psutil==6.0.0
 py-cpuinfo==9.0.0
 requests==2.32.3
 scikit-image==0.24.0
+scikit-learn==1.5.2
 scipy==1.14.1
 setuptools==75.0.0
+tabulate==0.9.0
+tensorboard==2.18.0
+termcolor==2.5.0
 tkinterdnd2==0.4.2
 torch==2.4.1
 torchvision==0.19.1
@@ -19,5 +26,4 @@ typing_extensions==4.12.2
 ultralytics
 ultralytics-thop==2.0.6
 urllib3==2.2.3
-filterpy
-numba
+yacs==0.1.8
