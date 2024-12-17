@@ -33,7 +33,7 @@ class ReId:
             images = folder[:]
         features = [self(img) for img in images]
         feature_matrix = np.vstack(features)
-        if feat2 in None:
+        if feat2 is None:
             feature_matrix = cosine_similarity(feature_matrix)
         else:
             feature_matrix = cosine_similarity(feature_matrix, feat2)
