@@ -23,11 +23,14 @@ class ReId:
         return predictions
 
     def proxi_matrix(self, folder):
-        files = os.listdir(folder)
+        cwd = os.getcwd()
+        os.chdir(folder)
+        files = os.listdir()
         images = [cv2.imread(f) for f in files]
         features = [self(img) for img in images]
         feature_matrix = np.vstack(features)
         feature_matrix = cosine_similarity(feature_matrix)
+        os.chdir(cwd)
         return feature_matrix
 
     def heatmap(self, feature_matrix):
