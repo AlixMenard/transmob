@@ -102,6 +102,10 @@ if __name__ == '__main__':
             cv2.putText(frame, f'{id} ({rank})', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
                         (0, 255, 0), 2)
 
+        cv2.imshow("frame", frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+
         ids = ids.reshape(-1,1)
         t_features = deepcopy(features)
         t_features = np.hstack((ids, t_features))
