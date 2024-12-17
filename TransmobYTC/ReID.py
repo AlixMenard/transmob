@@ -54,7 +54,7 @@ class ReId:
 
 if __name__ == '__main__':
     from ultralytics import YOLO
-    model = YOLO(r"C:\Users\guest_l5dyhea\Desktop\transmob\weights\yolo11x.pt")
+    model = YOLO(r"C:\Users\Utilisateur\Desktop\transmob\weights\yolo11x.pt")
     model.to("cuda")
 
     reid = ReId()
