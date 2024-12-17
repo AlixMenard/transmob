@@ -107,6 +107,6 @@ if __name__ == '__main__':
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
-        ids = ids.reshape(-1,1)
+        ids = np.array(ids).reshape(-1,1)
         t_features = deepcopy(features)
         t_features = np.hstack((ids, t_features))
