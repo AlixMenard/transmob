@@ -60,7 +60,7 @@ if __name__ == '__main__':
     reid = ReId()
     t_features = []
 
-    cap = cv2.VideoCapture(r"C:\Users\guest_l5dyhea\Desktop\transmob\videos\media\Fait_Aix 1_15' _piétons.mp4")
+    cap = cv2.VideoCapture(r"C:\Users\Utilisateur\Desktop\transmob\videos\media\Fait_Aix 1_15' _piétons.mp4")
 
     while cap.isOpened():
 
@@ -68,7 +68,7 @@ if __name__ == '__main__':
         if not ret:
             continue
 
-        results = yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False,
+        results = model.track(frame, tracker="botsort.yaml", persist=True, verbose=False,
                              device=0, conf=0.1)
         try:
             ids = results[0].boxes.id.int().cpu().tolist()
