@@ -66,11 +66,14 @@ if __name__ == '__main__':
 
 
     cap = cv2.VideoCapture(r"C:\Users\Utilisateur\Desktop\transmob\videos\media\Fait_Aix 1_15' _piétons.mp4")
+    total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    count = 0
 
     print("start video")
-    while cap.isOpened():
+    while cap.isOpened() and count < total:
 
         ret, frame = cap.read()
+        count += 1
         if not ret:
             continue
 
@@ -142,7 +145,7 @@ if __name__ == '__main__':
         t_features = deepcopy(features)
         t_features = np.hstack((ids, t_features))
         cv2.waitKey(1)
-        print(np.random.randint(0,9), end = "\r", flush = True)
+        print(f"{count}/{total}", end = "\r", flush = True)
 
     print(f"Total error: {total_error[0]}/{total_error[1]}")
     print(f"frame error: {frame_error[0]}/{frame_error[1]}")
