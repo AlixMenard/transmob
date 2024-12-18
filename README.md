@@ -77,6 +77,10 @@ Yolo object detection, Yolo tracking via BoT-SORT.\
 YOLO and additional processes running on CUDA\
 CUDA usage prevents paralleled processing, serialized is de facto used.
 
+## Notes
+- Classic et NT sont discontinuées pour des raisons de performances
+- La detection sera améliorée via SAHI -> Implémenter BoTSORT et ReId indépendament de YOLO
+
 ### Performances
 **Precision :** transmob == transmobNT < transmobYT == transmobYTC \
 
