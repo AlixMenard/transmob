@@ -2,12 +2,6 @@
 set "script_path=GUI.py"
 set "desired_ultralytics_version=8.3.33"
 
-echo Updating pip...
-py -m pip install --upgrade pip
-
-echo Installing Ultralytics version %desired_ultralytics_version%...
-py -m pip install ultralytics==%desired_ultralytics_version% --upgrade
-
 echo Pulling the latest code from Git...
 git pull
 
