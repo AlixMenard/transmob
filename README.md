@@ -54,12 +54,12 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 - Be sure to cover the whole potential crossing area, especially around crosswalks, where people might walk around and not exactly on
 - ~MP4 and LRV will give the same results, as the model scales the resolution down before processing. However, LRV files are much lighter on the CPU and the memory.~ MP4 files are more robust to compressing than LRV to decompressing, and performs better under SAHI.
 
-## transmob
+## ~transmob~
 
 Yolo object detection, SORT tracking.\
 Paralleled video processing.
 
-## transmobNT
+## ~transmobNT~
 
 Yolo object detection, SORT tracking.\
 Paralleled video processing.\
@@ -76,6 +76,10 @@ Paralleled video processing.\
 Yolo object detection, Yolo tracking via BoT-SORT.\
 YOLO and additional processes running on CUDA\
 CUDA usage prevents paralleled processing, serialized is de facto used.
+
+## Notes
+- Classic and NT versions are discontinued for efficiency reasons
+- Performance is to be enhanced with SAHI -> Implement BoTSORT and ReId independently from YOLO
 
 ### Performances
 **Precision :** transmob == transmobNT < transmobYT == transmobYTC \
