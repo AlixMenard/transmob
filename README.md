@@ -18,7 +18,10 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 - Execute `git clone https://github.com/AlixMenard/transmob`
 - Go in the repository : `cd transmob`
 - Install the necessary packages : `pip install -r requirements.txt`\
+- As FastReId is not updated, some modifications are necessary. Find the installation folder (usually `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages` and replace the **fastreid** folder with [this one](https://github.com/AlixMenard/fastreid) (unzip it beforehand). It is also necessary to download the [FastReId model](#FastReId) and place it in the FastReId_config folder. \
 \* This will install the yolo models of sizes *n*, *s*, *m* and *l*. On the first time you ask the program to use the model of size *x*, it will be automatically downloaded before processing.
+
+
 
 ### Start option 1
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
@@ -103,6 +106,9 @@ With double frame, models are located between 80% and 95% (estimate of max), wit
 - [X] Screenshot passing vehicles on all processes
 - [X] Fast setup for multiple pictures with same POV
 - [X] Cancel line creation if mistake made
+- [X] Memory efficient playlisting
+- [X] Discriminate SUV (large cars), vans and trucks
+- [ ] Implement ReId to prevent track loss
 - [ ] Directional process
 
 
@@ -111,4 +117,7 @@ As Yolo is under an [AGPL-3.0 License](https://firebasestorage.googleapis.com/v0
 
 This project used the [COCO dataset](https://cocodataset.org/#home) and the additional [Maryam Mahmood](https://universe.roboflow.com/maryam-mahmood-6hoeq/vans/dataset/3) van dataset to further train the YOLO model.
 
-The object detection uses [SAHI method](https://pypi.org/project/sahi/) and the object tracking relies on [BoT-SORT](https://github.com/NirAharon/BoT-SORT).
+
+The object detection uses [SAHI method](https://pypi.org/project/sahi/) and the object tracking relies on [BoT-SORT](https://github.com/NirAharon/BoT-SORT). 
+<a name="FastReId"></a>
+Vehicle tracking is enhanced with [FastReId](https://github.com/JDAI-CV/fast-reid) (model available [here](https://github.com/JDAI-CV/fast-reid/releases/download/v0.1.1/veriwild_bot_R50-ibn.pth), trained on [VeRi-Wild](https://github.com/PKU-IMRE/VERI-Wild)) (Although not listed on [PWC](https://paperswithcode.com/), FastReId outperforms most methods available on the website on most datasets).

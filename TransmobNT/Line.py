@@ -1,6 +1,7 @@
 import numpy as np
 from .Vehicle import Vehicle
 from typing import Dict, List
+from collections import defaultdict
 
 class Line:
 
@@ -17,7 +18,7 @@ class Line:
         self.id = Line.nb_lines
         Line.nb_lines += 1
         self.counter = Counter()
-        self.vehicles : Dict[int, float] = {}
+        self.vehicles = defaultdict(list)
         self.still_close : Dict[int, Vehicle] = {}
 
         if x1>x2:
@@ -48,7 +49,7 @@ class Line:
         x, y = self.p3
         p_vec = np.array([x - self.center[0], y - self.center[1]])
         y3 = np.dot(p_vec, self.normal)
-        self.direction = y3 / abs(y3)
+        self.direction = np.sign(y3) if y3 != 0 else 0
 
         self.mask_bound()
 
@@ -107,19 +108,19 @@ class Line:
         crossed = False
         x, y = v.box.cross_point
         _, p = self.proj((x, y))
-        if v.id in self.vehicles and (p * self.vehicles[v.id]<0 or p ==0):
+        if v.id in self.vehicles and (p * np.mean(self.vehicles[v.id])<0 or p ==0):
             if v.id in self.still_close:
-                self.vehicles[v.id] = p
-                return crossed
+                self.vehicles[v.id].append(p)
+                return False
             crossed = True
             self.still_close[v.id] = v
-            if self.vehicles[v.id]<0:
+            if np.mean(self.vehicles[v.id])<0:
                 self.counter.add(v, direction = 0)
                 v.cross(self.id)
             else:
                 self.counter.add(v, direction = 1)
                 v.cross(-self.id)
-        self.vehicles[v.id] = p
+        self.vehicles[v.id].append(p)
         return crossed
 
 

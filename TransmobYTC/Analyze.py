@@ -1,5 +1,7 @@
 import os
+import shutil
 from copy import deepcopy
+import json
 
 os.environ["OPENCV_LOG_LEVEL"] = "OFF"
 os.environ["OPENCV_FFMPEG_READ_ATTEMPTS"] = "8192"
@@ -53,10 +55,15 @@ def dic_search(dic: dict, tupl: tuple):
     return "", 0
 
 
-def draw_line(frame, line, color = (255, 255, 0), thickness = 3):
-    cv2.line(frame, line.start, line.end, color, thickness=thickness)
-    cv2.line(frame, line.center, line.p3, color, thickness=thickness)
-    cv2.putText(frame, f'{line.id}', line.end, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2)
+def draw_line(frame, line, mask, color = (255, 255, 0), thickness = 3):
+    x1, y1, x2, y2 = mask
+    strt = line.start[0]-x1, line.start[1]-y1
+    end = line.end[0]-x1, line.end[1]-y1
+    center = line.center[0]-x1, line.center[1]-y1
+    p3 = line.p3[0]-x1, line.p3[1]-y1
+    cv2.line(frame, strt, end, color, thickness=thickness)
+    cv2.line(frame, center, p3, color, thickness=thickness)
+    cv2.putText(frame, f'{line.id}', end, cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 0), 2)
 
 
 def time_5(_time):
@@ -97,6 +104,7 @@ class Analyser:
         self.frame_nb = frame_nb
         del self.cap
         if verbose: print("Video loaded...")
+        self.model = model
         self.yolo = YOLO(model)
         self.yolo = self.yolo.cuda()
         if verbose: print("YOLO loaded...")
@@ -133,7 +141,7 @@ class Analyser:
         while 1:
             frame = deepcopy(save_frame)
             for l in self.lines:
-                draw_line(frame, l)
+                draw_line(frame, l,(0, 0, 0, 0))
             for p in self.points:
                 cv2.circle(frame, p, radius=1, color=(0, 0, 255), thickness=3)
             cv2.imshow("Line setup", frame)
@@ -156,7 +164,6 @@ class Analyser:
                     self.points.pop()
                 elif self.lines:
                     self.lines.pop().del_line()
-
         return ret
 
     def get_start_time(self, trust_time):
@@ -231,15 +238,8 @@ class Analyser:
                     continue
 
             if self.mask is not None:
-                # Transfer to GPU
-                gpu_frame = torch.from_numpy(frame).cuda()
-                gpu_mask = torch.from_numpy(self.mask).cuda()
-
-                # Perform bitwise_and operation on GPU
-                gpu_result = gpu_frame & gpu_mask
-
-                # Transfer back to CPU
-                frame = gpu_result.cpu().numpy()
+                x1, y1, x2, y2 = self.mask
+                frame = frame[y1:y2, x1:x2]
 
             results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device=0, conf=0.1)
             try:
@@ -256,13 +256,18 @@ class Analyser:
                 if not class_name in self.watch_classes:
                     continue
                 x1, y1, x2, y2 = map(int, box)
+                dx, dy = self.mask[:2]
+                x1+=dx
+                x2+=dx
+                y1+=dy
+                y2+=dy
 
 
                 box = vBox(x1, y1, x2 - x1, y2 - y1)
                 if id in fleet_ids:
                     truck_frame = None
                     if class_name == "truck":
-                        truck_frame = frame[y1:y2, x1:x2]
+                        truck_frame = frame[y1-dy:y2-dy, x1-dx:x2-dx]
                     self.fleet.update_vehicle(id, box, class_name, conf, count, truck_frame)
                 else:
                     self.fleet.add_vehicle(id, box, class_name, conf, count)
@@ -277,9 +282,9 @@ class Analyser:
                         color = (255, 0, 0)
 
                 if self.graph:
-                    cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
+                    cv2.rectangle(frame, (x1-dx, y1-dy), (x2-dx, y2-dy), color, 2)
                     v = self.fleet.get(id)
-                    cv2.putText(frame, f'{v.id} ({v._class})', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
+                    cv2.putText(frame, f'{v.id} ({v._class})', (x1-dx, y1 - dy - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
                                 (255, 255, 0), 2)
 
             self.fleet.watch_bikes()
@@ -289,7 +294,7 @@ class Analyser:
                     del self.cap
                     break
                 for l in self.lines:
-                    draw_line(frame, l)
+                    draw_line(frame, l, self.mask)
                 cv2.imshow("Line setup", frame)
 
             time_last_save = count / self.fps - saves * 60
@@ -341,9 +346,9 @@ class Analyser:
                 if len(self.points) == 3:
                     self.lines.append(Line(self.points[0][0], self.points[0][1], self.points[1][0], self.points[1][1],
                                            self.points[2][0], self.points[2][1]))
-                    draw_line(frame, self.lines[-1])
+                    draw_line(frame, self.lines[-1], (0, 0, 0, 0))
                     self.points = []
-                    self.create_mask(frame)
+                    self.create_mask()
                 for p in self.points:
                     cv2.circle(frame, p, radius=1, color=(0, 0, 255), thickness=3)
                 cv2.imshow("Line setup", frame)
@@ -351,19 +356,60 @@ class Analyser:
         cv2.setMouseCallback("Line setup", click_event, param=frame)
 
     # noinspection PyTypeChecker
-    def create_mask(self, frame):
-        height, width = frame.shape[:2]
-        mask = np.zeros((height, width), dtype=np.uint8)
-
-        (x1, y1, x2, y2)= map(int, Line.get_total_bounding_box(self.lines))
-        cv2.rectangle(mask, (x1, y1), (x2, y2), color=255, thickness=cv2.FILLED)
-
-        if len(frame.shape) == 3:
-            mask = np.stack([mask] * frame.shape[2], axis=-1)
-        self.mask = mask
+    def create_mask(self):
+        self.mask = tuple(map(int, Line.get_total_bounding_box(self.lines)))
 
     def get_lines(self):
         return self.lines, self.mask
+
+    def dump(self, parent = None):
+        if parent is None:
+            parent = self.folder
+        if not os.path.exists(rf"{parent}/cache"):
+            os.makedirs(rf"{parent}/cache")
+        data = {}
+
+        data["name"] = self.name
+        data["url"] = self.url
+        data["folder"] = self.folder
+        data["threshold"] = self.threshold
+        data["watch_classes"] = self.watch_classes
+        data["graph"] = self.graph
+        data["screenshots"] = self.screenshots
+        data["frame_nb"] = self.frame_nb
+        data["model"] = self.model
+        data["strt"] = self.strt
+        data["end"] = self.end
+
+        data["lines"] = []
+        for l in self.lines:
+            data["lines"].append([])
+            data["lines"][-1].extend(list(l.start))
+            data["lines"][-1].extend(list(l.end))
+            data["lines"][-1].extend(list(l.p3))
+        data["mask"] = self.mask
+
+        with open(rf"{parent}/cache/{self.name[:-4]}.json", "w") as f:
+            json.dump(data, f, indent=4)
+        del data
+
+    @classmethod
+    def load(cls, parent, name):
+        data = json.load(open(fr"{parent}/cache/{name[:-4]}.json", "r"))
+        an = cls(parent, name, model=data["model"], graph=data["graph"], threshold=data["threshold"], watch_classes=data["watch_classes"],
+                 frame_nb=data["frame_nb"], screenshots=data["screenshots"])
+        an.strt = data["strt"]
+        an.end = data["end"]
+        lines = []
+        for l in data["lines"]:
+            x1, y1, x2, y2, x3, y3 = map(int, l)
+            lines.append(Line(x1, y1, x2, y2, x3, y3))
+        an.lines = deepcopy(lines)
+        an.mask = data["mask"]
+
+        del data, lines
+        return an
+
 
 
 if __name__ == "__main__":
