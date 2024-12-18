@@ -17,6 +17,8 @@ import time
 import tkinter as tk
 from datetime import datetime
 
+from fastreid.config import get_cfg
+from fastreid.engine import DefaultPredictor
 
 # ? First try at box connection, either too slow (often) or incorrect and leaving objects unclassed
 def dic_search2(dic: dict, tupl: tuple):
@@ -400,7 +402,7 @@ class Analyser:
         return an
 
 if __name__ == "__main__":
-    import argparse
+    """import argparse
 
     parser = argparse.ArgumentParser()
     parser.add_argument("-f", "--file", action="store", dest="file_name", default="media/Fait_Aix 1_15' _piétons.mp4")
@@ -414,4 +416,4 @@ if __name__ == "__main__":
     if args.file_name:
         An = Analyser("", args.file_name, graph=args.graph_bool, watch_classes=args.watch_classes)
         An.starter()
-        An.process()
+        An.process()"""
