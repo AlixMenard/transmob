@@ -110,7 +110,7 @@ if __name__ == '__main__':
         else:
             reid_ranks = []
 
-        reid_ranks = np.array(reid_ranks)
+        reid_ranks = np.array([0 if i<4 else 1 for i in reid_ranks])
         if len(reid_ranks) == 0:
             ids = np.array(ids)
             ids = ids.reshape(-1,1)
