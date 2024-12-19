@@ -54,6 +54,13 @@ Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de
 - Pensez à bien couvrir l'ensemble de la zone de passage, en particulier pour les passages piétons, pour lesquels les piétons peuvent traverser autour plutôt que sur le passage exactement
 - ~Les fichiers MP4 et LRV donnent les même résultats, car YOLO réduit la qualité de l'image avant de l'analyser.Cependant, les fichiers LRV sont bien plus légers sur le processeur et la mémoire de l'ordinateur.~ Les fichiers MP4 ont une meilleure robustesse face à la compressionque les fichiers LRV face à la décompresseion, et obtiennent de meilleurs résultats avec SAHI.
 
+### Formattage des résultats
+Afin de passer les résultats en format csv :
+- Ouvrir un powershell/commandline shell : win+r, taper "powershell" ou "cmd", puis `Entrée`
+- Naviguer jusqu'à l'emplacement du programme (Utilisez `cd <nom_dossier>` pour naviguer)
+- Dans le shell, exécutez  : `py Tools.py`
+- Une fenêtre s'ouvre, y séléctionner "Formattage des résultats", puis dans la fenêtre suivante, faire glisser le fichier de résultats ("results.txt")
+
 ## ~~transmob~~
 
 Detection d'objet par YOLO, suivi par SORT.\
