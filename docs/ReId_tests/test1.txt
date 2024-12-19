@@ -1,0 +1,5 @@
+20 minutes video, testing for non-rank1 occurences
+
+Total error: 54/162028   (0.0333%)
+frame error: 54/26999    (0.2000%)
+Vehicle error: 51/1915   (2.6631%)

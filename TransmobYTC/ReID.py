@@ -66,10 +66,14 @@ if __name__ == '__main__':
 
 
     cap = cv2.VideoCapture(r"C:\Users\Utilisateur\Desktop\transmob\videos\media\Fait_Aix 1_15' _piétons.mp4")
+    total = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    count = 0
 
-    while cap.isOpened():
+    print("start video")
+    while cap.isOpened() and count < total:
 
         ret, frame = cap.read()
+        count += 1
         if not ret:
             continue
 
@@ -95,6 +99,7 @@ if __name__ == '__main__':
             reid_ranks = []
             for i,id in enumerate(ids):
                 if not id in t_features[:, 0]:
+                    reid_ranks.append(-1)
                     continue
                 temp = prox[i]
                 ind = np.where(t_features[:, 0] == id)[0][0]
@@ -103,16 +108,20 @@ if __name__ == '__main__':
                 rank = np.where(temp == value)[0][0]
                 reid_ranks.append(rank)
         else:
-            reid_ranks = [-1]*len(ids)
+            reid_ranks = []
 
-        reid_ranks = np.array([i for i in reid_ranks if i != -1])
+        reid_ranks = np.array([0 if i<4 else 1 for i in reid_ranks])
         if len(reid_ranks) == 0:
+            ids = np.array(ids)
+            ids = ids.reshape(-1,1)
+            t_features = deepcopy(features)
+            t_features = np.hstack((ids, t_features))
             continue
         else:
             f_error = False
             for i,id in enumerate(ids):
                 _ = vehicle_error[id]
-                if reid_ranks[i] != 0:
+                if reid_ranks[i] > 0:
                     f_error = True
                     total_error[0] = total_error[0] + 1
                     vehicle_error[id] = True
@@ -120,6 +129,7 @@ if __name__ == '__main__':
             if f_error:
                 frame_error[0] = frame_error[0] + 1
             frame_error[1] = frame_error[1] + 1
+        #(np.random.randint(0,9), end = "\r", flush = True)
 
         """for id, classe, conf, box, rank in zip(ids, classes, confs, boxes, reid_ranks):
             x1, y1, x2, y2 = map(int, box)
@@ -134,6 +144,8 @@ if __name__ == '__main__':
         ids = ids.reshape(-1,1)
         t_features = deepcopy(features)
         t_features = np.hstack((ids, t_features))
+        cv2.waitKey(1)
+        print(f"{count}/{total}", end = "\r", flush = True)
 
     print(f"Total error: {total_error[0]}/{total_error[1]}")
     print(f"frame error: {frame_error[0]}/{frame_error[1]}")
