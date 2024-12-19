@@ -13,7 +13,8 @@ Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github
 - Navigate to the desired place to store the algorithm (use `cd <folder_name>` to navigate)
 - In the shell, execute : `git clone https://github.com/AlixMenard/transmob`
 - Go in the repository : `cd transmob`
-- Install the necessary packages : `pip install -r requirements.txt`\
+- Install the necessary packages : `pip install -r requirements.txt`
+- In the shell, execute : `pip install fastreid==1.4.0 --no-deps`
 - As FastReId is not updated, some modifications are necessary. Find the installation folder (usually `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages` and replace the **fastreid** folder with [this one](https://github.com/AlixMenard/fastreid) (unzip it beforehand). It is also necessary to download the [FastReId model](#FastReId) and place it in the FastReId_config folder. \
 \* This will install the yolo models of sizes *n*, *s*, *m* and *l*. On the first time you ask the program to use the model of size *x*, it will be automatically downloaded before processing.
 
