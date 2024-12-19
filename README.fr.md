@@ -16,7 +16,7 @@ Langues : [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.
 - Installez les librairies nécessaires : `pip install -r requirements.txt`
 - Dans le shell, exécutez : `pip install fastreid==1.4.0 --no-deps`
 - FastReID n'est plus à jour, des modifications sont nécessaires. Trouvez le dossier d'installation (généralement `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages` et remplacez le dossier **fastreid** par [celui-ci](https://github.com/AlixMenard/fastreid) (décompressez le avant). il faut aussi télécharger le [modèle FastReId](#FastReId) et le placer dans le dossier FastReId_config. \
-\* Ces étapes vont aussi installer les models YOLOv8 de tailles *n*, *s*, *m* et *l*. La première fois que vous demanderez au programme d'utiliser le modèle de taille *x*, il le téléchargera automatiquement avant de commencer.
+\* Ces étapes vont aussi installer les models YOLO de tailles *n*, *s*, *m* et *l*. La première fois que vous demanderez au programme d'utiliser le modèle de taille *x*, il le téléchargera automatiquement avant de commencer.
 
 ### Optionnel
 Si l'ordinateur a une [carte graphique compatible avec CUDA](https://en.wikipedia.org/wiki/CUDA#GPUs_supported), il faut télécharger et installer [NVIDIA CUDA toolkit](https://developer.nvidia.com/cuda-downloads).\
@@ -34,13 +34,13 @@ Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de
 ### Usage
 - Glissez et déposez le dossier contenant les vidéos à analyser (**chaque** fichier sera analysé, pensez à supprimer les duplicata, comme ceux avec différentes extensions, comme "fichier.mp4" et "fichier.lrv")
 - Choissisez les options que vous voulez :
-  - Process (explained below)
-  - Frame number : 1, chaque image se analysée, 2,une image sur deux sera analysée (deux fois plus rapide, réduis le taux de détetion, très fortement déconseillé pour les vidéos avec une qualité d'image basse)
-  - YOLO model : les modèles plus gros sont plus précis, mais considérablement plus lent dans le plupart des cas. Avec le support CUDA, le ralentissement lié à la taille du modèle est négligeable et toujours utiliser le modèle de taille *x* est fortement conseillé. 
-  - Classes : Types de véhicules à compter, Les autre seront ignorés. Si les piétons (*person*) sont comptés, les vélos et motocylettes (*bicycle* and *motorbike*) ne peuvent pas être ignorés.
-  - Number of cores : Nombre de cœurs dédiés au programme. Si l'ordinateur possède 10 cœurs physiques ou plus, les recommendations sont *Classic (4)*, *Nested Threads (3)* and *YallO (4)*. **/!\\** Avec CUDA, le nombre de coeurs est sans importance.
-  - With video : Si oui, la vidéo sera affichée durant son traitement. Cela ralentit considérablement le processus. C'est en revanche très utile pour juger de l'efficacité de détection d'un modèle sur une vidéo dont vous n'êtes pas certain.e de la qualité.
-  - One setup : Si oui, seule la première vidéo du dossier sera montrée pour tracer les lignes de comptage. Toutes les autres vidéos auront les même lignes.
+  - `Nombre de frames` : 1, chaque image se analysée, 2,une image sur deux sera analysée (deux fois plus rapide, réduis le taux de détetion, très fortement déconseillé pour les vidéos avec une qualité d'image basse)
+  - `Model YOLO` : les modèles plus gros sont plus précis, mais considérablement plus lent dans le plupart des cas. Avec le support CUDA, le ralentissement lié à la taille du modèle est négligeable et toujours utiliser le modèle de taille *x* est fortement conseillé. 
+  - `Types de véhicules` : Types de véhicules à compter, Les autre seront ignorés. Si les piétons (*person*) sont comptés, les vélos et motocylettes (*bicycle* and *motorbike*) ne peuvent pas être ignorés.
+  - `Avec vidéo` : Si oui, la vidéo sera affichée durant son traitement. Cela ralentit considérablement le processus. C'est en revanche très utile pour juger de l'efficacité de détection d'un modèle sur une vidéo dont vous n'êtes pas certain.e de la qualité.
+  - `Avec captures d'écran` : Enregistrera une capture de chaque véhicule compter, pour validation ou anlyse supplémentaire.
+  - `Un seul setup` : Si oui, seule la première vidéo du dossier sera montrée pour tracer les lignes de comptage. Toutes les autres vidéos auront les même lignes.
+  - `Valider les lignes` (Si `Un seul setup` est séléctionné) : Transferera les lignes à chaque vidéo du dossier, mais les affichera pour validation et permettre des modifications.
 - Start
 - La première image de chaque vidéo sera montrée, successivement, pour créer les lignes de comptage. Il faut 3 clics pour créer une ligne : les 2 premiers clics définissent les points de début et de fin de la ligne, le 3e clic défini la direction de comptage. A une intersection, Il est recommendé d'effectuer le 3e clic au milieu de l'intersection. **/!\\** *les 2 premiers clics définissant la ligne à travers laquelle les véhicules seront comptés, ils doivent être précis pour ne pas rater de véhicule ou en compter trop. Cependant, la précision du 3e clic n'a aucune importance. Si plusieurs lignes sont placées, l'ordre doit rester le même sur toutes les vidéos.*
 - Avec la première image, une fenêtre pop-up sera affichée pour vérifier la date de départ de la vidéo. Le programme montrera la date de création de la vidéo en première proposition, Que vous pouvez confirmer avec "Valider". Si cette date n'est pas correcte, vous pouvez taper la date réelle, au format (aaaa-MM-jj hh:mm), puis cliquer sur "Changer".
