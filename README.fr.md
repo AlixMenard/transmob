@@ -75,6 +75,10 @@ Detection d'objet par YOLO, suivi par YOLO via BoT-SORT.\
 YOLO et autres processus tournant sur CUDA.\
 L'usage de CUDA empêche la parallèlisation des vidéos qui sont de facto analysées successivement.
 
+## Notes
+- Classic et NT sont discontinués pour des raisons d'efficacité
+- Les performances doivent être améliorées avec SAHI -> Implémentation de BoTSORT et ReId indépendemment de YOLO
+
 ### Performances
 **Précision :** transmob == transmobNT < transmobYT == transmobYTC \
 
