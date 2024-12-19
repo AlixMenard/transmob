@@ -54,6 +54,13 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 - Be sure to cover the whole potential crossing area, especially around crosswalks, where people might walk around and not exactly on
 - ~MP4 and LRV will give the same results, as the model scales the resolution down before processing. However, LRV files are much lighter on the CPU and the memory.~ MP4 files are more robust to compressing than LRV to decompressing, and performs better under SAHI.
 
+### Results formatting
+To format the results in csv :
+- Open a powershell/commandline shell : win+r, type "powershell" or "cmd", then press `Enter`
+- Navigate to the program's folder (Use `cd <folder_name>` to navigate)
+- In the shell, eecute  : `py Tools.py`
+- A window pops up, select "Formattage des résultats", then in the next window, drag & drop the resuls file ("results.txt")
+
 
 ## ~~transmob~~
 
