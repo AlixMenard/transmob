@@ -17,8 +17,8 @@ import time
 import tkinter as tk
 from datetime import datetime
 
-from fastreid.config import get_cfg
-from fastreid.engine import DefaultPredictor
+#from fastreid.config import get_cfg
+#from fastreid.engine import DefaultPredictor
 
 # ? First try at box connection, either too slow (often) or incorrect and leaving objects unclassed
 def dic_search2(dic: dict, tupl: tuple):
