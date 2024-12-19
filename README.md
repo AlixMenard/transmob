@@ -13,7 +13,8 @@ Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github
 - Navigate to the desired place to store the algorithm (use `cd <folder_name>` to navigate)
 - In the shell, execute : `git clone https://github.com/AlixMenard/transmob`
 - Go in the repository : `cd transmob`
-- Install the necessary packages : `pip install -r requirements.txt`\
+- Install the necessary packages : `pip install -r requirements.txt`
+- In the shell, execute : `pip install fastreid==1.4.0 --no-deps`
 - As FastReId is not updated, some modifications are necessary. Find the installation folder (usually `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages` and replace the **fastreid** folder with [this one](https://github.com/AlixMenard/fastreid) (unzip it beforehand). It is also necessary to download the [FastReId model](#FastReId) and place it in the FastReId_config folder. \
 \* This will install the yolo models of sizes *n*, *s*, *m* and *l*. On the first time you ask the program to use the model of size *x*, it will be automatically downloaded before processing.
 
@@ -33,13 +34,13 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 ### Use
 - Drag&Drop the folder containing the videos to process (**every** video will be processed, make sure to eliminate duplicates, even with different extension, like "file.mp4" and "file.lrv")
 - Choose the fitting options
-  - Process (explained below)
-  - Frame number : 1, each frame will be processed, 2, one in two frames will be processed (twice as fast, reduces detection rate, heavily not recommended in case of low quality video)
-  - YOLO model : bigger models will be better, but slower in most cases. With CUDA support the slow-down is negligible and always using the model of size *x* is highly recommended
-  - Classes : Vehicle types to count, the others will be ignored. If pedestrians (*person*) are monitored, *bicycle* and *motorbike* can't be ignored.
-  - Number of cores dedicated to the process. If the computer has 10 physical cores or more, the recommendations are *Classic (4)*, *Nested Threads (3)* and *YallO (4)*. **/!\\** With CUDA, the number of cores is irrelevant.
-  - With video : If yes, the videos will be displayed as they are treated. This considerably slows down the process. It is however useful to test the quality of detection of a model size if you are unsure about the picture quality.
-  - One setup : If yes, only the first video of the folder will be shown to trace the counting lines. Every other video will have the exact same lines.
+  - `Nombre de frames` : 1, each frame will be processed, 2, one in two frames will be processed (twice as fast, reduces detection rate, heavily not recommended in case of low quality video)
+  - `Model YOLO` : bigger models will be better, but slower in most cases. With CUDA support the slow-down is negligible and always using the model of size *x* is highly recommended
+  - `Types de véhicules` : Vehicle types to count, the others will be ignored. If pedestrians (*person*) are monitored, *bicycle* and *motorbike* can't be ignored.
+  - `Avec vidéo` : If yes, the videos will be displayed as they are treated. This considerably slows down the process. It is however useful to test the quality of detection of a model size if you are unsure about the picture quality.
+  - `Avec captures d'écran` : This will keep a screenshot of every counted vehicule, with its class, for verification purposes or further analysis.
+  - `Un seul setup` : If yes, only the first video of the folder will be shown to trace the counting lines. Every other video will have the exact same lines.
+  - `Valider les lignes` (if `Un seul setup` is selected) : The lines will be transfered to every video in the folder, but shown to enable modifications.
 - Start
 - The 1st frame of each video will be displayed successively to create the counting lines. It takes 3 clicks to create a single line : the first 2 clicks define the starting and ending points of the line, the 3rd click defines the direction of counting. At an intersection, it is recommended to do the 3rd click in the middle of the intersection. **/!\\** *The first 2 clicks defining the line through which vehicles will be counted, they must be accurate so not to miss vehicles or count additional ones. However, the 3rd click's accuracy is not to worry about. In case multiple lines are placed, the order has to be consistent across all videos.*
 - Along with the first frame, a pop-up will be displayed to assess the video's start time. The program will show the time the video was created as a first proposition, which you can confirm using "Valider". If that time is not correct, you can type the actual start time in the entry, in the format (yyyy-mm-dd hh:mm), then click "Changer".
@@ -52,6 +53,13 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 - On complex intersections, such as roundabouts, make sure to place the lines such that vehicles engaged in the intersection and passing by a line will not be considered as passing the lines
 - Be sure to cover the whole potential crossing area, especially around crosswalks, where people might walk around and not exactly on
 - ~MP4 and LRV will give the same results, as the model scales the resolution down before processing. However, LRV files are much lighter on the CPU and the memory.~ MP4 files are more robust to compressing than LRV to decompressing, and performs better under SAHI.
+
+### Results formatting
+To format the results in csv :
+- Open a powershell/commandline shell : win+r, type "powershell" or "cmd", then press `Enter`
+- Navigate to the program's folder (Use `cd <folder_name>` to navigate)
+- In the shell, eecute  : `py Tools.py`
+- A window pops up, select "Formattage des résultats", then in the next window, drag & drop the resuls file ("results.txt")
 
 
 ## ~~transmob~~
