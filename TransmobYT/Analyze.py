@@ -140,7 +140,7 @@ class Analyser:
         while 1:
             frame = deepcopy(save_frame)
             for l in self.lines:
-                draw_line(frame, l, self.mask)
+                draw_line(frame, l, (0,0,0,0))
             for p in self.points:
                 cv2.circle(frame, p, radius=1, color=(0, 0, 255), thickness=3)
             cv2.imshow("Line setup", frame)
