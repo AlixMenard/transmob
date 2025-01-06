@@ -77,13 +77,11 @@ class Playlist:
 
         self.files = [f[0] for f in final_order]
 
-    def initialise(self, lines=None, trust = False, first = False):
+    def initialise(self, lines=None, trust = False):
         if self.playlists is not None:
-            first = True
             for i,p in enumerate(self.playlists):
                 print(f"{i}/{len(self.playlists)}", end="\r", flush=True)
-                lines, trust = p.initialise(lines, trust, first)
-                first = False
+                lines, trust = p.initialise(lines, trust)
                 p.dump()
             print("Complete.", flush=True)
             for i in range(len(self.playlists)):
@@ -97,6 +95,7 @@ class Playlist:
             if os.path.isdir(rf"{self.folder}/product/screens"):
                 shutil.rmtree(rf"{self.folder}/product/screens")
             os.mkdir(f"{self.folder}/product/screens")
+        first = True
         for f in self.files:
             an = Analyser(self.folder, f, graph=self.graph, model=self.model, watch_classes=self.watch_classes,
                           frame_nb=self.frame_nb, screenshots=self.screenshots)
@@ -107,6 +106,7 @@ class Playlist:
             if self.onesetup:
                 lines = an.get_lines()
             self.analysers[f] = an
+            first = False
         self.sort_files()
         return lines, trust
 
