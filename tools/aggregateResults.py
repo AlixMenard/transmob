@@ -17,7 +17,6 @@ def aggregateResults(path):
 
 def get_res_files(path):
     files = os.listdir(path)
-    files = sorted(files, key=lambda t: os.stat(t).st_mtime)
     res_files = []
     for file in files:
         if os.path.isdir(os.path.join(path, file)):
