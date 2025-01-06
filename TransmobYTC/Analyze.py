@@ -99,6 +99,9 @@ class Analyser:
         self.mask = None
         self.length = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
         self.fps = int(self.cap.get(cv2.CAP_PROP_FPS))
+        frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        frame_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        self.frame_shape = (frame_width, frame_height)
         self.points: List[(int, int)] = []
         self.lines: List[Line] = []
         self.frame_nb = frame_nb
@@ -359,7 +362,7 @@ class Analyser:
 
     # noinspection PyTypeChecker
     def create_mask(self):
-        self.mask = tuple(map(int, Line.get_total_bounding_box(self.lines)))
+        self.mask = tuple(map(int, Line.get_total_bounding_box(self.lines, self.frame_shape)))
 
     def get_lines(self):
         return self.lines, self.mask

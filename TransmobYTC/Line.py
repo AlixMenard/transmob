@@ -67,7 +67,7 @@ class Line:
         self.counter.cleanse(still_tracked)
 
     @staticmethod
-    def get_total_bounding_box(lines:List["Line"]):
+    def get_total_bounding_box(lines:List["Line"], shape:(int, int)):
         if not lines:
             return None
 
@@ -81,6 +81,11 @@ class Line:
             min_y1 = min(min_y1, y1)
             max_x2 = max(max_x2, x2)
             max_y2 = max(max_y2, y2)
+
+        min_x1 = max(0, min_x1)
+        min_y1 = max(0, min_y1)
+        max_x2 = min(shape[0], max_x2)
+        max_y2 = min(shape[1], max_y2)
         
         return [min_x1, min_y1, max_x2, max_y2]
 
