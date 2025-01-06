@@ -77,13 +77,14 @@ Nested Threads for processing (frame processing // tracking) \
 ## transmobYT
 
 Yolo object detection, Yolo tracking via BoT-SORT.\
-Paralleled video processing.\
+Paralleled video processing.
 
 ## transmobYTC
 
 Yolo object detection, Yolo tracking via BoT-SORT.\
 YOLO and additional processes running on CUDA\
-CUDA usage prevents paralleled processing, serialized is de facto used.
+CUDA usage prevents paralleled processing, serialized is de facto used.\
+CUDA performances allow for further discrimancy of *trucks* into *trucks and vans*.
 
 ## Notes
 - Classic and NT versions are discontinued for efficiency reasons
