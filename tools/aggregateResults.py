@@ -1,6 +1,7 @@
 import os
 import tkinter as tk
 from tkinterdnd2 import TkinterDnD, DND_FILES
+import shutil
 
 def aggregateResults(path):
     res_files = get_res_files(path)
@@ -23,6 +24,45 @@ def get_res_files(path):
         elif file == "results.txt":
             res_files.append(os.path.join(path, file))
     return res_files
+
+def move_files_one_level_up(folder_path):
+    """
+    Recursively move all files in subfolders one level up.
+
+    :param folder_path: Path to the folder to start the operation.
+    """
+    for root, dirs, files in os.walk(folder_path, topdown=False):
+        for file in files:
+            # Construct full file paths
+            current_file_path = os.path.join(root, file)
+            target_directory = os.path.dirname(root)
+
+            # Move the file up one directory level
+            try:
+                shutil.move(current_file_path, target_directory)
+                print(f"Moved: {current_file_path} -> {target_directory}")
+            except Exception as e:
+                print(f"Error moving {current_file_path}: {e}")
+
+        # Remove empty folders
+        for dir_name in dirs:
+            subfolder_path = os.path.join(root, dir_name)
+            if not os.listdir(subfolder_path):
+                try:
+                    os.rmdir(subfolder_path)
+                    print(f"Removed empty folder: {subfolder_path}")
+                except Exception as e:
+                    print(f"Error removing folder {subfolder_path}: {e}")
+
+if __name__ == "__main__":
+    # Specify the starting folder path here
+    folder_path = input("Enter the path to the folder: ").strip()
+
+    if os.path.isdir(folder_path):
+        move_files_one_level_up(folder_path)
+    else:
+        print(f"Invalid folder path: {folder_path}")
+
 
 def window():
     root = TkinterDnD.Tk()

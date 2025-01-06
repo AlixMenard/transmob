@@ -3,13 +3,13 @@ import tkinter as tk
 from tkinterdnd2 import TkinterDnD, DND_FILES
 import math
 
-def split(path):
+def split(path, size):
     files = os.listdir(path)
     nb_splits = math.ceil(len(files)/5)
     os.chdir(path)
     for i in range(nb_splits):
         os.mkdir(f"split_{i}")
-        for _ in range(5):
+        for _ in range(size):
             if len(files) == 0:
                 break
             f = files.pop(0)
@@ -24,15 +24,21 @@ def window():
     file_entry = tk.Entry(root, textvariable = file_path)
     file_entry.grid(row = 0, column = 1, pady=10, padx=5)
 
+    size_lab = tk.Label(root, text = "Taille des sous-dossiers : ")
+    size_lab.grid(row = 1, column = 0, pady=10, padx=5)
+    size_var = tk.IntVar(value = 5)
+    size_entry = tk.Entry(root, textvariable = size_var)
+    size_entry.grid(row = 1, column = 1, pady=10, padx=5)
+
     def validate():
         path = file_path.get()
         path = path.strip('"{}')
-        split(path)
+        split(path, size_entry.get())
         root.destroy()
 
     def create_bt():
         bt = tk.Button(root, text = "Valider", command = validate)
-        bt.grid(row = 1, column = 0, columnspan = 2, pady=10, padx=5)
+        bt.grid(row = 2, column = 0, columnspan = 2, pady=10, padx=5)
 
     def on_drop(event):
         # When a file is dropped, set the file path into the entry widget
