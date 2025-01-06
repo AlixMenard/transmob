@@ -17,8 +17,8 @@ import time
 import tkinter as tk
 from datetime import datetime
 
-from fastreid.config import get_cfg
-from fastreid.engine import DefaultPredictor
+#from fastreid.config import get_cfg
+#from fastreid.engine import DefaultPredictor
 
 # ? First try at box connection, either too slow (often) or incorrect and leaving objects unclassed
 def dic_search2(dic: dict, tupl: tuple):
@@ -140,7 +140,7 @@ class Analyser:
         while 1:
             frame = deepcopy(save_frame)
             for l in self.lines:
-                draw_line(frame, l, self.mask)
+                draw_line(frame, l, (0,0,0,0))
             for p in self.points:
                 cv2.circle(frame, p, radius=1, color=(0, 0, 255), thickness=3)
             cv2.imshow("Line setup", frame)
