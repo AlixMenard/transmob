@@ -101,7 +101,7 @@ class Playlist:
             an = Analyser(self.folder, f, graph=self.graph, model=self.model, watch_classes=self.watch_classes,
                           frame_nb=self.frame_nb, screenshots=self.screenshots)
             if (lines is not None) or (not first):
-                trust = an.starter(lines, trust_time=trust, sp = not self.validation) or trust
+                trust = an.starter(lines, trust_time=trust, sp = not self.validation or not first) or trust
             else:
                 trust = an.starter(trust_time=trust) or trust
             if self.onesetup:
