@@ -33,7 +33,7 @@ def window():
     def validate():
         path = file_path.get()
         path = path.strip('"{}')
-        split(path, size_entry.get())
+        split(path, int(size_entry.get()))
         root.destroy()
 
     def create_bt():
