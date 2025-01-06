@@ -83,7 +83,7 @@ class Playlist:
             for p in self.playlists:
                 lines, trust = p.initialise(lines, trust, first)
                 first = False
-            [p.dump() for p in self.playlists]
+                p.dump()
             for i in range(len(self.playlists)):
                 del self.playlists[0]
             self.playlists = [rf"{self.folder}/{s}" for s in os.listdir(self.folder) if s != "playlist.json"]
@@ -98,7 +98,7 @@ class Playlist:
         for f in self.files:
             an = Analyser(self.folder, f, graph=self.graph, model=self.model, watch_classes=self.watch_classes,
                           frame_nb=self.frame_nb, screenshots=self.screenshots)
-            if lines is not None or first:
+            if (lines is not None) or (not first):
                 trust = an.starter(lines, trust_time=trust, sp = not self.validation) or trust
             else:
                 trust = an.starter(trust_time=trust) or trust
