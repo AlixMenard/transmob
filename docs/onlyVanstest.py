@@ -50,5 +50,20 @@ def fight(coco_path, vans_path, onlyvans, yolo11):
     for van in vans:
         frame = cv2.imread(van)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        conf = model.detect(frame)[0].boxes.conf[0]
+        conf = model.detect(frame, classes = [2])[0].boxes.conf[0]
         vans_confs_yolo.append(conf)
+
+    model = YOLO(onlyvans).to(device)
+
+    cars_confs_vans = []
+    vans_confs_vans = []
+    for car in cars:
+        frame = cv2.imread(car)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        conf = model.detect(frame)[0].boxes.conf[0]
+        cars_confs_vans.append(conf)
+    for van in vans:
+        frame = cv2.imread(van)
+        frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        conf = model.detect(frame)[0].boxes.conf[0]
+        vans_confs_vans.append(conf)
