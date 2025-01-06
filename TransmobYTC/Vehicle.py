@@ -60,8 +60,8 @@ class Vehicle:
         self.hist_conf = self.hist_conf[:15]
 
         if _class == "truck":
-            if self.classbis is not None and all(h[0]=="car" for h in self.hist_conf[-5:]):
-                self.hist_conf[-1] = ("car", conf)
+            if self.classbis is not None and all(h[0]=="van" for h in self.hist_conf[-5:]):
+                self.hist_conf[-1] = ("van", conf)
                 return
             results = self.fleet.onlyvans(frame, device=0, verbose=False)
             classes = results[0].boxes.cls.int().cpu().tolist()
@@ -71,9 +71,9 @@ class Vehicle:
             else:
                 c, cls = confs[0], classes[0]
                 if c >= conf:
-                    self.hist_conf[-1] = ("car", c)
-                _class = "car"
-                self.classbis = "car"
+                    self.hist_conf[-1] = ("van", c)
+                _class = "van"
+                self.classbis = "van"
 
         if _class != self._class or self._class == "person":
             self.class_check()
