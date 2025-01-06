@@ -17,6 +17,7 @@ def aggregateResults(path):
 
 def get_res_files(path):
     files = os.listdir(path)
+    files = sorted(files, key=lambda t: os.stat(t).st_mtime)
     res_files = []
     for file in files:
         if os.path.isdir(os.path.join(path, file)):
@@ -25,14 +26,11 @@ def get_res_files(path):
             res_files.append(os.path.join(path, file))
     return res_files
 
-def move_files_one_level_up(folder_path):
-    """
-    Recursively move all files in subfolders one level up.
-
-    :param folder_path: Path to the folder to start the operation.
-    """
+def move_videos_up(folder_path):
     for root, dirs, files in os.walk(folder_path, topdown=False):
         for file in files:
+            if not os.path.splitext(file)[1].lower() in [".mp4", ".mts", ".lrv", ".avi"]:
+                continue
             # Construct full file paths
             current_file_path = os.path.join(root, file)
             target_directory = os.path.dirname(root)
@@ -53,16 +51,6 @@ def move_files_one_level_up(folder_path):
                     print(f"Removed empty folder: {subfolder_path}")
                 except Exception as e:
                     print(f"Error removing folder {subfolder_path}: {e}")
-
-if __name__ == "__main__":
-    # Specify the starting folder path here
-    folder_path = input("Enter the path to the folder: ").strip()
-
-    if os.path.isdir(folder_path):
-        move_files_one_level_up(folder_path)
-    else:
-        print(f"Invalid folder path: {folder_path}")
-
 
 def window():
     root = TkinterDnD.Tk()
