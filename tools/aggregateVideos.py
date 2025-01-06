@@ -24,4 +24,4 @@ def get_vid_length(path):
 def merge(temp, path, count):
     vids = [VideoFileClip(os.path.join(path,t[0])) for t in temp]
     n_vid = concatenate_videoclips(vids, method="compose")
-    n_vid.write_videofile(os.path.join(path,f"merged_{count}.mp4"))
+    n_vid.write_videofile(os.path.join(path,f"merged_{count}.mp4"), threads=32)
