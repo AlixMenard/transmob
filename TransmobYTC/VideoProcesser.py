@@ -77,16 +77,17 @@ class Playlist:
 
         self.files = [f[0] for f in final_order]
 
-    def initialise(self, lines=None):
+    def initialise(self, lines=None, trust = False, first = False):
         if self.playlists is not None:
+            first = True
             for p in self.playlists:
-                lines = p.initialise(lines)
+                lines, trust = p.initialise(lines, trust, first)
+                first = False
             [p.dump() for p in self.playlists]
             for i in range(len(self.playlists)):
                 del self.playlists[0]
             self.playlists = [rf"{self.folder}/{s}" for s in os.listdir(self.folder) if s != "playlist.json"]
             return
-        trust = False
         if os.path.exists(f"{self.folder}/product"):
             shutil.rmtree(f"{self.folder}/product")
         os.mkdir(f"{self.folder}/product")
@@ -97,7 +98,7 @@ class Playlist:
         for f in self.files:
             an = Analyser(self.folder, f, graph=self.graph, model=self.model, watch_classes=self.watch_classes,
                           frame_nb=self.frame_nb, screenshots=self.screenshots)
-            if lines is not None:
+            if lines is not None or first:
                 trust = an.starter(lines, trust_time=trust, sp = not self.validation) or trust
             else:
                 trust = an.starter(trust_time=trust) or trust
@@ -105,7 +106,7 @@ class Playlist:
                 lines = an.get_lines()
             self.analysers[f] = an
         self.sort_files()
-        return lines
+        return lines, trust
 
     def start(self, an:Analyser):
         if type(an) == str:
