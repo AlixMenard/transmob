@@ -5,7 +5,7 @@ import math
 
 def split(path, size):
     files = os.listdir(path)
-    files = sorted(files, key=lambda t: os.stat(t).st_mtime)
+    files = sorted(files, key=lambda t: os.stat(os.path.join(path,t)).st_mtime)
     nb_splits = math.ceil(len(files)/size)
     os.chdir(path)
     for i in range(nb_splits):
