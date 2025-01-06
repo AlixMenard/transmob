@@ -80,10 +80,12 @@ class Playlist:
     def initialise(self, lines=None, trust = False, first = False):
         if self.playlists is not None:
             first = True
-            for p in self.playlists:
+            for i,p in enumerate(self.playlists):
+                print(f"{i}/{len(self.playlists)}", end="\r")
                 lines, trust = p.initialise(lines, trust, first)
                 first = False
                 p.dump()
+            print("Complete.")
             for i in range(len(self.playlists)):
                 del self.playlists[0]
             self.playlists = [rf"{self.folder}/{s}" for s in os.listdir(self.folder) if s != "playlist.json"]
