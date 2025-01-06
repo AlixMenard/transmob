@@ -242,8 +242,6 @@ class Analyser:
 
             if self.mask is not None:
                 x1, y1, x2, y2 = self.mask
-                print(self.mask)
-                print(self.lines[0].start, self.lines[0].end)
                 frame = frame[y1:y2, x1:x2]
 
             results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device=0, conf=0.1)
