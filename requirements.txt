@@ -1,4 +1,5 @@
-﻿faiss-cpu==1.9.0.post1
+﻿boxmot==11.0.6
+faiss-cpu==1.9.0.post1
 filterpy
 lapx==0.5.10.post1
 matplotlib==3.9.2
