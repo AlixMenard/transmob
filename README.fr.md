@@ -82,7 +82,8 @@ Analyse en parallèle des vidéos.\
 
 Detection d'objet par YOLO, suivi par YOLO via BoT-SORT.\
 YOLO et autres processus tournant sur CUDA.\
-L'usage de CUDA empêche la parallèlisation des vidéos qui sont de facto analysées successivement.
+L'usage de CUDA empêche la parallèlisation des vidéos qui sont de facto analysées successivement.\
+les performances de CUDA de discriminer *trucks* (*camions*) en *trucks and vans* (*camions et camionettes*).
 
 ## Notes
 - Classic et NT sont discontinués pour des raisons d'efficacité
