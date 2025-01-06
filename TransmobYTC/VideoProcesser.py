@@ -175,7 +175,7 @@ class Playlist:
             for file in self.analysers:
                 if self.analysers[file] is not None:
                     self.analysers[file].dump()
-                    del self.analysers[file]
+                    self.analysers[file] = 0
         else:
             for p in self.playlists:
                 if type(p) == str:
