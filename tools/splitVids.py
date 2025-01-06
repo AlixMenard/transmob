@@ -5,7 +5,7 @@ import math
 
 def split(path, size):
     files = os.listdir(path)
-    nb_splits = math.ceil(len(files)/5)
+    nb_splits = math.ceil(len(files)/size)
     os.chdir(path)
     for i in range(nb_splits):
         os.mkdir(f"split_{i}")
