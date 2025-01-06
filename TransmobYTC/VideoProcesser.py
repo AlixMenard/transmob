@@ -80,7 +80,7 @@ class Playlist:
     def initialise(self, lines=None):
         if self.playlists is not None:
             for p in self.playlists:
-                p.initialise(lines)
+                lines = p.initialise(lines)
             [p.dump() for p in self.playlists]
             for i in range(len(self.playlists)):
                 del self.playlists[0]
@@ -105,6 +105,7 @@ class Playlist:
                 lines = an.get_lines()
             self.analysers[f] = an
         self.sort_files()
+        return lines
 
     def start(self, an:Analyser):
         if type(an) == str:
