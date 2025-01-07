@@ -19,7 +19,7 @@ def get_cars(coco_path):
             txt = f.read()
         txt = txt.split(" ")[0]
         if txt == "2":
-            cars.append(os.path.join(rf"{coco_path}/images/train2017", label))
+            cars.append(os.path.join(rf"{coco_path}/images/train2017", label[:-4]+".jpg"))
         if len(cars) > 50:
             break
     return cars
@@ -33,7 +33,7 @@ def get_trucks(coco_path):
             txt = f.read()
         txt = txt.split(" ")[0]
         if txt == "7":
-            trucks.append(os.path.join(rf"{coco_path}/images/train2017", label))
+            trucks.append(os.path.join(rf"{coco_path}/images/train2017", label[:-4]+".jpg"))
         if len(trucks) > 50:
             break
     return trucks
@@ -62,19 +62,22 @@ def fight(coco_path, vans_path, onlyvans, yolo11):
     for car in cars:
         frame = cv2.imread(car)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        conf = model.detect(frame, classes = [2])[0].boxes.conf[0]
+        confs = model(frame, classes = [2])[0].boxes.conf
+        conf = confs[0] if len(confs) > 0 else 0
         cars_confs_yolo.append(conf)
     print("vans yolo...")
     for van in vans:
         frame = cv2.imread(van)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        conf = model.detect(frame, classes = [2,7])[0].boxes.conf[0]
+        confs = model(frame, classes = [2,7])[0].boxes.conf
+        conf = confs[0] if len(confs) > 0 else 0
         vans_confs_yolo.append(conf)
     print("trucks yolo...")
     for truck in trucks:
         frame = cv2.imread(truck)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        conf = model.detect(frame, classes = [7])[0].boxes.conf[0]
+        confs = model(frame, classes = [7])[0].boxes.conf
+        conf = confs[0] if len(confs) > 0 else 0
         trucks_confs_yolo.append(conf)
 
     model = YOLO(onlyvans).to(device)
@@ -86,19 +89,22 @@ def fight(coco_path, vans_path, onlyvans, yolo11):
     for car in cars:
         frame = cv2.imread(car)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        conf = model.detect(frame)[0].boxes.conf[0]
+        confs = model(frame)[0].boxes.conf
+        conf = confs[0] if len(confs) > 0 else 0
         cars_confs_vans.append(conf)
     print("vans vans...")
     for van in vans:
         frame = cv2.imread(van)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        conf = model.detect(frame)[0].boxes.conf[0]
+        confs = model(frame)[0].boxes.conf
+        conf = confs[0] if len(confs) > 0 else 0
         vans_confs_vans.append(conf)
     print("trucks vans...")
     for truck in trucks:
         frame = cv2.imread(truck)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        conf = model.detect(frame)[0].boxes.conf[0]
+        confs = model(frame)[0].boxes.conf
+        conf = confs[0] if len(confs) > 0 else 0
         trucks_confs_vans.append(conf)
 
     dic = {"cars_confs_yolo": cars_confs_yolo,
