@@ -114,7 +114,7 @@ def fight(coco_path, vans_path, onlyvans, yolo11):
            "vans_confs_vans": vans_confs_vans,
            "trucks_confs_vans": trucks_confs_vans}
     with open("test.json", "w") as f:
-        json.dump(dic, f)
+        json.dump(dic, f, indent = 4)
 
 if __name__ == "__main__":
     coco_path = r"C:\Users\Utilisateur\Desktop\transmob\datasets\coco"
