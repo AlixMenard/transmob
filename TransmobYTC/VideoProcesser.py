@@ -188,7 +188,7 @@ class Playlist:
     def clean(self):
         if os.path.exists(rf"{self.folder}/playlist.json"):
             os.remove(rf"{self.folder}/playlist.json")
-        if not self.playlists:
+        if os.path.exists(rf"{self.folder}/cache"):
             shutil.rmtree(rf"{self.folder}/cache")
 
     @classmethod
