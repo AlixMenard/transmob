@@ -5,7 +5,6 @@ def get():
         data = json.load(json_file)
     return data
 
-
 def find_delta(delta_ori, delta_vans):
     # Combine the two lists and get unique values as potential thresholds
     combined = sorted(set(delta_ori + delta_vans))
@@ -53,7 +52,7 @@ def find_ratio(ratio_ori, ratio_vans):
     return best_threshold, best_score, grade
 
 # ! Value
-length = 500
+length = 435
 def prep():
     with open('test.json', 'r') as json_file:
         data = json.load(json_file)
@@ -71,10 +70,10 @@ prep()
 data = get()
 
 threshold, score, grade = find_delta(data["cars_confs_deltas"], data["vans_confs_deltas"])
-print(f"Best threshold delta cars vs vans : {threshold}, Best score: {score}, Grade: {100*grade:2f}%")
+print(f"Best threshold delta cars vs vans : {threshold}, Best score: {score}, Grade: {100*grade:.2f}%")
 threshold, score, grade = find_ratio(data["cars_confs_ratio"], data["vans_confs_ratio"])
-print(f"Best threshold ratio cars vs vans : {threshold}, Best score: {score}, Grade: {100*grade:2f}%")
+print(f"Best threshold ratio cars vs vans : {threshold}, Best score: {score}, Grade: {100*grade:.2f}%")
 threshold, score, grade = find_delta(data["trucks_confs_deltas"], data["vans_confs_deltas"])
-print(f"Best threshold delta trucks vs vans : {threshold}, Best score: {score}, Grade: {100*grade:2f}%")
+print(f"Best threshold delta trucks vs vans : {threshold}, Best score: {score}, Grade: {100*grade:.2f}%")
 threshold, score, grade = find_ratio(data["trucks_confs_ratio"], data["vans_confs_ratio"])
-print(f"Best threshold ratio trucks vs vans : {threshold}, Best score: {score}, Grade: {100*grade:2f}%")
+print(f"Best threshold ratio trucks vs vans : {threshold}, Best score: {score}, Grade: {100*grade:.2f}%")
