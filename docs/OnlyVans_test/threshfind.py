@@ -24,7 +24,9 @@ def find_delta(delta_ori, delta_vans):
             best_score = score
             best_threshold = threshold
 
-    return best_threshold, best_score
+    grade = best_score / (len(delta_ori)+len(delta_vans))
+
+    return best_threshold, best_score, grade
 
 def find_ratio(ratio_ori, ratio_vans):
     # Combine the two lists and get unique values as potential thresholds
@@ -45,13 +47,15 @@ def find_ratio(ratio_ori, ratio_vans):
             best_score = score
             best_threshold = threshold
 
-    return best_threshold, best_score
+    grade = best_score / (len(ratio_ori)+len(ratio_vans))
 
-threshold, score = find_delta(data["cars_confs_deltas"], data["vans_confs_deltas"])
-print(f"Best threshold delta cars vs vans : {threshold}, Best score: {score}")
-threshold, score = find_ratio(data["cars_confs_ratio"], data["vans_confs_ratio"])
-print(f"Best threshold ratio cars vs vans : {threshold}, Best score: {score}")
-threshold, score = find_delta(data["trucks_confs_deltas"], data["vans_confs_deltas"])
-print(f"Best threshold delta trucks vs vans : {threshold}, Best score: {score}")
-threshold, score = find_ratio(data["trucks_confs_ratio"], data["vans_confs_ratio"])
-print(f"Best threshold ratio trucks vs vans : {threshold}, Best score: {score}")
+    return best_threshold, best_score, grade
+
+threshold, score, grade = find_delta(data["cars_confs_deltas"], data["vans_confs_deltas"])
+print(f"Best threshold delta cars vs vans : {threshold}, Best score: {score}, Grade: {100*grade:2f}%")
+threshold, score, grade = find_ratio(data["cars_confs_ratio"], data["vans_confs_ratio"])
+print(f"Best threshold ratio cars vs vans : {threshold}, Best score: {score}, Grade: {100*grade:2f}%")
+threshold, score, grade = find_delta(data["trucks_confs_deltas"], data["vans_confs_deltas"])
+print(f"Best threshold delta trucks vs vans : {threshold}, Best score: {score,} Grade: {100*grade:2f}%")
+threshold, score, grade = find_ratio(data["trucks_confs_ratio"], data["vans_confs_ratio"])
+print(f"Best threshold ratio trucks vs vans : {threshold}, Best score: {score}, Grade: {100*grade:2f}%")

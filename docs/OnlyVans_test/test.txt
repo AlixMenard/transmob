@@ -1,4 +1,4 @@
-Best threshold delta cars vs vans : 0.06734633445739746, Best score: 91
-Best threshold ratio cars vs vans : 1.085169393309295, Best score: 92
-Best threshold delta trucks vs vans : 0.027992069721221924, Best score: 90
-Best threshold ratio trucks vs vans : 1.0310174003739823, Best score: 94
+Best threshold delta cars vs vans : 0.06734633445739746, Best score: 91, Grade: 89.215686%
+Best threshold ratio cars vs vans : 1.085169393309295, Best score: 92, Grade: 90.196078%
+Best threshold delta trucks vs vans : 0.027992069721221924, Best score: (90,) Grade: 88.235294%
+Best threshold ratio trucks vs vans : 1.0310174003739823, Best score: 94, Grade: 92.156863%
