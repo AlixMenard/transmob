@@ -91,9 +91,9 @@ class Playlist:
         if os.path.exists(f"{self.folder}/product"):
             shutil.rmtree(f"{self.folder}/product")
         os.mkdir(f"{self.folder}/product")
+        if os.path.isdir(rf"{self.folder}/product/screens"):
+            shutil.rmtree(rf"{self.folder}/product/screens")
         if self.screenshots:
-            if os.path.isdir(rf"{self.folder}/product/screens"):
-                shutil.rmtree(rf"{self.folder}/product/screens")
             os.mkdir(f"{self.folder}/product/screens")
         first = True
         for f in self.files:
