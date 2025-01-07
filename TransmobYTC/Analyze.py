@@ -269,7 +269,7 @@ class Analyser:
                 box = vBox(x1, y1, x2 - x1, y2 - y1)
                 if id in fleet_ids:
                     truck_frame = None
-                    if class_name == "truck":
+                    if class_name in ["truck", "car"]:
                         truck_frame = frame[y1-dy:y2-dy, x1-dx:x2-dx]
                     self.fleet.update_vehicle(id, box, class_name, conf, count, truck_frame)
                 else:
