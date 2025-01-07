@@ -20,7 +20,7 @@ def get_cars(coco_path):
         txt = txt.split(" ")[0]
         if txt == "2":
             cars.append(os.path.join(rf"{coco_path}/images/train2017", label[:-4]+".jpg"))
-        if len(cars) > 50:
+        if len(cars) >= 200:
             break
     return cars
 
@@ -34,7 +34,7 @@ def get_trucks(coco_path):
         txt = txt.split(" ")[0]
         if txt == "7":
             trucks.append(os.path.join(rf"{coco_path}/images/train2017", label[:-4]+".jpg"))
-        if len(trucks) > 50:
+        if len(trucks)>= 200:
             break
     return trucks
 
@@ -44,7 +44,7 @@ def get_vans(vans_path):
     vans = []
     for label in images:
         vans.append(os.path.join(rf"{vans_path}/train/images", label))
-        if len(vans) > 50:
+        if len(vans) >= 200:
             break
     return vans
 
