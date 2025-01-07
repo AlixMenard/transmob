@@ -59,7 +59,7 @@ class Vehicle:
         self.hist_conf.append((_class, conf))
         self.hist_conf = self.hist_conf[:15]
 
-        if _class == "truck":
+        if _class in ["truck", "car"]:
             if self.classbis is not None and all(h[0]=="van" for h in self.hist_conf[-5:]):
                 self.hist_conf[-1] = ("van", conf)
                 return
@@ -70,7 +70,7 @@ class Vehicle:
                 return
             else:
                 c, cls = confs[0], classes[0]
-                if c >= conf*1.1:
+                if conf/c <= 1.05:
                     self.hist_conf[-1] = ("van", c)
                 _class = "van"
                 self.classbis = "van"
