@@ -70,7 +70,7 @@ class Vehicle:
                 return
             else:
                 c, cls = confs[0], classes[0]
-                if conf/c <= 1.05:
+                if conf/c <= 1.066:
                     self.hist_conf[-1] = ("van", c)
                 _class = "van"
                 self.classbis = "van"
