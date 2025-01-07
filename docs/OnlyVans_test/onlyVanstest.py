@@ -62,21 +62,21 @@ def fight(coco_path, vans_path, onlyvans, yolo11):
     for car in cars:
         frame = cv2.imread(car)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        confs = model(frame, classes = [2])[0].boxes.conf
+        confs = model(frame, classes = [2], verbose = False)[0].boxes.conf.float().cpu().tolist()
         conf = confs[0] if len(confs) > 0 else 0
         cars_confs_yolo.append(conf)
     print("vans yolo...")
     for van in vans:
         frame = cv2.imread(van)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        confs = model(frame, classes = [2,7])[0].boxes.conf
+        confs = model(frame, classes = [2,7], verbose = False)[0].boxes.conf.float().cpu().tolist()
         conf = confs[0] if len(confs) > 0 else 0
         vans_confs_yolo.append(conf)
     print("trucks yolo...")
     for truck in trucks:
         frame = cv2.imread(truck)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        confs = model(frame, classes = [7])[0].boxes.conf
+        confs = model(frame, classes = [7], verbose = False)[0].boxes.conf.float().cpu().tolist()
         conf = confs[0] if len(confs) > 0 else 0
         trucks_confs_yolo.append(conf)
 
@@ -89,21 +89,21 @@ def fight(coco_path, vans_path, onlyvans, yolo11):
     for car in cars:
         frame = cv2.imread(car)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        confs = model(frame)[0].boxes.conf
+        confs = model(frame, verbose = False)[0].boxes.conf.float().cpu().tolist()
         conf = confs[0] if len(confs) > 0 else 0
         cars_confs_vans.append(conf)
     print("vans vans...")
     for van in vans:
         frame = cv2.imread(van)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        confs = model(frame)[0].boxes.conf
+        confs = model(frame, verbose = False)[0].boxes.conf.float().cpu().tolist()
         conf = confs[0] if len(confs) > 0 else 0
         vans_confs_vans.append(conf)
     print("trucks vans...")
     for truck in trucks:
         frame = cv2.imread(truck)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        confs = model(frame)[0].boxes.conf
+        confs = model(frame, verbose = False)[0].boxes.conf.float().cpu().tolist()
         conf = confs[0] if len(confs) > 0 else 0
         trucks_confs_vans.append(conf)
 
