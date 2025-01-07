@@ -1,8 +1,9 @@
 import json
 
-with open('test.json', 'r') as json_file:
-    data = json.load(json_file)
-
+def get():
+    with open('test.json', 'r') as json_file:
+        data = json.load(json_file)
+    return data
 
 
 def find_delta(delta_ori, delta_vans):
@@ -51,11 +52,29 @@ def find_ratio(ratio_ori, ratio_vans):
 
     return best_threshold, best_score, grade
 
+# ! Value
+length = 500
+def prep():
+    with open('test.json', 'r') as json_file:
+        data = json.load(json_file)
+    data["cars_confs_deltas"] = [data["cars_confs_yolo"][i] - data["cars_confs_vans"][i] for i in range(length)]
+    data["trucks_confs_deltas"] = [data["trucks_confs_yolo"][i] - data["trucks_confs_vans"][i] for i in range(length)]
+    data["vans_confs_deltas"] = [data["vans_confs_yolo"][i] - data["vans_confs_vans"][i] for i in range(length)]
+
+    data["cars_confs_ratio"] = [data["cars_confs_yolo"][i] / data["cars_confs_vans"][i] if data["cars_confs_vans"][i]>0 else 10e9 for i in range(length)]
+    data["trucks_confs_ratio"] = [data["trucks_confs_yolo"][i] / data["trucks_confs_vans"][i] if data["trucks_confs_vans"][i]>0 else 10e9 for i in range(length)]
+    data["vans_confs_ratio"] = [data["vans_confs_yolo"][i] / data["vans_confs_vans"][i] if data["vans_confs_vans"][i]>0 else 10e9 for i in range(length)]
+    with open('test.json', 'w') as json_file:
+        json.dump(data, json_file, indent=4)
+
+prep()
+data = get()
+
 threshold, score, grade = find_delta(data["cars_confs_deltas"], data["vans_confs_deltas"])
 print(f"Best threshold delta cars vs vans : {threshold}, Best score: {score}, Grade: {100*grade:2f}%")
 threshold, score, grade = find_ratio(data["cars_confs_ratio"], data["vans_confs_ratio"])
 print(f"Best threshold ratio cars vs vans : {threshold}, Best score: {score}, Grade: {100*grade:2f}%")
 threshold, score, grade = find_delta(data["trucks_confs_deltas"], data["vans_confs_deltas"])
-print(f"Best threshold delta trucks vs vans : {threshold}, Best score: {score,} Grade: {100*grade:2f}%")
+print(f"Best threshold delta trucks vs vans : {threshold}, Best score: {score}, Grade: {100*grade:2f}%")
 threshold, score, grade = find_ratio(data["trucks_confs_ratio"], data["vans_confs_ratio"])
 print(f"Best threshold ratio trucks vs vans : {threshold}, Best score: {score}, Grade: {100*grade:2f}%")
