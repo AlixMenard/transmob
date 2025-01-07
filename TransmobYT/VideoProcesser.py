@@ -130,6 +130,7 @@ class Playlist:
                 process_dur += process_dur2
                 del p
             diff = round(100 * (process_dur / video_d) - 100, 2) if process_dur < video_d else round(100 * (process_dur / video_d) - 100, 2)
+            self.clean()
             return video_d, process_dur, diff
         An = [self.analysers[f] if self.analysers[f] is not None else f for f in self.files]
         start = time.time()
@@ -140,6 +141,7 @@ class Playlist:
         process_dur = end-start
         print("\n"*3)
         diff = round(100*(process_dur/video_d)-100, 2) if process_dur<video_d else round(100*(process_dur/video_d)-100, 2)
+        self.clean()
         return video_d, process_dur, diff
 
     def get_lines(self):
@@ -177,6 +179,12 @@ class Playlist:
                     p = Playlist.load(rf"{p}")
                 p.dump()
                 del p
+
+    def clean(self):
+        if os.path.exists(rf"{self.folder}/playlist.json"):
+            os.remove(rf"{self.folder}/playlist.json")
+        if not self.playlists:
+            shutil.rmtree(rf"{self.folder}/cache")
 
     @classmethod
     def load(cls, parent):
