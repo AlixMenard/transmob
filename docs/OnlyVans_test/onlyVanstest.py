@@ -109,3 +109,10 @@ def fight(coco_path, vans_path, onlyvans, yolo11):
            "trucks_confs_vans": trucks_confs_vans}
     with open("test.json", "w") as f:
         json.dump(dic, f)
+
+if __name__ == "__main__":
+    coco_path = r"C:\Users\Utilisateur\Desktop\transmob\datasets\coco"
+    van_path = r"C:\Users\Utilisateur\Desktop\transmob\datasets\vans_dataset"
+    yolo = r"C:\Users\Utilisateur\Desktop\transmob\weights\yolo11x.pt"
+    onlyvans = r"C:\Users\Utilisateur\Desktop\transmob\weights\vansx.pt"
+    fight(coco_path, van_path, onlyvans, yolo)
