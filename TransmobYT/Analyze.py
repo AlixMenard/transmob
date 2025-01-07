@@ -281,8 +281,10 @@ class Analyser:
                 if self.graph:
                     cv2.rectangle(frame, (x1-dx, y1-dy), (x2-dx, y2-dy), color, 2)
                     v = self.fleet.get(id)
-                    cv2.putText(frame, f'{v.id} ({v._class})', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
-                                (255, 255, 0), 2)
+                    text = f'{v.id} ({v._class})'
+                    text_x = x1 - dx + 5
+                    text_y = y2 - dy - 5
+                    cv2.putText(frame, text, (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 0), 1)
 
             self.fleet.watch_bikes()
 
