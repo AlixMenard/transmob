@@ -79,6 +79,8 @@ if __name__ == '__main__':
 
         results = model.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes = [2],
                              device=0, conf=0.1)
+        if count % 10 != 0:
+            continue
         try:
             ids = results[0].boxes.id.int().cpu().tolist()
         except:
@@ -110,7 +112,7 @@ if __name__ == '__main__':
         else:
             reid_ranks = []
 
-        reid_ranks = np.array([0 if i<4 else 1 for i in reid_ranks])
+        reid_ranks = np.array([0 if i<5 else 1 for i in reid_ranks])
         if len(reid_ranks) == 0:
             ids = np.array(ids)
             ids = ids.reshape(-1,1)
