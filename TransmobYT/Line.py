@@ -56,7 +56,7 @@ class Line:
         self.mask_bound()
 
     def mask_bound(self):
-        margin = 4/5
+        margin = 8/15
         self.maskbound = [
             self.center[0] - self.length * margin,  # left
             self.center[1] - self.length * margin,  # top
