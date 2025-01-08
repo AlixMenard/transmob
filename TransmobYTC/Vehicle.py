@@ -60,7 +60,7 @@ class Vehicle:
         self.hist_conf = self.hist_conf[:15]
 
         if _class in ["truck", "car"]:
-            if (self.classbis is not None) and (all(h[0]=="van" for h in self.hist_conf[-5:])) and (frame_t-self.last_onlyvans < 15):
+            if (self.classbis is not None) and (all(h[0]=="van" for h in self.hist_conf[-5:])) and (frame_t-self.last_onlyvans < 10):
                 self.hist_conf[-1] = ("van", conf)
                 return
             results = self.fleet.onlyvans(frame, device=0, verbose=False)
