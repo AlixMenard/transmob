@@ -267,6 +267,7 @@ class Analyser:
 
 
                 box = vBox(x1, y1, x2 - x1, y2 - y1)
+                box_frame = vBox(x1-dx, y1-dy, x2 - x1, y2 - y1)
                 if id in fleet_ids:
                     truck_frame = None
                     if class_name in ["truck", "car"]:
@@ -282,7 +283,7 @@ class Analyser:
                         crossed = l.cross(self.fleet.get(id))
                         if crossed and self.screenshots:
                             class_name = self.fleet.get(id)._class
-                            self.screen(frame, box.xyxy, id, class_name, c_time)
+                            self.screen(frame, box_frame.xyxy, id, class_name, c_time)
                         color = (255, 0, 0)
 
                 if self.graph:
