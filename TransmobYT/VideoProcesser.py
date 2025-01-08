@@ -78,34 +78,38 @@ class Playlist:
 
         self.files = [f[0] for f in final_order]
 
-    def initialise(self, lines=None):
+    def initialise(self, lines=None, trust = False):
         if self.playlists is not None:
-            for p in self.playlists:
-                p.initialise(lines)
-            [p.dump() for p in self.playlists]
+            for i, p in enumerate(self.playlists):
+                print(f"{i}/{len(self.playlists)}", end="\r", flush=True)
+                lines, trust = p.initialise(lines, trust)
+                p.dump()
+            print("Complete.", flush=True)
             for i in range(len(self.playlists)):
                 del self.playlists[0]
             self.playlists = [rf"{self.folder}/{s}" for s in os.listdir(self.folder) if s != "playlist.json"]
             return
-        trust = False
         if os.path.exists(f"{self.folder}/product"):
             shutil.rmtree(f"{self.folder}/product")
         os.mkdir(f"{self.folder}/product")
+        if os.path.isdir(rf"{self.folder}/product/screens"):
+            shutil.rmtree(rf"{self.folder}/product/screens")
         if self.screenshots:
-            if os.path.isdir(rf"{self.folder}/product/screens"):
-                shutil.rmtree(rf"{self.folder}/product/screens")
             os.mkdir(f"{self.folder}/product/screens")
+        first = True
         for f in self.files:
             an = Analyser(self.folder, f, graph=self.graph, model=self.model, watch_classes=self.watch_classes,
                           frame_nb=self.frame_nb, screenshots=self.screenshots)
             if lines is not None:
-                trust = an.starter(lines, trust_time=trust, sp = not self.validation) or trust
+                trust = an.starter(lines, trust_time=trust, sp = not self.validation and not first) or trust
             else:
                 trust = an.starter(trust_time=trust) or trust
             if self.onesetup:
                 lines = an.get_lines()
             self.analysers[f] = an
+            first = False
         self.sort_files()
+        return lines, trust
 
     def start(self, an:Analyser):
         if type(an) == str:
@@ -116,6 +120,7 @@ class Playlist:
         process_duration = end_time - start_time
         d = vidduration(an.url)
         print(f"{an.name} ({format_dur(d)}) lasted {format_dur(process_duration)}")
+        del an
         return d
 
     def play(self):
@@ -130,6 +135,7 @@ class Playlist:
                 process_dur += process_dur2
                 del p
             diff = round(100 * (process_dur / video_d) - 100, 2) if process_dur < video_d else round(100 * (process_dur / video_d) - 100, 2)
+            self.clean()
             return video_d, process_dur, diff
         An = [self.analysers[f] if self.analysers[f] is not None else f for f in self.files]
         start = time.time()
@@ -140,6 +146,7 @@ class Playlist:
         process_dur = end-start
         print("\n"*3)
         diff = round(100*(process_dur/video_d)-100, 2) if process_dur<video_d else round(100*(process_dur/video_d)-100, 2)
+        self.clean()
         return video_d, process_dur, diff
 
     def get_lines(self):
@@ -177,6 +184,12 @@ class Playlist:
                     p = Playlist.load(rf"{p}")
                 p.dump()
                 del p
+
+    def clean(self):
+        if os.path.exists(rf"{self.folder}/playlist.json"):
+            os.remove(rf"{self.folder}/playlist.json")
+        if os.path.exists(rf"{self.folder}/cache"):
+            shutil.rmtree(rf"{self.folder}/cache")
 
     @classmethod
     def load(cls, parent):

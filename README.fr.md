@@ -82,7 +82,8 @@ Analyse en parallèle des vidéos.\
 
 Detection d'objet par YOLO, suivi par YOLO via BoT-SORT.\
 YOLO et autres processus tournant sur CUDA.\
-L'usage de CUDA empêche la parallèlisation des vidéos qui sont de facto analysées successivement.
+L'usage de CUDA empêche la parallèlisation des vidéos qui sont de facto analysées successivement.\
+les performances de CUDA de discriminer *trucks* (*camions*) en *trucks and vans* (*camions et camionettes*).
 
 ## Notes
 - Classic et NT sont discontinués pour des raisons d'efficacité
@@ -93,8 +94,8 @@ L'usage de CUDA empêche la parallèlisation des vidéos qui sont de facto analy
 
 **Distinction camionette vs voiture/camion :** 
 - Modèle unique, entrainé sur COCO et un ensemble de données supplémentaire,mauvaises performannces (84% des camionettes sont toujours catégorisées en voiture/camion). COCO contient peut être déjà des camionnettes listées comme voiture ou camion, et/ou les données additionnelles sont insuffisantes face à COCO. 
-- Modèle additionnel, entrainé spécifiquement sur les données de camionnettes, les reconnait avec une haute confiance, ce qui permet une comparaison de confiance entre la détection orginale et celle faite par le modèle secondaire. 
-*Précision évaluée manuellement sur une vidéo de 26 minutes, car la validation de l'entraînement a échoué à plusieurs reprises, 70 vehicules*
+- Modèle additionnel, entrainé spécifiquement sur les données de camionnettes, les reconnait avec une haute confiance, ce qui permet une comparaison de confiance entre la détection orginale et celle faite par le modèle secondaire. \
+*Précision évaluée manuellement sur une vidéo de 26 minutes, car la validation de l'entraînement a échoué à plusieurs reprises, set de 70 vehicules.*\
 *Cela ne reclasse pas tous les véhicules incorrectement classés en camion*
 
 **Rapidité :** transmobYTC >> transmobYT > transmobNT >= transmob \

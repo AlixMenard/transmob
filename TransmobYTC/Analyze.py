@@ -99,6 +99,9 @@ class Analyser:
         self.mask = None
         self.length = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
         self.fps = int(self.cap.get(cv2.CAP_PROP_FPS))
+        frame_width = int(self.cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        frame_height = int(self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        self.frame_shape = (frame_width, frame_height)
         self.points: List[(int, int)] = []
         self.lines: List[Line] = []
         self.frame_nb = frame_nb
@@ -264,9 +267,10 @@ class Analyser:
 
 
                 box = vBox(x1, y1, x2 - x1, y2 - y1)
+                box_frame = vBox(x1-dx, y1-dy, x2 - x1, y2 - y1)
                 if id in fleet_ids:
                     truck_frame = None
-                    if class_name == "truck":
+                    if class_name in ["truck", "car"]:
                         truck_frame = frame[y1-dy:y2-dy, x1-dx:x2-dx]
                     self.fleet.update_vehicle(id, box, class_name, conf, count, truck_frame)
                 else:
@@ -278,14 +282,17 @@ class Analyser:
                     if l.inbound(x, y, self.fleet.get(id)):
                         crossed = l.cross(self.fleet.get(id))
                         if crossed and self.screenshots:
-                            self.screen(frame, box.xyxy, id, class_name, c_time)
+                            class_name = self.fleet.get(id)._class
+                            self.screen(frame, box_frame.xyxy, id, class_name, c_time)
                         color = (255, 0, 0)
 
                 if self.graph:
                     cv2.rectangle(frame, (x1-dx, y1-dy), (x2-dx, y2-dy), color, 2)
                     v = self.fleet.get(id)
-                    cv2.putText(frame, f'{v.id} ({v._class})', (x1-dx, y1 - dy - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6,
-                                (255, 255, 0), 2)
+                    text = f'{v.id} ({v._class})'
+                    text_x = x1 - dx + 5
+                    text_y = y2 - dy - 5
+                    cv2.putText(frame, text, (text_x, text_y), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (255, 255, 0), 1)
 
             self.fleet.watch_bikes()
 
@@ -334,7 +341,7 @@ class Analyser:
         roi = frame[y1:y2, x1:x2]
         if not c_time:
             c_time = self.strt
-        file_name = fr'{self.folder}/product/screens/{str_time(time_5(c_time))}_{id}_{class_name}.jpg'
+        file_name = fr'{self.folder}/product/screens/{str_time(time_1(c_time))}_{id}_{class_name}.jpg'
         #print(file_name)
         cv2.imwrite(file_name, roi)
 
@@ -357,7 +364,7 @@ class Analyser:
 
     # noinspection PyTypeChecker
     def create_mask(self):
-        self.mask = tuple(map(int, Line.get_total_bounding_box(self.lines)))
+        self.mask = tuple(map(int, Line.get_total_bounding_box(self.lines, self.frame_shape)))
 
     def get_lines(self):
         return self.lines, self.mask

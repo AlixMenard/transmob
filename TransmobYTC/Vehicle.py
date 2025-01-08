@@ -51,7 +51,7 @@ class Vehicle:
         dy = y2-y1
         ds = np.sqrt(dx**2 + dy**2)
         self.speeds.append(ds/dt)
-        self.speeds = self.speeds[0:15]
+        self.speeds = self.speeds[:15]
 
         self.box = box
         self.last_frame = frame_t
@@ -59,21 +59,23 @@ class Vehicle:
         self.hist_conf.append((_class, conf))
         self.hist_conf = self.hist_conf[:15]
 
-        if _class == "truck":
-            if self.classbis is not None and all(h[0]=="car" for h in self.hist_conf[-5:]):
-                self.hist_conf[-1] = ("car", conf)
+        if _class in ["truck", "car"]:
+            if (self.classbis is not None) and (all(h[0]=="van" for h in self.hist_conf[-5:])) and (frame_t-self.last_onlyvans < 15):
+                self.hist_conf[-1] = ("van", conf)
                 return
             results = self.fleet.onlyvans(frame, device=0, verbose=False)
+            self.last_onlyvans = frame_t
             classes = results[0].boxes.cls.int().cpu().tolist()
             confs = results[0].boxes.conf.float().cpu().tolist()
             if len(confs)<1:
                 return
             else:
                 c, cls = confs[0], classes[0]
-                if c >= conf:
-                    self.hist_conf[-1] = ("car", c)
-                _class = "car"
-                self.classbis = "car"
+                if conf/c <= 1.066:
+                    self.hist_conf[-1] = ("van", c)
+                    _class = "van"
+                    self.classbis = "van"
+
 
         if _class != self._class or self._class == "person":
             self.class_check()

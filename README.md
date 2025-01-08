@@ -77,13 +77,14 @@ Nested Threads for processing (frame processing // tracking) \
 ## transmobYT
 
 Yolo object detection, Yolo tracking via BoT-SORT.\
-Paralleled video processing.\
+Paralleled video processing.
 
 ## transmobYTC
 
 Yolo object detection, Yolo tracking via BoT-SORT.\
 YOLO and additional processes running on CUDA\
-CUDA usage prevents paralleled processing, serialized is de facto used.
+CUDA usage prevents paralleled processing, serialized is de facto used.\
+CUDA performances allow for further discrimancy of *trucks* into *trucks and vans*.
 
 ## Notes
 - Classic and NT versions are discontinued for efficiency reasons
@@ -94,8 +95,8 @@ CUDA usage prevents paralleled processing, serialized is de facto used.
 
 **Discrimination of vans vs cars & trucks :** 
 - Standalone model, retrained with COCO and additional data on vans, performs poorly (84% of vans are still categorized as car/truck). The original COCO dataset might already contain several vans listed as one or the other, and/or the additional van dataset is too scarce in comparison to COCO dataset. 
-- Additional model, trained specifically on vans dataset, recognizes with high conficence vans, allowing for a confidence comparison between the original detection on yolo11 and the second detection with this model. 
-*Accuracy evaluated manually on a 26 minutes video, as the training validation repeatedly failed for the model, set of 70 vehicles*
+- Additional model, trained specifically on vans dataset, recognizes with high conficence vans, allowing for a confidence comparison between the original detection on yolo11 and the second detection with this model. \
+*Accuracy evaluated manually on a 26 minutes video, as the training validation repeatedly failed for the model, set of 70 vehicles*\
 *This does not re-classify every vehicle formerly wrongfully detected as truck*
 
 **Speed :** transmobYTC >> transmobYT > transmobNT >= transmob \
