@@ -56,13 +56,16 @@ length = 124
 def prep():
     with open('test.json', 'r') as json_file:
         data = json.load(json_file)
-    data["cars_confs_deltas"] = [data["cars_confs_yolo"][i] - data["cars_confs_vans"][i] for i in range(length)]
-    data["trucks_confs_deltas"] = [data["trucks_confs_yolo"][i] - data["trucks_confs_vans"][i] for i in range(length)]
-    data["vans_confs_deltas"] = [data["vans_confs_yolo"][i] - data["vans_confs_vans"][i] for i in range(length)]
+    lcars = len(data["cars_confs_yolo"])
+    l_trucks = len(data["trucks_confs_yolo"])
+    l_vans = len(data["vans_confs_yolo"])
+    data["cars_confs_deltas"] = [data["cars_confs_yolo"][i] - data["cars_confs_vans"][i] for i in range(lcars)]
+    data["trucks_confs_deltas"] = [data["trucks_confs_yolo"][i] - data["trucks_confs_vans"][i] for i in range(l_trucks)]
+    data["vans_confs_deltas"] = [data["vans_confs_yolo"][i] - data["vans_confs_vans"][i] for i in range(l_vans)]
 
-    data["cars_confs_ratio"] = [data["cars_confs_yolo"][i] / data["cars_confs_vans"][i] if data["cars_confs_vans"][i]>0 else 10e9 for i in range(length)]
-    data["trucks_confs_ratio"] = [data["trucks_confs_yolo"][i] / data["trucks_confs_vans"][i] if data["trucks_confs_vans"][i]>0 else 10e9 for i in range(length)]
-    data["vans_confs_ratio"] = [data["vans_confs_yolo"][i] / data["vans_confs_vans"][i] if data["vans_confs_vans"][i]>0 else 10e9 for i in range(length)]
+    data["cars_confs_ratio"] = [data["cars_confs_yolo"][i] / data["cars_confs_vans"][i] if data["cars_confs_vans"][i]>0 else 10e9 for i in range(lcars)]
+    data["trucks_confs_ratio"] = [data["trucks_confs_yolo"][i] / data["trucks_confs_vans"][i] if data["trucks_confs_vans"][i]>0 else 10e9 for i in range(l_trucks)]
+    data["vans_confs_ratio"] = [data["vans_confs_yolo"][i] / data["vans_confs_vans"][i] if data["vans_confs_vans"][i]>0 else 10e9 for i in range(l_vans)]
     with open('test.json', 'w') as json_file:
         json.dump(data, json_file, indent=4)
 
