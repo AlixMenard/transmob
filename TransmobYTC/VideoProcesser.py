@@ -80,7 +80,7 @@ class Playlist:
     def initialise(self, lines=None, trust = False):
         if self.playlists is not None:
             for i, p in enumerate(self.playlists):
-                print(f"{i}/{len(self.playlists)}", end="\r", flush=True)
+                print(f"{i+1}/{len(self.playlists)}", end="\r", flush=True)
                 lines, trust = p.initialise(lines, trust)
                 p.dump()
             print("Complete.", flush=True)
