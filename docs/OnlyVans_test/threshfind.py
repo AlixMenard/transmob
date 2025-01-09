@@ -52,7 +52,7 @@ def find_ratio(ratio_ori, ratio_vans):
     return best_threshold, best_score, grade
 
 # ! Value
-length = 435
+length = 124
 def prep():
     with open('test.json', 'r') as json_file:
         data = json.load(json_file)
