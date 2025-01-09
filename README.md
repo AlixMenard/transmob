@@ -7,8 +7,8 @@ Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github
 ### Pre-requisite
 - [Python = 3.12](https://www.python.org/downloads/release/python-3127/)
 - [git](https://git-scm.com/downloads/win)
-
-### Install <a name="Install"></a>
+<a name="Install"></a>
+### Install 
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
 - Navigate to the desired place to store the algorithm (use `cd <folder_name>` to navigate)
 - In the shell, execute : `git clone https://github.com/AlixMenard/transmob`
@@ -98,7 +98,7 @@ CUDA performances allow for further discrimancy of *trucks & cars* into *trucks 
 - Performance is to be enhanced with SAHI -> Implement BoTSORT and ReId independently from YOLO
 
 ### Performances
-**Precision :** transmob == transmobNT < transmobYT == transmobYTC \
+**Precision :** transmob == transmobNT < transmobYT == transmobYTC
 
 **Discrimination of vans vs cars & trucks :** 
 - Standalone model, retrained with COCO and additional data on vans, performs poorly (84% of vans are still categorized as car/truck). The original COCO dataset might already contain several vans listed as one or the other, and/or the additional van dataset is too scarce in comparison to COCO dataset. 
