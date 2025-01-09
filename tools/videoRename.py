@@ -12,6 +12,8 @@ def str_time(_time):
     return c_time_str
 
 def rename(path, camera, city):
+    camera = camera.replace(" ", "_")
+    city = city.replace(" ", "_")
     files = os.listdir(path)
     for file in files:
         if os.path.isdir(os.path.join(path, file)):
