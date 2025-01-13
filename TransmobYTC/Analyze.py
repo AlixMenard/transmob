@@ -265,7 +265,6 @@ class Analyser:
                 y1+=dy
                 y2+=dy
 
-
                 box = vBox(x1, y1, x2 - x1, y2 - y1)
                 box_frame = vBox(x1-dx, y1-dy, x2 - x1, y2 - y1)
                 if id in fleet_ids:

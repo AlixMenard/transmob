@@ -2,6 +2,8 @@ import os
 from copy import deepcopy
 import json
 
+import torch
+
 os.environ["OPENCV_LOG_LEVEL"] = "OFF"
 os.environ["OPENCV_FFMPEG_READ_ATTEMPTS"] = "8192"
 
@@ -16,6 +18,10 @@ from typing import List
 import time
 import tkinter as tk
 from datetime import datetime
+
+from boxmot import BotSort
+from pathlib import Path
+from fastreid.config import get_cfg
 
 #from fastreid.config import get_cfg
 #from fastreid.engine import DefaultPredictor
@@ -109,6 +115,13 @@ class Analyser:
         if verbose: print("Video loaded...")
         self.model = model
         self.yolo = YOLO(model)
+        self .tracker = BotSort(
+            reid_weights=Path("FastReId_config/veriwild_bot_resnet50.pt"),
+            device=torch.device("cpu"),  # Use CPU for inference
+            half=True,
+            frame_rate=self.fps,
+            with_reid=False
+        )
         if verbose: print("YOLO loaded...")
         self.class_labels = [
             "person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat",
@@ -242,17 +255,21 @@ class Analyser:
                 x1, y1, x2, y2 = self.mask
                 frame = frame[y1:y2, x1:x2]
 
-            results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device='cpu', conf = 0.1)
+            results = self.yolo.predict(frame, verbose=False, classes=self.watch_classes_ids, device='cpu', conf = 0.25)
             try:
-                ids = results[0].boxes.id.int().cpu().tolist()
+                boxes = results[0].boxes.xyxy.cpu().tolist()
             except:
                 continue
             classes = results[0].boxes.cls.int().cpu().tolist()
             confs = results[0].boxes.conf.float().cpu().tolist()
             boxes = results[0].boxes.xyxy.cpu().tolist()
+            dets = np.array([[*box, conf, cls] for box, conf, cls in zip(boxes, confs, classes)])
 
-            for id, classe, conf, box in zip(ids, classes, confs, boxes):
-                class_name = self.class_labels[classe]
+            res = self.tracker.update(dets, frame) # ? [*t.xyxy, t.id, t.conf, t.cls, t.det_ind]
+
+            fleet_ids = self.fleet.ids
+            for *box, id, conf, classe, _ in res:
+                class_name = self.class_labels[int(classe)]
                 if not class_name in self.watch_classes:
                     continue
                 x1, y1, x2, y2 = map(int, box)
@@ -262,7 +279,6 @@ class Analyser:
                 y1+=dy
                 y2+=dy
 
-                fleet_ids = self.fleet.ids
                 box = vBox(x1, y1, x2 - x1, y2 - y1)
                 box_frame = vBox(x1-dx, y1-dy, x2 - x1, y2 - y1)
                 if id in fleet_ids:
@@ -276,6 +292,7 @@ class Analyser:
                     if l.inbound(x, y, self.fleet.get(id)):
                         crossed = l.cross(self.fleet.get(id))
                         if crossed and self.screenshots:
+                            class_name = self.fleet.get(id)._class
                             self.screen(frame, box_frame.xyxy, id, class_name, c_time)
                         color = (255, 0, 0)
 
@@ -289,12 +306,12 @@ class Analyser:
 
             self.fleet.watch_bikes()
 
-            if cv2.waitKey(1) & 0xFF == 13:
-                del self.cap
-                break
             if self.graph:
+                if cv2.waitKey(1) & 0xFF == 13:
+                    del self.cap
+                    break
                 for l in self.lines:
-                    draw_line(frame, l, (0, 0, 0, 0))
+                    draw_line(frame, l, self.mask)
                 cv2.imshow("Line setup", frame)
 
             time_last_save = count / self.fps - saves * 60
