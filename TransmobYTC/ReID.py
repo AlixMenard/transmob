@@ -10,7 +10,7 @@ import seaborn as sns
 from copy import deepcopy
 
 class ReId:
-    def __init__(self, model = r"../FastReId_config/veriwild_bot_R50-ibn.pth", config = r"../FastReId_config/bagtricks_R50-ibn.yml"):
+    def __init__(self, model = r"../FastReId_config/veriwild_bot_resnet50.pt", config = r"../FastReId_config/bagtricks_R50-ibn.yml"):
         self.cfg = get_cfg()
         self.cfg.merge_from_file(config)
         self.cfg.MODEL.WEIGHTS = model

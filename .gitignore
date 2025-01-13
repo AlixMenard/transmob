@@ -7,4 +7,4 @@ videos/
 **/datasets/**
 **/runs/**
 **/vans_dataset/**
-**/veriwild_bot_R50-ibn.pth
+FastReId_config/veriwild_bot_resnet50.pt
