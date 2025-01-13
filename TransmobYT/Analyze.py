@@ -91,7 +91,7 @@ class Analyser:
         self.name = name
         self.url = folder + "/" + name
         self.folder = folder
-        self.cap = cv2.VideoCapture(self.url, cv2.CAP_FFMPEG)
+        self.cap = cv2.VideoCapture(self.url)
         self.threshold = threshold
         self.watch_classes = watch_classes
         self.graph = graph
@@ -132,7 +132,7 @@ class Analyser:
             self.lines[0].set_nb_lines(len(self.lines))
             self.mask = deepcopy(lines[1])
             should_pass = sp
-        self.cap = cv2.VideoCapture(self.url, cv2.CAP_FFMPEG)
+        self.cap = cv2.VideoCapture(self.url)
         succ, frame = self.cap.read()
         while not succ:
             succ, frame = self.cap.read()
@@ -210,7 +210,7 @@ class Analyser:
 
     def process(self):
         c_time = None
-        self.cap = cv2.VideoCapture(self.url, cv2.CAP_FFMPEG)
+        self.cap = cv2.VideoCapture(self.url)
         time_last_save = saves = count = 0
         print(f"File : {self.url} - {self.fps} FPS - {int(self.length / self.fps)} seconds")
 
