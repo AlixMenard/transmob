@@ -115,7 +115,7 @@ class Analyser:
         if verbose: print("Video loaded...")
         self.model = model
         self.yolo = YOLO(model)
-        self .tracker = BotSort(
+        self.tracker = BotSort(
             reid_weights=Path("FastReId_config/veriwild_bot_resnet50.pt"),
             device=torch.device("cpu"),  # Use CPU for inference
             half=True,
