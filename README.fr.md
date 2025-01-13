@@ -3,6 +3,7 @@ Suivi vidéo de véhicule basé sur [YOLOv11](https://github.com/ultralytics/ult
 Langues : [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/AlixMenard/transmob/blob/main/README.fr.md)
 [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/AlixMenard/transmob/blob/main/README.md)
 
+<a name="Install"></a>
 ## Installation
 ### Prérequis
 - [Python = 3.12](https://www.python.org/downloads/release/python-3127/)
@@ -24,17 +25,19 @@ Durant la prochaine étape, après avoir installé les librairies requises, il f
 Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de meilleurs performances.
 
 ### Méthode lancement 1
+- Allez dans le dossier *transmob*
+- Lancez "start.vbs". Arès le premier lancement, un raccourci sera disponible sur le Bureau pour y accéder plus facilement.
+- Le programme va se lancer puis se mettre à jour. Pas de panique si le lancement est un peu long.
+### Méthode lancement 2
 - Ouvrez un powershell/commandline shell : win+r, tapez "powershell" ou "cmd", puis `Entrée`
 - Naviguez jusqu'au dépôt (à *<chemin_précédent>/transmob*)
 - Exécutez `py GUI.py`
-### Méthode lancement 2
-- Allez dans le dossier *transmob*
-- Lancez "start.vbs". Arès le premier lancement, un raccourci sera disponible sur le Bureau pour y accéder plus facilement".
-- Le programme va se lancer puis se mettre à jour. Pas de panique si le lancement est un peu long.
 ### Usage
 - Glissez et déposez le dossier contenant les vidéos à analyser (**chaque** fichier sera analysé, pensez à supprimer les duplicata, comme ceux avec différentes extensions, comme "fichier.mp4" et "fichier.lrv")
 - Choissisez les options que vous voulez :
-  - `Nombre de frames` : 1, chaque image se analysée, 2,une image sur deux sera analysée (deux fois plus rapide, réduis le taux de détetion, très fortement déconseillé pour les vidéos avec une qualité d'image basse)
+  - `Nombre de frames` :
+    - 1 : chaque image sera analysée
+    - 2 : une image sur deux sera analysée (deux fois plus rapide, réduis le taux de détetion, très fortement déconseillé pour les vidéos avec une qualité d'image basse)
   - `Model YOLO` : les modèles plus gros sont plus précis, mais considérablement plus lent dans le plupart des cas. Avec le support CUDA, le ralentissement lié à la taille du modèle est négligeable et toujours utiliser le modèle de taille *x* est fortement conseillé. 
   - `Types de véhicules` : Types de véhicules à compter, Les autre seront ignorés. Si les piétons (*person*) sont comptés, les vélos et motocylettes (*bicycle* and *motorbike*) ne peuvent pas être ignorés.
   - `Avec vidéo` : Si oui, la vidéo sera affichée durant son traitement. Cela ralentit considérablement le processus. C'est en revanche très utile pour juger de l'efficacité de détection d'un modèle sur une vidéo dont vous n'êtes pas certain.e de la qualité.
@@ -42,9 +45,11 @@ Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de
   - `Un seul setup` : Si oui, seule la première vidéo du dossier sera montrée pour tracer les lignes de comptage. Toutes les autres vidéos auront les même lignes.
   - `Valider les lignes` (Si `Un seul setup` est séléctionné) : Transferera les lignes à chaque vidéo du dossier, mais les affichera pour validation et permettre des modifications.
 - Start
-- La première image de chaque vidéo sera montrée, successivement, pour créer les lignes de comptage. Il faut 3 clics pour créer une ligne : les 2 premiers clics définissent les points de début et de fin de la ligne, le 3e clic défini la direction de comptage. A une intersection, Il est recommendé d'effectuer le 3e clic au milieu de l'intersection. **/!\\** *les 2 premiers clics définissant la ligne à travers laquelle les véhicules seront comptés, ils doivent être précis pour ne pas rater de véhicule ou en compter trop. Cependant, la précision du 3e clic n'a aucune importance. Si plusieurs lignes sont placées, l'ordre doit rester le même sur toutes les vidéos.*
-- Avec la première image, une fenêtre pop-up sera affichée pour vérifier la date de départ de la vidéo. Le programme montrera la date de création de la vidéo en première proposition, Que vous pouvez confirmer avec "Valider". Si cette date n'est pas correcte, vous pouvez taper la date réelle, au format (aaaa-MM-jj hh:mm), puis cliquer sur "Changer".
-- Après avoir défini toutes les lignes sur l'image, pressez `Entrée` pour valider, et répéter pour chaque vidéo.
+- Pour chaque vidéo :
+  - Une fenêtre pop-up sera affichée pour vérifier la date de départ de la vidéo. Le nom de la fenêtre correspond au nom de la vidéo. La fenêtre affiche l'heure estimée de création de la vidéo en se basant sur la date de création du fichier. Si elle est correcte, cliquez sur "Valider", et le programme considerera alors les heures de départ estimée pour les autres vidéos du dossier elles aussi correctes. Sinon, entrez la date de départ de la vidéo **en entier**, le format spécifié doit être respecté.
+  - La première image de chaque vidéo sera montrée, successivement, pour créer les lignes de comptage. Il faut 3 clics pour créer une ligne : les 2 premiers clics définissent les points de début et de fin de la ligne, le 3e clic défini la direction de comptage. A une intersection, Il est recommendé d'effectuer le 3e clic au milieu de l'intersection. \
+**/!\\** *les 2 premiers clics définissant la ligne à travers laquelle les véhicules seront comptés, ils doivent être précis pour ne pas rater de véhicule ou en compter trop. Cependant, la précision du 3e clic n'a aucune importance. Si plusieurs lignes sont placées, l'ordre doit rester le même sur toutes les vidéos.*
+  - Après avoir défini toutes les lignes sur l'image, pressez `Entrée` pour valider, et répéter pour chaque vidéo.
 - Quand plus aucune vidéo n'est montrée, le paramétrage est terminé et le programme va analyser toutes les vidéos. Ne pas ouvrir le fichier `results.txt`durant le processus, cela pourrait empêcher le prgoramme d'écrire le résultat et le bloquer. \
 *Note : Si les commandes python comme `py GUI.py` ne marchent pas, remplacez `py` par `python` (e.g. `python GUI.py`)*
 
@@ -54,12 +59,20 @@ Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de
 - Pensez à bien couvrir l'ensemble de la zone de passage, en particulier pour les passages piétons, pour lesquels les piétons peuvent traverser autour plutôt que sur le passage exactement
 - ~Les fichiers MP4 et LRV donnent les même résultats, car YOLO réduit la qualité de l'image avant de l'analyser.Cependant, les fichiers LRV sont bien plus légers sur le processeur et la mémoire de l'ordinateur.~ Les fichiers MP4 ont une meilleure robustesse face à la compressionque les fichiers LRV face à la décompresseion, et obtiennent de meilleurs résultats avec SAHI.
 
-### Formattage des résultats
-Afin de passer les résultats en format csv :
-- Ouvrir un powershell/commandline shell : win+r, taper "powershell" ou "cmd", puis `Entrée`
-- Naviguer jusqu'à l'emplacement du programme (Utilisez `cd <nom_dossier>` pour naviguer)
-- Dans le shell, exécutez  : `py Tools.py`
-- Une fenêtre s'ouvre, y séléctionner "Formattage des résultats", puis dans la fenêtre suivante, faire glisser le fichier de résultats ("results.txt")
+
+### Outils additionnels
+Des outils additionnels utiles sont disponibles. Pour y accèder, ouvrez une invite de commande et naviguez jusqu'au dossier du projet (voir la [partie Installation](#Install) pour plus d'indications sur la navigation via invite de commande). Exécutez `py Tools.py` (ou `python Tools.py`) pour ouvrir une fenêtre incluant les différents outils.
+#### Formattage des résultats
+Il vous suffit de glisser-déposer le fichier `results.txt` créer par le programme, et cliquer sur "Valider". Un fichier csv sera créer au même emplacement.
+#### Renommer vidéos
+Glissez-déposez le dossier contenant les vidéos à renommer. Entrez le nom/numéro de la caméra (e.g. `GP07`) et son emplacement (ville, rue...), puis cliquez sur "Valider". Chaque vidéo sera renommée au format `camera_emplacement_AAAAMMJJ_HHhMM.ext`, avec *ext* l'extension conservée du fichier vidéo, et `AAAAMMJJ_HHhMM` la date de création formattée de la vidéo.\
+**/!\\** *Ne pas utiliser de caractères spéciaux dans le nom des fichiers.*
+#### Séparer vidéos
+Dans les cas où un grand nombre de vidéos doivent être analysées (>10), il est nécessaire de les séparer en sous-dossiers. Il est aussi recommandé de le faire pour plus de 5 vidéos, car cela permet au programme de mieux gérer la mémoire, mais ce n'est pas obligatoire. Le dossier parent pourra toujours être donné en entier au programme, qui se chargera de traiter chaque sous-dossier.\
+Glissez-déposez le dossier contenant les vidéos, puis renseignez le nombre de vidéos par sous-dossier, enfin cliquez sur "Valider".
+#### Aggréger résultats
+Si les vidéos étaient séparées en sous dossiers, vous aurez peut être besoin de récupérer les résultats de l'ensemble des vidéos en une seule fois. Il suffit de glisser-déposer le dossier parent et cliquer sur "Valider". L'outil ira chercher récursivement les fichiers `results.txt` dans les sous-dossiers, et les combinera en en fichier unique dans le dossier parent. 
+
 
 ## ~~transmob~~
 
@@ -90,13 +103,11 @@ les performances de CUDA de discriminer *trucks* (*camions*) en *trucks and vans
 - Les performances doivent être améliorées avec SAHI -> Implémentation de BoTSORT et ReId indépendemment de YOLO
 
 ### Performances
-**Précision :** transmob == transmobNT < transmobYT == transmobYTC \
+**Précision :** transmob == transmobNT < transmobYT == transmobYTC 
 
 **Distinction camionette vs voiture/camion :** 
 - Modèle unique, entrainé sur COCO et un ensemble de données supplémentaire,mauvaises performannces (84% des camionettes sont toujours catégorisées en voiture/camion). COCO contient peut être déjà des camionnettes listées comme voiture ou camion, et/ou les données additionnelles sont insuffisantes face à COCO. 
-- Modèle additionnel, entrainé spécifiquement sur les données de camionnettes, les reconnait avec une haute confiance, ce qui permet une comparaison de confiance entre la détection orginale et celle faite par le modèle secondaire. \
-*Précision évaluée manuellement sur une vidéo de 26 minutes, car la validation de l'entraînement a échoué à plusieurs reprises, set de 70 vehicules.*\
-*Cela ne reclasse pas tous les véhicules incorrectement classés en camion*
+- Modèle additionnel, entrainé spécifiquement sur les données de camionnettes, les reconnait avec une haute confiance, ce qui permet une comparaison de confiance entre la détection orginale et celle faite par le modèle secondaire. Sur les tests de validation, en comparant les *confiances* du modèle COCO et celles du modèle secondaire sur des images de voiture et camions (de COCO) et de camionnettes (des données supplémentaires), un taux de discrimination réussie de 90% est atteint en plaçant un seuil du *ratio de confiances* (COCO/secondaire) à approximativement `1.08211`. (Au dessus du seuil, le modèle entrainé sur COCO prime, en dèça le véhicule est considéré comme une camionette)
 
 **Rapidité :** transmobYTC >> transmobYT > transmobNT >= transmob \
 YTC n'est que peu affecté en temps par la taille du modèle utilisé, les autres processus sont affectés par un ratio q\~=1.3  \
@@ -105,7 +116,7 @@ Les vidéos peuvent être analysées par 2 images à la fois. Sur de la qualité
 **Modèles :** 
 Du plus léger au plus lourd : *n*, *s*, *m*, *l*, *x*. \
 *m* et supérieurs offrent une detection parfaite en simple frame sur les versions YT et YTC, tandis que *n* est à ~95% et *s* est estimé au dessus de 97%. \
-En double frame, les modèles se situent entre 80% et 95% (estimation max), avec la meilleur performance pour *l*.
+En double frame, les modèles se situent entre 80% et 95% (estimation max), avec (surprenamment) la meilleur performance pour *l*.
 
 ### A faire
 - [x] Organisation des fichiers pour un ordre de traitemetn optimisé 

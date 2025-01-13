@@ -11,40 +11,40 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 #endRegion
 
 def get_cars(coco_path):
-    labels = os.listdir(rf"{coco_path}/labels/train2017")
+    labels = os.listdir(rf"{coco_path}/labels/val2017")
     np.random.shuffle(labels)
     cars = []
     for label in labels:
-        with open(os.path.join(rf"{coco_path}/labels/train2017", label), 'r') as f:
+        with open(os.path.join(rf"{coco_path}/labels/val2017", label), 'r') as f:
             txt = f.read()
         txt = txt.split(" ")[0]
         if txt == "2":
-            cars.append(os.path.join(rf"{coco_path}/images/train2017", label[:-4]+".jpg"))
-        if len(cars) >= 500:
+            cars.append(os.path.join(rf"{coco_path}/images/val2017", label[:-4]+".jpg"))
+        if len(cars) >= 124:
             break
     return cars
 
 def get_trucks(coco_path):
-    labels = os.listdir(rf"{coco_path}/labels/train2017")
+    labels = os.listdir(rf"{coco_path}/labels/val2017")
     np.random.shuffle(labels)
     trucks = []
     for label in labels:
-        with open(os.path.join(rf"{coco_path}/labels/train2017", label), 'r') as f:
+        with open(os.path.join(rf"{coco_path}/labels/val2017", label), 'r') as f:
             txt = f.read()
         txt = txt.split(" ")[0]
         if txt == "7":
-            trucks.append(os.path.join(rf"{coco_path}/images/train2017", label[:-4]+".jpg"))
-        if len(trucks)>= 500:
+            trucks.append(os.path.join(rf"{coco_path}/images/val2017", label[:-4]+".jpg"))
+        if len(trucks)>= 124:
             break
     return trucks
 
 def get_vans(vans_path):
-    images = os.listdir(rf"{vans_path}/train/images")
+    images = os.listdir(rf"{vans_path}/valid/images")
     np.random.shuffle(images)
     vans = []
     for label in images:
-        vans.append(os.path.join(rf"{vans_path}/train/images", label))
-        if len(vans) >= 500:
+        vans.append(os.path.join(rf"{vans_path}/valid/images", label))
+        if len(vans) >= 124:
             break
     return vans
 

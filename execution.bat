@@ -1,5 +1,5 @@
 @echo off
-set "script_path=GUI.py"
+set "script_path=HomePage.py"
 set "desired_ultralytics_version=8.3.33"
 
 echo Pulling the latest code from Git...

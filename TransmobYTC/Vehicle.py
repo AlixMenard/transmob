@@ -18,6 +18,7 @@ class Vehicle:
         self.last_frame = frame_t
         self.coords: List[int] = [self.box.cross_point]
         self.speeds: List[float] = []
+        self.van_count : int = 0
 
     def class_check(self):
         if self.idbis is not None:
@@ -60,6 +61,11 @@ class Vehicle:
         self.hist_conf = self.hist_conf[:15]
 
         if _class in ["truck", "car"]:
+            if self.van_count == 5:
+                self.hist_conf[-1] = ("van", conf)
+                return
+            elif self.van_count == -5:
+                return
             if (self.classbis is not None) and (all(h[0]=="van" for h in self.hist_conf[-5:])) and (frame_t-self.last_onlyvans < 10):
                 self.hist_conf[-1] = ("van", conf)
                 return
@@ -71,10 +77,13 @@ class Vehicle:
                 return
             else:
                 c, cls = confs[0], classes[0]
-                if conf/c <= 1.066:
+                if conf/c <= 1.08211:
                     self.hist_conf[-1] = ("van", c)
                     _class = "van"
                     self.classbis = "van"
+                    self.van_count  = 0 if self.van_count < 0 else self.van_count + 1
+                else:
+                    self.van_count = 0 if self.van_count > 0 else self.van_count - 1
 
 
         if _class != self._class or self._class == "person":
