@@ -4,6 +4,10 @@ from pathlib import Path
 import tkinter as tk
 from tkinterdnd2 import TkinterDnD, DND_FILES
 
+import os
+import subprocess
+from pathlib import Path
+
 def repair_videos_in_folder(folder_path):
     folder_path = Path(folder_path)
     if not folder_path.is_dir():
@@ -18,7 +22,8 @@ def repair_videos_in_folder(folder_path):
             file_path = Path(root) / file
 
             if file_path.suffix.lower() in video_extensions:
-                repaired_file_path = file_path.with_suffix(".r.mkv")
+                repaired_file_path = file_path.with_suffix(".repaired.mkv")
+
                 # Check if the repaired file already exists
                 if repaired_file_path.exists():
                     print(f"Skipping {file_path}: Repaired file already exists.")
@@ -37,12 +42,23 @@ def repair_videos_in_folder(folder_path):
                 try:
                     print(f"Processing {file_path}...")
                     subprocess.run(command, check=True)
-                    os.remove(file_path)
                     print(f"Repaired file saved as {repaired_file_path}")
+
+                    # Preserve the original file's timestamps
+                    original_stat = file_path.stat()
+                    os.utime(repaired_file_path, (original_stat.st_atime, original_stat.st_mtime))
+                    print(f"Preserved timestamps for {repaired_file_path}")
+                    os.remove(file_path)
+
                 except subprocess.CalledProcessError as e:
                     print(f"Error processing {file_path}: {e}")
                 except Exception as e:
                     print(f"Unexpected error with {file_path}: {e}")
+
+if __name__ == "__main__":
+    folder_to_scan = input("Enter the path to the folder containing videos: ")
+    repair_videos_in_folder(folder_to_scan)
+
 
 def window():
     root = TkinterDnD.Tk()
