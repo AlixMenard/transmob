@@ -3,7 +3,7 @@
 - [Python = 3.12](https://www.python.org/downloads/release/python-3127/)
 - [git](https://git-scm.com/downloads/win)
 
-### Installation facile (bêta)
+### Installation facile (bêta, windows uniquement)
 Téléchargez et exécutez le fichier [TransMobSetup](../TransMobSetup.exe).\
 Ceci installera les fichiers du programme sur votre ordinateur, dans `Documents` par défaut, mais vous pouvez choisir un autre emplacement.
 
