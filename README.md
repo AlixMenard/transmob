@@ -10,6 +10,7 @@ Follow the instructions in [Install](https://github.com/AlixMenard/transmob/blob
 - Go to the *transmob* folder.
 - Run "start.vbs". After the first use, a shortcut will be created on the Desktop for easier access.
 - The process will update, then start, no worries if it is a little long.
+- A window will give you 2 options : the video analyse program, or [additional tools ("Outils additionnels")](#Tools)
 ### Start option 2
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
 - Navigate to the git repository (at *<previous_path>/transmob*). See [Install](https://github.com/AlixMenard/transmob/blob/main/MDFIles/INSTALL.md) for more info about shell navigation.
@@ -17,7 +18,9 @@ Follow the instructions in [Install](https://github.com/AlixMenard/transmob/blob
 ### Use
 - Drag&Drop the folder containing the videos to process (**every** video will be processed, make sure to eliminate duplicates, even with different extension, like "file.mp4" and "file.lrv")
 - Choose the fitting options
-  - `Nombre de frames` : 1, each frame will be processed, 2, one in two frames will be processed (twice as fast, reduces detection rate, heavily not recommended in case of low quality video)
+  - `Nombre de frames` : 
+    - 1 : each frame will be processed
+    - 2 : one in two frames will be processed (twice as fast, reduces detection rate, heavily not recommended in case of low quality video)
   - `Model YOLO` : bigger models will be better, but slower in most cases. With CUDA support the slow-down is negligible and always using the model of size *x* is highly recommended
   - `Types de véhicules` : Vehicle types to count, the others will be ignored. If pedestrians (*person*) are monitored, *bicycle* and *motorbike* can't be ignored.
   - `Avec vidéo` : If yes, the videos will be displayed as they are treated. This considerably slows down the process. It is however useful to test the quality of detection of a model size if you are unsure about the picture quality.
@@ -39,6 +42,7 @@ Follow the instructions in [Install](https://github.com/AlixMenard/transmob/blob
 - Be sure to cover the whole potential crossing area, especially around crosswalks, where people might walk around and not exactly on
 - ~MP4 and LRV will give the same results, as the model scales the resolution down before processing. However, LRV files are much lighter on the CPU and the memory.~ MP4 files are more robust to compressing than LRV to decompressing, and performs better under SAHI.
 
+<a name="Tools"></a>
 ### Additional tools
 Additional useful tools are made available. You can access them by opening a shell and navigating to the project folder (see [the installation part](#Install) for more information about shell navigation). Then execute `py Tools.py` (or `python Tools.py`) to open a window presenting the different tools.
 The tools include :
@@ -48,7 +52,7 @@ The tools include :
 - Results aggregation
 - Video repair
 
-More details are available [here](https://github.com/AlixMenard/transmob/blob/main/MDFIles/Tools.md)
+More details are available [here](https://github.com/AlixMenard/transmob/blob/main/MDFIles/Tools.md).
 
 ## ~~transmob~~
 

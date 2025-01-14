@@ -5,7 +5,7 @@
 
 ### Easy Installation (beta)
 Download and execute the [TransMobSetup](https://github.com/AlixMenard/transmob/blob/main/TransMobSetup.exe) file.\
-This will install the program files on your computer, in `Documents` by default but you can choose another location.
+This will install the program files on your computer, in `Documents` by default, but you can choose another location.
 
 ### Manual Installation
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
@@ -14,7 +14,7 @@ This will install the program files on your computer, in `Documents` by default 
 - Go in the repository : `cd transmob`
 - Install the necessary packages : `pip install -r requirements.txt`
 - In the shell, execute : `pip install fastreid==1.4.0 --no-deps`
-- As FastReId is not updated, some modifications are necessary. Find the installation folder (usually `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages` and replace the **fastreid** folder with [this one](https://github.com/AlixMenard/fastreid) (unzip it beforehand). It is also necessary to download the [FastReId model](#FastReId) and place it in the FastReId_config folder. \
+- As FastReId is not updated, some modifications are necessary. Find the installation folder (usually `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages`) and replace the **fastreid** folder with [this one](https://github.com/AlixMenard/fastreid) (unzip it beforehand). It is also necessary to download the [FastReId model](../README.md#FastReId) and place it in the FastReId_config folder. \
 \* This will install the yolo models of sizes *n*, *s*, *m* and *l*. On the first time you ask the program to use the model of size *x*, it will be automatically downloaded before processing.
 
 ### Optionnal
