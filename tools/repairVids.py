@@ -8,6 +8,25 @@ import os
 import subprocess
 from pathlib import Path
 
+import os
+import subprocess
+from pathlib import Path
+
+def get_video_duration(file_path):
+    command = [
+        "ffprobe",
+        "-v", "error",
+        "-show_entries", "format=duration",
+        "-of", "default=noprint_wrappers=1:nokey=1",
+        str(file_path)
+    ]
+    try:
+        result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True, text=True)
+        return float(result.stdout.strip())
+    except subprocess.CalledProcessError as e:
+        print(f"Error getting duration for {file_path}: {e}")
+        return None
+
 def repair_videos_in_folder(folder_path):
     folder_path = Path(folder_path)
     if not folder_path.is_dir():
@@ -44,16 +63,33 @@ def repair_videos_in_folder(folder_path):
                     subprocess.run(command, check=True)
                     print(f"Repaired file saved as {repaired_file_path}")
 
-                    # Preserve the original file's timestamps
+                    # Get the original file's duration
+                    original_duration = get_video_duration(file_path)
+                    if original_duration is None:
+                        print(f"Skipping timestamp adjustment for {file_path} due to missing duration.")
+                        continue
+
+                    # Calculate the new last modified time
                     original_stat = file_path.stat()
-                    os.utime(repaired_file_path, (original_stat.st_atime, original_stat.st_mtime))
-                    print(f"Preserved timestamps for {repaired_file_path}")
+                    original_start_time = original_stat.st_mtime - original_duration
+
+                    repaired_duration = get_video_duration(repaired_file_path)
+                    if repaired_duration is None:
+                        print(f"Skipping timestamp adjustment for {repaired_file_path} due to missing duration.")
+                        continue
+
+                    new_modified_time = original_start_time + repaired_duration
+
+                    # Set the repaired file's timestamps
+                    os.utime(repaired_file_path, (original_stat.st_atime, new_modified_time))
+                    print(f"Adjusted timestamps for {repaired_file_path}")
                     os.remove(file_path)
 
                 except subprocess.CalledProcessError as e:
                     print(f"Error processing {file_path}: {e}")
                 except Exception as e:
                     print(f"Unexpected error with {file_path}: {e}")
+
 
 if __name__ == "__main__":
     folder_to_scan = input("Enter the path to the folder containing videos: ")
