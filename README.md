@@ -46,7 +46,7 @@ The tools include :
 - Video renaming
 - Video splitting
 - Results aggregation
-- Video repair
+- Video repair\
 More details are available [here](https://github.com/AlixMenard/transmob/blob/main/Tools.md)
 
 ## ~~transmob~~
