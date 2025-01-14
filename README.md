@@ -1,10 +1,10 @@
 # transmob
 [Yolov11](https://github.com/ultralytics/ultralytics) based vehicle tracking solution\
 Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/AlixMenard/transmob/blob/main/README.md)
-[![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/AlixMenard/transmob/blob/main/README.fr.md)
+[![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/AlixMenard/transmob/blob/main/MDFIles/README.fr.md)
 
 #### Installation
-Follow the instructions in [Install](https://github.com/AlixMenard/transmob/blob/main/INSTALL.md).
+Follow the instructions in [Install](https://github.com/AlixMenard/transmob/blob/main/MDFIles/INSTALL.md).
 
 ### Start option 1
 - Go to the *transmob* folder.
@@ -12,7 +12,7 @@ Follow the instructions in [Install](https://github.com/AlixMenard/transmob/blob
 - The process will update, then start, no worries if it is a little long.
 ### Start option 2
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
-- Navigate to the git repository (at *<previous_path>/transmob*). See [Install](https://github.com/AlixMenard/transmob/blob/main/INSTALL.md) for more info about shell navigation.
+- Navigate to the git repository (at *<previous_path>/transmob*). See [Install](https://github.com/AlixMenard/transmob/blob/main/MDFIles/INSTALL.md) for more info about shell navigation.
 - Execute `py GUI.py`
 ### Use
 - Drag&Drop the folder containing the videos to process (**every** video will be processed, make sure to eliminate duplicates, even with different extension, like "file.mp4" and "file.lrv")
@@ -48,7 +48,7 @@ The tools include :
 - Results aggregation
 - Video repair
 
-More details are available [here](https://github.com/AlixMenard/transmob/blob/main/Tools.md)
+More details are available [here](https://github.com/AlixMenard/transmob/blob/main/MDFIles/Tools.md)
 
 ## ~~transmob~~
 
