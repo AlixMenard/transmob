@@ -255,7 +255,7 @@ class Analyser:
                 x1, y1, x2, y2 = self.mask
                 frame = frame[y1:y2, x1:x2]
 
-            results = self.yolo.predict(frame, verbose=False, classes=self.watch_classes_ids, device='cpu', conf = 0.25)
+            results = self.yolo.predict(frame, verbose=False, classes=self.watch_classes_ids, device='cpu', conf = 0.4, iou=0.7)
             try:
                 boxes = results[0].boxes.xyxy.cpu().tolist()
             except:
@@ -348,6 +348,8 @@ class Analyser:
     def screen(self, frame, box, id, class_name, c_time):
         x1, y1, x2, y2 = map(int, box)
         roi = frame[y1:y2, x1:x2]
+        if not c_time:
+            c_time = self.strt
         file_name = fr'{self.folder}/product/screens/{str_time(time_1(c_time))}_{id}_{class_name}.jpg'
         #print(file_name)
         cv2.imwrite(file_name, roi)
