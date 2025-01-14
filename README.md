@@ -4,7 +4,7 @@ Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github
 [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/AlixMenard/transmob/blob/main/MDFIles/README.fr.md)
 
 #### Installation
-Follow the instructions in [Install](https://github.com/AlixMenard/transmob/blob/main/MDFIles/INSTALL.md).
+Follow the instructions in [Install](https://github.com/AlixMenard/transmob/blob/main/MDFiles/INSTALL.md).
 
 ### Start option 1
 - Go to the *transmob* folder.
