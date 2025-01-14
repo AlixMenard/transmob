@@ -1,34 +1,16 @@
 # transmob
 Suivi vidéo de véhicule basé sur [YOLOv11](https://github.com/ultralytics/ultralytics) \
-Langues : 
-[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/AlixMenard/transmob/blob/main/README.md)
+Langues :[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/AlixMenard/transmob/blob/main/README.md)
 [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/AlixMenard/transmob/blob/main/MDFIles/README.fr.md)
 
-<a name="Install"></a>
 ## Installation
-### Prérequis
-- [Python = 3.12](https://www.python.org/downloads/release/python-3127/)
-- [git](https://git-scm.com/downloads/win)
-
-### Installer
-- Ouvrir un powershell/commandline shell : win+r, taper "powershell" ou "cmd", puis `Entrée`
-- Naviguer jusqu'à l'emplacement ou vous souhaiter installer le programme (Utilisez `cd <nom_dossier>` pour naviguer)
-- Dans le shell, exécutez : `git clone https://github.com/AlixMenard/transmob`
-- Allez dans le dépôt : `cd transmob`
-- Installez les librairies nécessaires : `pip install -r requirements.txt`
-- Dans le shell, exécutez : `pip install fastreid==1.4.0 --no-deps`
-- FastReID n'est plus à jour, des modifications sont nécessaires. Trouvez le dossier d'installation (généralement `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages` et remplacez le dossier **fastreid** par [celui-ci](https://github.com/AlixMenard/fastreid) (décompressez le avant). il faut aussi télécharger le [modèle FastReId](#FastReId) et le placer dans le dossier FastReId_config. \
-\* Ces étapes vont aussi installer les models YOLO de tailles *n*, *s*, *m* et *l*. La première fois que vous demanderez au programme d'utiliser le modèle de taille *x*, il le téléchargera automatiquement avant de commencer.
-
-### Optionnel
-Si l'ordinateur a une [carte graphique compatible avec CUDA](https://en.wikipedia.org/wiki/CUDA#GPUs_supported), il faut télécharger et installer [NVIDIA CUDA toolkit](https://developer.nvidia.com/cuda-downloads).\
-Durant la prochaine étape, après avoir installé les librairies requises, il faut désinstaller les librairies pytorch par défaut (`pip uninstall torch torchvision torchaudio`) et les ré-installer avec le support de CUDA sur le [site de PyTorch](https://pytorch.org/get-started/locally/). Sélectionnez la version *Stable*, votre système d'exploitation, *pip*, *python* et une *version de CUDA* ([voir compatibilité version/carte graphique ici](https://en.wikipedia.org/wiki/CUDA#GPUs_supported)), puis copier et exécuter la commande donnée par le site.\
-Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de meilleurs performances.
+Suivez les instructions de [Install](https://github.com/AlixMenard/transmob/blob/main/MDFIles/INSTALL.fr.md).
 
 ### Méthode lancement 1
 - Allez dans le dossier *transmob*
 - Lancez "start.vbs". Arès le premier lancement, un raccourci sera disponible sur le Bureau pour y accéder plus facilement.
 - Le programme va se lancer puis se mettre à jour. Pas de panique si le lancement est un peu long.
+- Une fenêtre vous donnera 2 options : le programme d'analyse vidéo, ou des [Outils additionnels](#Tools)
 ### Méthode lancement 2
 - Ouvrez un powershell/commandline shell : win+r, tapez "powershell" ou "cmd", puis `Entrée`
 - Naviguez jusqu'au dépôt (à *<chemin_précédent>/transmob*)
@@ -60,22 +42,17 @@ Avoir une carte graphique compatible avec CUDA est hautement recommandé pour de
 - Pensez à bien couvrir l'ensemble de la zone de passage, en particulier pour les passages piétons, pour lesquels les piétons peuvent traverser autour plutôt que sur le passage exactement
 - ~Les fichiers MP4 et LRV donnent les même résultats, car YOLO réduit la qualité de l'image avant de l'analyser.Cependant, les fichiers LRV sont bien plus légers sur le processeur et la mémoire de l'ordinateur.~ Les fichiers MP4 ont une meilleure robustesse face à la compressionque les fichiers LRV face à la décompresseion, et obtiennent de meilleurs résultats avec SAHI.
 
-
+<a name="Tools"></a>
 ### Outils additionnels
 Des outils additionnels utiles sont disponibles. Pour y accèder, ouvrez une invite de commande et naviguez jusqu'au dossier du projet (voir la [partie Installation](#Install) pour plus d'indications sur la navigation via invite de commande). Exécutez `py Tools.py` (ou `python Tools.py`) pour ouvrir une fenêtre incluant les différents outils.
-#### Formattage des résultats
-Il vous suffit de glisser-déposer le fichier `results.txt` créer par le programme, et cliquer sur "Valider". Un fichier csv sera créer au même emplacement.
-#### Renommer vidéos
-Glissez-déposez le dossier contenant les vidéos à renommer. Entrez le nom/numéro de la caméra (e.g. `GP07`) et son emplacement (ville, rue...), puis cliquez sur "Valider". Chaque vidéo sera renommée au format `camera_emplacement_AAAAMMJJ_HHhMM.ext`, avec *ext* l'extension conservée du fichier vidéo, et `AAAAMMJJ_HHhMM` la date de création formattée de la vidéo.\
-**/!\\** *Ne pas utiliser de caractères spéciaux dans le nom des fichiers.*
-#### Séparer vidéos
-Dans les cas où un grand nombre de vidéos doivent être analysées (>10), il est nécessaire de les séparer en sous-dossiers. Il est aussi recommandé de le faire pour plus de 5 vidéos, car cela permet au programme de mieux gérer la mémoire, mais ce n'est pas obligatoire. Le dossier parent pourra toujours être donné en entier au programme, qui se chargera de traiter chaque sous-dossier.\
-Glissez-déposez le dossier contenant les vidéos, puis renseignez le nombre de vidéos par sous-dossier, enfin cliquez sur "Valider".
-#### Aggréger résultats
-Si les vidéos étaient séparées en sous dossiers, vous aurez peut être besoin de récupérer les résultats de l'ensemble des vidéos en une seule fois. Il suffit de glisser-déposer le dossier parent et cliquer sur "Valider". L'outil ira chercher récursivement les fichiers `results.txt` dans les sous-dossiers, et les combinera en en fichier unique dans le dossier parent. 
-#### Réparer vidéos
-Si les vidéos sont endommagées (e.g. VLC Media Player un message d'erreur similaire à "Index endommagé ou absent") le programme ne sera pas capable de les lire correctement, il est donc nécessaire de réparer les vidéos en amont. Glissez et déposez le dossier sur la fenêtre puis cliquez sur "Valider". L'outil va récursivement regarder les vidéos dans le dossier et les sous-dossiers pour les réparer. Les fichiers vidéo `file.ext` avec *file* le nom de la vidéo et *ext* l'extension du format vidéo seront **remplacés** par `file.r.mkv`. Si cette réparation ne marche pas, bonne chance.
+Les outils permettent :
+- Formattage des résultats
+- Renommer vidéos
+- Séparer vidéos
+- Aggréger résultats
+- Réparer vidéos
 
+Plus de détails sont disponibles [ici](https://github.com/AlixMenard/transmob/blob/main/MDFIles/Tools.fr.md).
 
 ## ~~transmob~~
 
