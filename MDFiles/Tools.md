@@ -14,6 +14,6 @@ If videos are damaged (e.g. VLC Media Player shows an error message similar to "
 
 <a name="ffmpeg"></a>
 ### FFMPEG
-FFmpeg is a free and open-source software project for handling video, audio, and other multimedia files and streams. FFmpeg is **not** natively installed on windows devices, thus itis necessary to install it in order to use the Video Repair tool.\
+FFmpeg is a free and open-source software project for handling video, audio, and other multimedia files and streams. FFmpeg is **not** natively installed on windows devices, thus it is necessary to install it in order to use the Video Repair tool.\
 Here is a [Tutorial](https://phoenixnap.com/kb/ffmpeg-windows) to install FFmpeg on windows 11.\
 *Reminder : You can open a Windows terminal by pressing `win + r`, typing `cmd` then pressing `Enter`
