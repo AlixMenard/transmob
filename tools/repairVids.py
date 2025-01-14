@@ -30,6 +30,7 @@ def repair_videos_in_folder(folder_path):
                     "-i", str(file_path),
                     "-map", "0",
                     "-c", "copy",
+                    "-loglevel", "quiet",  # Suppress verbose output
                     str(repaired_file_path)
                 ]
 
