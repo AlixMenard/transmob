@@ -1,6 +1,6 @@
 # transmob
 [Yolov11](https://github.com/ultralytics/ultralytics) based vehicle tracking solution\
-Languages : [![en](README.md)
+Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](README.md)
 [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](MDFIles/README.fr.md)
 
 #### Installation
@@ -13,7 +13,7 @@ Follow the instructions in [Install](MDFiles/INSTALL.md).
 - A window will give you 2 options : the video analyse program, or [additional tools ("Outils additionnels")](#Tools)
 ### Start option 2
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
-- Navigate to the git repository (at *<previous_path>/transmob*). See [Install](https://github.com/AlixMenard/transmob/blob/main/MDFIles/INSTALL.md) for more info about shell navigation.
+- Navigate to the git repository (at *<previous_path>/transmob*). See [Install](MDFIles/INSTALL.md) for more info about shell navigation.
 - Execute `py GUI.py`
 ### Use
 - Drag&Drop the folder containing the videos to process (**every** video will be processed, make sure to eliminate duplicates, even with different extension, like "file.mp4" and "file.lrv")
@@ -52,7 +52,7 @@ The tools include :
 - Results aggregation
 - Video repair
 
-More details are available [here](https://github.com/AlixMenard/transmob/blob/main/MDFIles/Tools.md).
+More details are available [here](MDFIles/Tools.md).
 
 ## ~~transmob~~
 

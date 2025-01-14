@@ -1,10 +1,10 @@
 # transmob
 Suivi vidéo de véhicule basé sur [YOLOv11](https://github.com/ultralytics/ultralytics) \
-Langues :[![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/AlixMenard/transmob/blob/main/README.md)
-[![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/AlixMenard/transmob/blob/main/MDFIles/README.fr.md)
+Langues :[![en](https://img.shields.io/badge/lang-en-red.svg)](../README.md)
+[![fr](https://img.shields.io/badge/lang-fr-blue.svg)](README.fr.md)
 
 ## Installation
-Suivez les instructions de [Install](https://github.com/AlixMenard/transmob/blob/main/MDFIles/INSTALL.fr.md).
+Suivez les instructions de [Install](MDFIles/INSTALL.fr.md).
 
 ### Méthode lancement 1
 - Allez dans le dossier *transmob*
@@ -52,7 +52,7 @@ Les outils permettent :
 - Aggréger résultats
 - Réparer vidéos
 
-Plus de détails sont disponibles [ici](https://github.com/AlixMenard/transmob/blob/main/MDFIles/Tools.fr.md).
+Plus de détails sont disponibles [ici](MDFIles/Tools.fr.md).
 
 ## ~~transmob~~
 

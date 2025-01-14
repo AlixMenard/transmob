@@ -4,7 +4,7 @@
 - [git](https://git-scm.com/downloads/win)
 
 ### Installation facile (bêta)
-Téléchargez et exécutez le fichier [TransMobSetup](https://github.com/AlixMenard/transmob/blob/main/TransMobSetup.exe).\
+Téléchargez et exécutez le fichier [TransMobSetup](../TransMobSetup.exe).\
 Ceci installera les fichiers du programme sur votre ordinateur, dans `Documents` par défaut, mais vous pouvez choisir un autre emplacement.
 
 ### Installation Manuelle
