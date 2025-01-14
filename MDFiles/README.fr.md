@@ -4,7 +4,7 @@ Langues :[![en](https://img.shields.io/badge/lang-en-red.svg)](../README.md)
 [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](README.fr.md)
 
 ## Installation
-Suivez les instructions de [Install](MDFiles/INSTALL.fr.md).
+Suivez les instructions de [Install](INSTALL.fr.md).
 
 ### Méthode lancement 1
 - Allez dans le dossier *transmob*
@@ -52,7 +52,7 @@ Les outils permettent :
 - Aggréger résultats
 - Réparer vidéos
 
-Plus de détails sont disponibles [ici](MDFiles/Tools.fr.md).
+Plus de détails sont disponibles [ici](Tools.fr.md).
 
 ## ~~transmob~~
 
