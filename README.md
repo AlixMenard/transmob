@@ -3,25 +3,8 @@
 Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](https://github.com/AlixMenard/transmob/blob/main/README.md)
 [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](https://github.com/AlixMenard/transmob/blob/main/README.fr.md)
 
-## Installation
-### Pre-requisite
-- [Python = 3.12](https://www.python.org/downloads/release/python-3127/)
-- [git](https://git-scm.com/downloads/win)
-<a name="Install"></a>
-### Install 
-- Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
-- Navigate to the desired place to store the algorithm (use `cd <folder_name>` to navigate)
-- In the shell, execute : `git clone https://github.com/AlixMenard/transmob`
-- Go in the repository : `cd transmob`
-- Install the necessary packages : `pip install -r requirements.txt`
-- In the shell, execute : `pip install fastreid==1.4.0 --no-deps`
-- As FastReId is not updated, some modifications are necessary. Find the installation folder (usually `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages` and replace the **fastreid** folder with [this one](https://github.com/AlixMenard/fastreid) (unzip it beforehand). It is also necessary to download the [FastReId model](#FastReId) and place it in the FastReId_config folder. \
-\* This will install the yolo models of sizes *n*, *s*, *m* and *l*. On the first time you ask the program to use the model of size *x*, it will be automatically downloaded before processing.
-
-### Optionnal
-If the computer has a [CUDA compatible graphic card](https://en.wikipedia.org/wiki/CUDA#GPUs_supported), you need to download and install [NVIDIA CUDA toolkit](https://developer.nvidia.com/cuda-downloads).\
-During the next step, after installing the required modules, you need to uninstall pytorch modules (`pip uninstall torch torchvision torchaudio`) and re-install it with CUDA support on the [Pytorch Website](https://pytorch.org/get-started/locally/). Select the *Stable* version, the correct OS, *pip*, *python* and a *CUDA SDK version* ([see here for graphic card/version compatibility](https://en.wikipedia.org/wiki/CUDA#GPUs_supported)), then copy and execute the command given by the website.\
-A CUDA compatible graphic card is highly recommended for increased speed performances.
+#### Installation
+Follow the instructions in [Install](https://github.com/AlixMenard/transmob/blob/main/INSTALL.md).
 
 ### Start option 1
 - Go to the *transmob* folder.
@@ -29,7 +12,7 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 - The process will update, then start, no worries if it is a little long.
 ### Start option 2
 - Open a powershell/commandline shell : win+r, type "powershell" or "cmd", enter
-- Navigate to the git repository (at *<previous_path>/transmob*)
+- Navigate to the git repository (at *<previous_path>/transmob*). See [Install](https://github.com/AlixMenard/transmob/blob/main/INSTALL.md) for more info about shell navigation.
 - Execute `py GUI.py`
 ### Use
 - Drag&Drop the folder containing the videos to process (**every** video will be processed, make sure to eliminate duplicates, even with different extension, like "file.mp4" and "file.lrv")
@@ -58,18 +41,13 @@ A CUDA compatible graphic card is highly recommended for increased speed perform
 
 ### Additional tools
 Additional useful tools are made available. You can access them by opening a shell and navigating to the project folder (see [the installation part](#Install) for more information about shell navigation). Then execute `py Tools.py` (or `python Tools.py`) to open a window presenting the different tools.
-#### Results formatting (Formattage des résultats)
-You simply need to drag & drop the `results.txt` file produces by the program, then "Valider". A csv file will be created in the same location.
-#### Video renaming (Renommer vidéos)
-Drag & drop the folder in which you want to rename the videos. Fill in the camera name (e.g. `GP07`) and the location, then click "Valider". Every video will be renamed in the format `camera_location_YYYYMMDD_HHhmm.ext` with *ext* being the file extension, preserved, and *YYYYMMDD_HHhmm* being the formatted date of the video.
-#### Video splitting (Séparer vidéos)
-In case of numerous videos to analyse (>10), it is necessary to split them in several subfolders. It is also recommended over 5 videos as it allows the program for better memory management, but isn't mandatory. The folder can still be given whole to the program afterwise, as every subfolder will be treated.\
-To do so, drag & drop the folder containing the videos, then fill in the number of videos per subfolder, then click "Valider".
-#### Results aggregation (Aggréger résultats)
-If videos were split in subfolders, you might still want to retrieve the results for the whole video set. You only need to drag & drop the folder and click "Valider". The tool will look recursively into every subfolder for `results.txt` files and combine them in a single one inside the parent folder.
-#### Video repair (Réparer vidéos)
-If videos are damaged (e.g. VLC Media Player shows an error message similar to "Video index damaged or missing") the program will not be able to read them, thus it is necessary to repair the videos before hand. Drag & drop the folder on the window and click "Valider". The tool will recursively look for videos inside the folder to repair them. The video files `file.ext` with *file* the video name and *ext* the video format extension will be **replaced** by `file.r.mkv`. If this repair fails, good luck.
-
+The tools include :
+- Results formatting
+- Video renaming
+- Video splitting
+- Results aggregation
+- Video repair
+More details are available [here](https://github.com/AlixMenard/transmob/blob/main/Tools.md)
 
 ## ~~transmob~~
 
