@@ -72,6 +72,8 @@ Dans les cas où un grand nombre de vidéos doivent être analysées (>10), il e
 Glissez-déposez le dossier contenant les vidéos, puis renseignez le nombre de vidéos par sous-dossier, enfin cliquez sur "Valider".
 #### Aggréger résultats
 Si les vidéos étaient séparées en sous dossiers, vous aurez peut être besoin de récupérer les résultats de l'ensemble des vidéos en une seule fois. Il suffit de glisser-déposer le dossier parent et cliquer sur "Valider". L'outil ira chercher récursivement les fichiers `results.txt` dans les sous-dossiers, et les combinera en en fichier unique dans le dossier parent. 
+#### Réparer vidéos
+Si les vidéos sont endommagées (e.g. VLC Media Player un message d'erreur similaire à "Index endommagé ou absent") le programme ne sera pas capable de les lire correctement, il est donc nécessaire de réparer les vidéos en amont. Glissez et déposez le dossier sur la fenêtre puis cliquez sur "Valider". L'outil va récursivement regarder les vidéos dans le dossier et les sous-dossiers pour les réparer. Les fichiers vidéo `file.ext` avec *file* le nom de la vidéo et *ext* l'extension du format vidéo seront **remplacés** par `file.r.mkv`. Si cette réparation ne marche pas, bonne chance.
 
 
 ## ~~transmob~~
