@@ -1,7 +1,7 @@
 # transmob
 [Yolov11](https://github.com/ultralytics/ultralytics) based vehicle tracking solution\
 Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](README.md)
-[![fr](https://img.shields.io/badge/lang-fr-blue.svg)](MDFIles/README.fr.md)
+[![fr](https://img.shields.io/badge/lang-fr-blue.svg)](MDFiles/README.fr.md)
 
 #### Installation
 Follow the instructions in [Install](MDFiles/INSTALL.md).
