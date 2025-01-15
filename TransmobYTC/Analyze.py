@@ -15,10 +15,12 @@ import numpy as np
 from ultralytics import YOLO
 from typing import List
 import time
-import torch
 import tkinter as tk
 from datetime import datetime
 
+from boxmot import BotSort
+from pathlib import Path
+from fastreid.config import get_cfg
 
 # ? First try at box connection, either too slow (often) or incorrect and leaving objects unclassed
 def dic_search2(dic: dict, tupl: tuple):
@@ -109,6 +111,13 @@ class Analyser:
         if verbose: print("Video loaded...")
         self.model = model
         self.yolo = YOLO(model)
+        self.tracker = BotSort(
+            reid_weights=Path("FastReId_config/veriwild_bot_resnet50.pt"),
+            device=torch.device("cuda:0"),
+            half=True,
+            frame_rate=self.fps,
+            with_reid=True
+        )
         self.yolo = self.yolo.cuda()
         if verbose: print("YOLO loaded...")
         self.class_labels = [
@@ -244,17 +253,19 @@ class Analyser:
                 x1, y1, x2, y2 = self.mask
                 frame = frame[y1:y2, x1:x2]
 
-            results = self.yolo.track(frame, tracker="botsort.yaml", persist=True, verbose=False, classes=self.watch_classes_ids, device=0, conf = 0.4, agnostic_nms = True)
+            results = self.yolo.predict(frame, verbose=False, classes=self.watch_classes_ids, device=0, conf = 0.4, agnostic_nms = True)
             try:
-                ids = results[0].boxes.id.int().to('cuda')
+                boxes = results[0].boxes.xyxy.cpu().tolist()
             except:
                 continue
-            classes = results[0].boxes.cls.int().to('cuda')
-            confs = results[0].boxes.conf.float().to('cuda')
-            boxes = results[0].boxes.xyxy.to('cuda')
+            classes = results[0].boxes.cls.int().cpu().tolist()
+            confs = results[0].boxes.conf.float().cpu().tolist()
+            dets = np.array([[*box, conf, cls] for box, conf, cls in zip(boxes, confs, classes)])
+
+            res = self.tracker.update(dets, frame)  # ? [*t.xyxy, t.id, t.conf, t.cls, t.det_ind]
 
             fleet_ids = self.fleet.ids
-            for id, classe, conf, box in zip(ids.cpu().tolist(), classes.cpu().tolist(), confs.cpu().tolist(), boxes.cpu().tolist()):
+            for *box, id, conf, classe, _ in res:
                 class_name = self.class_labels[classe]
                 if not class_name in self.watch_classes:
                     continue
