@@ -23,9 +23,6 @@ from boxmot import BotSort
 from pathlib import Path
 from fastreid.config import get_cfg
 
-#from fastreid.config import get_cfg
-#from fastreid.engine import DefaultPredictor
-
 # ? First try at box connection, either too slow (often) or incorrect and leaving objects unclassed
 def dic_search2(dic: dict, tupl: tuple):
     margin = 5
@@ -117,7 +114,7 @@ class Analyser:
         self.yolo = YOLO(model)
         self.tracker = BotSort(
             reid_weights=Path("FastReId_config/veriwild_bot_resnet50.pt"),
-            device=torch.device("cpu"),  # Use CPU for inference
+            device=torch.device("cpu"),
             half=True,
             frame_rate=self.fps,
             with_reid=False
@@ -262,7 +259,6 @@ class Analyser:
                 continue
             classes = results[0].boxes.cls.int().cpu().tolist()
             confs = results[0].boxes.conf.float().cpu().tolist()
-            boxes = results[0].boxes.xyxy.cpu().tolist()
             dets = np.array([[*box, conf, cls] for box, conf, cls in zip(boxes, confs, classes)])
 
             res = self.tracker.update(dets, frame) # ? [*t.xyxy, t.id, t.conf, t.cls, t.det_ind]
@@ -327,6 +323,7 @@ class Analyser:
             c_time = self.strt
         c_time_str = str_time(c_time)
         self.save(c_time_str, c_time + time_last_save, [])
+        cv2.destroyAllWindows()
         #for l in self.lines:
         #    print(l.counter.count())
         #print(f"Done : {self.url}")
