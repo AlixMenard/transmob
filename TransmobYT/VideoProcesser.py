@@ -88,7 +88,7 @@ class Playlist:
             for i in range(len(self.playlists)):
                 del self.playlists[0]
             self.playlists = [rf"{self.folder}/{s}" for s in os.listdir(self.folder) if s != "playlist.json"]
-            return
+            return lines, trust
         if os.path.exists(f"{self.folder}/product"):
             shutil.rmtree(f"{self.folder}/product")
         os.mkdir(f"{self.folder}/product")
