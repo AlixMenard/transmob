@@ -4,7 +4,7 @@
 - [git](https://git-scm.com/downloads/win)
 
 ### Easy Installation (beta, windows only)
-Download and execute the [TransMobSetup](../TransMobSetup.exe) file.\
+Download and execute the [TransMobSetup](../TransMobIASetup.exe) file.\
 This will install the program files on your computer, in `Documents` by default, but you can choose another location.
 
 ### Manual Installation
