@@ -116,8 +116,36 @@ class Analyser:
             device=torch.device("cuda:0"),
             half=True,
             frame_rate=self.fps,
-            with_reid=True
+            with_reid=True,
+            per_class=True,
+            track_high_thresh=0.4,
+            track_low_thresh=0.05,
+            new_track_thresh=0.4,
+            track_buffer=self.fps*2,
+            match_thresh=0.7,
+            proximity_thresh=0.5,
+            appearance_thresh=0.5,
+            cmc_method="sof",
+            fuse_first_associate=True
         )
+        tracker_config = {
+            "reid_weights": "path/to/reid_model.pth",
+            "device": "cuda",
+            "half": True,
+            "per_class": True,
+            "track_high_thresh": 0.6,
+            "track_low_thresh": 0.1,
+            "new_track_thresh": 0.3,
+            "track_buffer": 40,
+            "match_thresh": 0.7,
+            "proximity_thresh": 0.6,
+            "appearance_thresh": 0.5,
+            "cmc_method": "sof",
+            "frame_rate": 30,
+            "fuse_first_associate": True,
+            "with_reid": True,
+        }
+
         self.yolo = self.yolo.cuda()
         if verbose: print("YOLO loaded...")
         self.class_labels = [
