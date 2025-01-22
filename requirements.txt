@@ -1,7 +1,7 @@
-﻿boxmot==11.0.6
-faiss-cpu==1.9.0.post1
+﻿faiss-cpu==1.9.0.post1
 filterpy
 lapx==0.5.10.post1
+loguru==0.7.3
 matplotlib==3.9.2
 moviepy==2.1.1
 numba
