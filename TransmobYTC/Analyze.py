@@ -115,38 +115,20 @@ class Analyser:
         self.tracker = BotSort(
             reid_weights=Path("FastReId_config/veriwild_bot_resnet50.pt"),
             device=torch.device("cuda:0"),
-            half=True,
+            half=False,
             frame_rate=self.fps,
             with_reid=True,
-            per_class=True,
-            track_high_thresh=0.4,
+            per_class=False,
+            track_high_thresh=0.25,
             track_low_thresh=0.05,
-            new_track_thresh=0.4,
-            track_buffer=self.fps*2,
+            new_track_thresh=0.25,
+            track_buffer=self.fps*10,
             match_thresh=0.7,
-            proximity_thresh=0.5,
-            appearance_thresh=0.5,
+            proximity_thresh=0.6,
+            appearance_thresh=0.25,
             cmc_method="sof",
-            fuse_first_associate=True
+            fuse_first_associate=False
         )
-        tracker_config = {
-            "reid_weights": "path/to/reid_model.pth",
-            "device": "cuda",
-            "half": True,
-            "per_class": True,
-            "track_high_thresh": 0.6,
-            "track_low_thresh": 0.1,
-            "new_track_thresh": 0.3,
-            "track_buffer": 40,
-            "match_thresh": 0.7,
-            "proximity_thresh": 0.6,
-            "appearance_thresh": 0.5,
-            "cmc_method": "sof",
-            "frame_rate": 30,
-            "fuse_first_associate": True,
-            "with_reid": True,
-        }
-
         self.yolo = self.yolo.cuda()
         if verbose: print("YOLO loaded...")
         self.class_labels = [
@@ -300,6 +282,7 @@ class Analyser:
                 if not class_name in self.watch_classes:
                     continue
                 x1, y1, x2, y2 = map(int, box)
+                x1, y1, x2, y2 = map(lambda x: max(0,x), (x1, y1, x2, y2))
                 dx, dy = self.mask[:2]
                 x1+=dx
                 x2+=dx
@@ -349,7 +332,7 @@ class Analyser:
                 if not c_time:
                     c_time = self.strt
                 c_time_str = str_time(c_time)
-                self.save(c_time_str, c_time + time_last_save, ids)
+                self.save(c_time_str, c_time + time_last_save, res[:, 4])
                 c_time += time_last_save
                 saves += 1
 
