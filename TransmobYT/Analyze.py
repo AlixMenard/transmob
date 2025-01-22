@@ -266,6 +266,7 @@ class Analyser:
 
             fleet_ids = self.fleet.ids
             for *box, id, conf, classe, _ in res:
+                id = int(id)
                 class_name = self.class_labels[int(classe)]
                 if not class_name in self.watch_classes:
                     continue

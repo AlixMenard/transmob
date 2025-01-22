@@ -295,7 +295,8 @@ class Analyser:
 
             fleet_ids = self.fleet.ids
             for *box, id, conf, classe, _ in res:
-                class_name = self.class_labels[classe]
+                id = int(id)
+                class_name = self.class_labels[int(classe)]
                 if not class_name in self.watch_classes:
                     continue
                 x1, y1, x2, y2 = map(int, box)
