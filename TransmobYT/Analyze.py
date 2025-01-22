@@ -22,6 +22,7 @@ from datetime import datetime
 from boxmot import BotSort
 from pathlib import Path
 from fastreid.config import get_cfg
+import torch
 
 # ? First try at box connection, either too slow (often) or incorrect and leaving objects unclassed
 def dic_search2(dic: dict, tupl: tuple):
