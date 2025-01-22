@@ -119,15 +119,15 @@ class Analyser:
             frame_rate=self.fps,
             with_reid=True,
             per_class=False,
-            track_high_thresh=0.25,
-            track_low_thresh=0.05,
-            new_track_thresh=0.25,
+            track_high_thresh=0.35,
+            track_low_thresh=0.1,
+            new_track_thresh=0.35,
             track_buffer=self.fps*10,
-            match_thresh=0.7,
-            proximity_thresh=0.6,
-            appearance_thresh=0.25,
+            match_thresh=0.5,
+            proximity_thresh=0.5,
+            appearance_thresh=0.05,
             cmc_method="sof",
-            fuse_first_associate=False
+            fuse_first_associate=True
         )
         self.yolo = self.yolo.cuda()
         if verbose: print("YOLO loaded...")
