@@ -125,7 +125,7 @@ class Analyser:
             track_buffer=self.fps*10,
             match_thresh=0.2,
             proximity_thresh=0.65,
-            appearance_thresh=0.1,
+            appearance_thresh=0.01,
             cmc_method="ecc", # ECC > SIFT > SOF/ORB
             fuse_first_associate=True
         )
