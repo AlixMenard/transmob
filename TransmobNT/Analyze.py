@@ -378,7 +378,7 @@ class Analyser:
         roi = frame[y1:y2, x1:x2]
         if not c_time:
             c_time = self.strt
-        file_name = fr'{self.folder}/product/screens/{str_time(time_5(c_time))}_l{line.id}_{id}_{class_name}.jpg'
+        file_name = fr'{self.folder}/product/screens/{str_time(time_1(c_time))}_l{line.id}_{id}_{class_name}.jpg'
         #print(file_name)
         cv2.imwrite(file_name, roi)
 
