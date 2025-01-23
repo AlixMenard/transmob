@@ -126,7 +126,7 @@ class Analyser:
             match_thresh=0.5,
             proximity_thresh=0.5,
             appearance_thresh=0.05,
-            cmc_method="sof",
+            cmc_method="ecc", # ECC > SIFT > SOF/ORB
             fuse_first_associate=True
         )
         self.yolo = self.yolo.cuda()
