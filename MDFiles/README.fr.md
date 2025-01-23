@@ -1,6 +1,6 @@
 # transmob
 Suivi vidéo de véhicule basé sur [YOLOv11](https://github.com/ultralytics/ultralytics) \
-Langues :[![en](https://img.shields.io/badge/lang-en-red.svg)](../README.md)
+Langues : [![en](https://img.shields.io/badge/lang-en-red.svg)](../README.md)
 [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](README.fr.md)
 
 ## Installation
@@ -24,7 +24,7 @@ Suivez les instructions de [Install](INSTALL.fr.md).
   - `Model YOLO` : les modèles plus gros sont plus précis, mais considérablement plus lent dans le plupart des cas. Avec le support CUDA, le ralentissement lié à la taille du modèle est négligeable et toujours utiliser le modèle de taille *x* est fortement conseillé. 
   - `Types de véhicules` : Types de véhicules à compter, Les autre seront ignorés. Si les piétons (*person*) sont comptés, les vélos et motocylettes (*bicycle* and *motorbike*) ne peuvent pas être ignorés.
   - `Avec vidéo` : Si oui, la vidéo sera affichée durant son traitement. Cela ralentit considérablement le processus. C'est en revanche très utile pour juger de l'efficacité de détection d'un modèle sur une vidéo dont vous n'êtes pas certain.e de la qualité.
-  - `Avec captures d'écran` : Enregistrera une capture de chaque véhicule compter, pour validation ou anlyse supplémentaire.
+  - `Avec captures d'écran` : Enregistrera une capture de chaque véhicule compter, pour validation ou anlyse supplémentaire. Les captures d'écran seront sauvegardées avec le nom  `<date>_<heure>_l<numero_ligne>_<id_vehicule>_<type>`.
   - `Un seul setup` : Si oui, seule la première vidéo du dossier sera montrée pour tracer les lignes de comptage. Toutes les autres vidéos auront les même lignes.
   - `Valider les lignes` (Si `Un seul setup` est séléctionné) : Transferera les lignes à chaque vidéo du dossier, mais les affichera pour validation et permettre des modifications.
 - Start
