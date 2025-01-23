@@ -114,11 +114,18 @@ class Analyser:
         self.model = model
         self.yolo = YOLO(model)
         self.tracker = BotSort(
-            reid_weights=Path("FastReId_config/veriwild_bot_resnet50.pt"),
+            reid_weights=Path(),
             device=torch.device("cpu"),
             half=True,
             frame_rate=self.fps,
-            with_reid=False
+            with_reid=False,
+            per_class=False,
+            track_high_thresh=0.35,
+            track_low_thresh=0.1,
+            new_track_thresh=0.35,
+            track_buffer=self.fps*5,
+            proximity_thresh=0.65,
+            cmc_method="ecc", # ECC > SIFT > SOF/ORB
         )
         if verbose: print("YOLO loaded...")
         self.class_labels = [
