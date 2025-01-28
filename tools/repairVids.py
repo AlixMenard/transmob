@@ -41,7 +41,7 @@ def repair_videos_in_folder(folder_path):
             file_path = Path(root) / file
 
             if file_path.suffix.lower() in video_extensions:
-                repaired_file_path = file_path.with_suffix(".r.mkv")
+                repaired_file_path = file_path.with_suffix(".r.mp4")
 
                 # Check if the repaired file already exists
                 if repaired_file_path.exists():

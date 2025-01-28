@@ -75,7 +75,7 @@ class Parser:
                     f.write(f"{line}:{q.pretty_count(line)}\n")
 
     def make_csv(self):
-        columns = ["car", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
+        columns = ["car", "van", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
         with open(self.save_path[:-3]+"csv", "w") as f:
             f.write("date;time;line;sens;" + ";".join(columns) + "\n")
             for q in self.timelapse:
