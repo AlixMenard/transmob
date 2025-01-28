@@ -1,6 +1,6 @@
 # transmob
 [Yolov11](https://github.com/ultralytics/ultralytics) based vehicle tracking solution\
-Languages :[![en](https://img.shields.io/badge/lang-en-red.svg)](README.md)
+Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](README.md)
 [![fr](https://img.shields.io/badge/lang-fr-blue.svg)](MDFiles/README.fr.md)
 
 #### Installation
@@ -24,7 +24,7 @@ Follow the instructions in [Install](MDFiles/INSTALL.md).
   - `Model YOLO` : bigger models will be better, but slower in most cases. With CUDA support the slow-down is negligible and always using the model of size *x* is highly recommended
   - `Types de véhicules` : Vehicle types to count, the others will be ignored. If pedestrians (*person*) are monitored, *bicycle* and *motorbike* can't be ignored.
   - `Avec vidéo` : If yes, the videos will be displayed as they are treated. This considerably slows down the process. It is however useful to test the quality of detection of a model size if you are unsure about the picture quality.
-  - `Avec captures d'écran` : This will keep a screenshot of every counted vehicule, with its class, for verification purposes or further analysis.
+  - `Avec captures d'écran` : This will keep a screenshot of every counted vehicule, with its class, for verification purposes or further analysis. Screenshots will be saved with the name format `<date>_<time>_l<line_number>_<vehicle_id>_<class>`.
   - `Un seul setup` : If yes, only the first video of the folder will be shown to trace the counting lines. Every other video will have the exact same lines.
   - `Valider les lignes` (if `Un seul setup` is selected) : The lines will be transfered to every video in the folder, but shown to enable modifications.
 - Start

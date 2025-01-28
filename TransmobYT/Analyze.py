@@ -22,9 +22,7 @@ from datetime import datetime
 from boxmot import BotSort
 from pathlib import Path
 from fastreid.config import get_cfg
-
-#from fastreid.config import get_cfg
-#from fastreid.engine import DefaultPredictor
+import torch
 
 # ? First try at box connection, either too slow (often) or incorrect and leaving objects unclassed
 def dic_search2(dic: dict, tupl: tuple):
@@ -116,11 +114,18 @@ class Analyser:
         self.model = model
         self.yolo = YOLO(model)
         self.tracker = BotSort(
-            reid_weights=Path("FastReId_config/veriwild_bot_resnet50.pt"),
-            device=torch.device("cpu"),  # Use CPU for inference
+            reid_weights=Path(),
+            device=torch.device("cpu"),
             half=True,
             frame_rate=self.fps,
-            with_reid=False
+            with_reid=False,
+            per_class=False,
+            track_high_thresh=0.35,
+            track_low_thresh=0.1,
+            new_track_thresh=0.35,
+            track_buffer=self.fps*5,
+            proximity_thresh=0.65,
+            cmc_method="ecc", # ECC > SIFT > SOF/ORB
         )
         if verbose: print("YOLO loaded...")
         self.class_labels = [
@@ -262,13 +267,13 @@ class Analyser:
                 continue
             classes = results[0].boxes.cls.int().cpu().tolist()
             confs = results[0].boxes.conf.float().cpu().tolist()
-            boxes = results[0].boxes.xyxy.cpu().tolist()
             dets = np.array([[*box, conf, cls] for box, conf, cls in zip(boxes, confs, classes)])
 
             res = self.tracker.update(dets, frame) # ? [*t.xyxy, t.id, t.conf, t.cls, t.det_ind]
 
             fleet_ids = self.fleet.ids
             for *box, id, conf, classe, _ in res:
+                id = int(id)
                 class_name = self.class_labels[int(classe)]
                 if not class_name in self.watch_classes:
                     continue
@@ -293,7 +298,7 @@ class Analyser:
                         crossed = l.cross(self.fleet.get(id))
                         if crossed and self.screenshots:
                             class_name = self.fleet.get(id)._class
-                            self.screen(frame, box_frame.xyxy, id, class_name, c_time)
+                            self.screen(frame, box_frame.xyxy, id, class_name, c_time, l)
                         color = (255, 0, 0)
 
                 if self.graph:
@@ -319,7 +324,7 @@ class Analyser:
                 if not c_time:
                     c_time = self.strt
                 c_time_str = str_time(c_time)
-                self.save(c_time_str, c_time + time_last_save, res[5:])
+                self.save(c_time_str, c_time + time_last_save, res[:, 4])
                 c_time += time_last_save
                 saves += 1
 
@@ -327,6 +332,7 @@ class Analyser:
             c_time = self.strt
         c_time_str = str_time(c_time)
         self.save(c_time_str, c_time + time_last_save, [])
+        cv2.destroyAllWindows()
         #for l in self.lines:
         #    print(l.counter.count())
         #print(f"Done : {self.url}")
@@ -345,12 +351,12 @@ class Analyser:
 
         self.fleet.cleanse(tracked_ids)
 
-    def screen(self, frame, box, id, class_name, c_time):
+    def screen(self, frame, box, id, class_name, c_time, line):
         x1, y1, x2, y2 = map(int, box)
         roi = frame[y1:y2, x1:x2]
         if not c_time:
             c_time = self.strt
-        file_name = fr'{self.folder}/product/screens/{str_time(time_1(c_time))}_{id}_{class_name}.jpg'
+        file_name = fr'{self.folder}/product/screens/{str_time(time_1(c_time))}_l{line.id}_{id}_{class_name}.jpg'
         #print(file_name)
         cv2.imwrite(file_name, roi)
 
