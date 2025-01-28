@@ -113,20 +113,6 @@ class Analyser:
         if verbose: print("Video loaded...")
         self.model = model
         self.yolo = YOLO(model)
-        self.tracker = BotSort(
-            reid_weights=Path(),
-            device=torch.device("cpu"),
-            half=True,
-            frame_rate=self.fps,
-            with_reid=False,
-            per_class=False,
-            track_high_thresh=0.35,
-            track_low_thresh=0.1,
-            new_track_thresh=0.35,
-            track_buffer=self.fps*5,
-            proximity_thresh=0.65,
-            cmc_method="ecc", # ECC > SIFT > SOF/ORB
-        )
         if verbose: print("YOLO loaded...")
         self.class_labels = [
             "person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat",
@@ -226,8 +212,25 @@ class Analyser:
         root.mainloop()
         return ret
 
+    def init_tracker(self):
+        self.tracker = BotSort(
+            reid_weights=Path(),
+            device=torch.device("cpu"),
+            half=True,
+            frame_rate=self.fps,
+            with_reid=False,
+            per_class=False,
+            track_high_thresh=0.35,
+            track_low_thresh=0.1,
+            new_track_thresh=0.35,
+            track_buffer=self.fps*5,
+            proximity_thresh=0.65,
+            cmc_method="ecc", # ECC > SIFT > SOF/ORB
+        )
+
     def process(self):
         c_time = None
+        self.init_tracker()
         self.cap = cv2.VideoCapture(self.url)
         time_last_save = saves = count = 0
         print(f"File : {self.url} - {self.fps} FPS - {int(self.length / self.fps)} seconds")

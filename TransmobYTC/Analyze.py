@@ -112,23 +112,6 @@ class Analyser:
         if verbose: print("Video loaded...")
         self.model = model
         self.yolo = YOLO(model)
-        self.tracker = BotSort(
-            reid_weights=Path("FastReId_config/veriwild_bot_resnet50.pt"),
-            device=torch.device("cuda:0"),
-            half=False,
-            frame_rate=self.fps,
-            with_reid=True,
-            per_class=False,
-            track_high_thresh=0.3,
-            track_low_thresh=0.1,
-            new_track_thresh=0.35,
-            track_buffer=self.fps*20,
-            match_thresh=0.15,
-            proximity_thresh=0.6,
-            appearance_thresh=0.01,
-            cmc_method="ecc", # ECC > SIFT > SOF/ORB
-            fuse_first_associate=True
-        )
         self.yolo = self.yolo.cuda()
         if verbose: print("YOLO loaded...")
         self.class_labels = [
@@ -230,8 +213,28 @@ class Analyser:
         #print("in get time : ", ret)
         return ret
 
+    def init_tracker(self):
+        self.tracker = BotSort(
+            reid_weights=Path("FastReId_config/veriwild_bot_resnet50.pt"),
+            device=torch.device("cuda:0"),
+            half=False,
+            frame_rate=self.fps,
+            with_reid=True,
+            per_class=False,
+            track_high_thresh=0.3,
+            track_low_thresh=0.1,
+            new_track_thresh=0.35,
+            track_buffer=self.fps*20,
+            match_thresh=0.15,
+            proximity_thresh=0.6,
+            appearance_thresh=0.01,
+            cmc_method="ecc", # ECC > SIFT > SOF/ORB
+            fuse_first_associate=True
+        )
+
     def process(self):
         c_time = None
+        self.init_tracker()
         self.cap = cv2.VideoCapture(self.url)
         time_last_save = saves = count = 0
         print(f"File : {self.url} - {self.fps} FPS - {int(self.length / self.fps)} seconds", flush = True)
