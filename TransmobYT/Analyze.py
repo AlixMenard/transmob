@@ -324,7 +324,7 @@ class Analyser:
                 if not c_time:
                     c_time = self.strt
                 c_time_str = str_time(c_time)
-                self.save(c_time_str, c_time + time_last_save, res[:, 4])
+                self.save(c_time_str, c_time + time_last_save, res[:, 4] if res else [])
                 c_time += time_last_save
                 saves += 1
 
