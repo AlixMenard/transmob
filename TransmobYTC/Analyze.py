@@ -264,7 +264,7 @@ class Analyser:
                 x1, y1, x2, y2 = self.mask
                 frame = frame[y1:y2, x1:x2]
 
-            results = self.yolo.predict(frame, verbose=False, classes=self.watch_classes_ids, device=0, conf = 0.4, agnostic_nms = True)
+            results = self.yolo.predict(frame, verbose=False, classes=self.watch_classes_ids, device=0, conf = 0.3, agnostic_nms = True)
             try:
                 boxes = results[0].boxes.xyxy.cpu().tolist()
             except:
