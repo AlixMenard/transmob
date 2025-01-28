@@ -119,12 +119,12 @@ class Analyser:
             frame_rate=self.fps,
             with_reid=True,
             per_class=False,
-            track_high_thresh=0.35,
+            track_high_thresh=0.3,
             track_low_thresh=0.1,
             new_track_thresh=0.35,
-            track_buffer=self.fps*10,
-            match_thresh=0.2,
-            proximity_thresh=0.65,
+            track_buffer=self.fps*20,
+            match_thresh=0.15,
+            proximity_thresh=0.6,
             appearance_thresh=0.01,
             cmc_method="ecc", # ECC > SIFT > SOF/ORB
             fuse_first_associate=True
