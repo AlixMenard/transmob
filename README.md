@@ -7,7 +7,7 @@ Languages : [![en](https://img.shields.io/badge/lang-en-red.svg)](README.md)
 Follow the instructions in [Install](MDFiles/INSTALL.md).
 
 ### Start option 1
-- Go to the *transmob* folder.
+- Go to the AI folder.
 - Run "start.vbs". After the first use, a shortcut will be created on the Desktop for easier access.
 - The process will update, then start, no worries if it is a little long.
 - A window will give you 2 options : the video analyse program, or [additional tools ("Outils additionnels")](#Tools)
