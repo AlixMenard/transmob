@@ -42,7 +42,15 @@ def window():
         rv.window()
 
     bt_split = tk.Button(root, text="Réparer vidéos", command=repair)
-    bt_split.grid(column=0, row=2, columnspan = 2, pady=10, padx=5)
+    bt_split.grid(column=0, row=2, pady=10, padx=5)
+
+    def redate():
+        import tools.redateVid as rv
+        root.destroy()
+        rv.window()
+
+    bt_split = tk.Button(root, text="Changer date de vidéos", command=redate)
+    bt_split.grid(column=1, row=2, pady=10, padx=5)
 
     def on_closing():
         global end
