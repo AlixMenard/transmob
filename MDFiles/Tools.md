@@ -12,7 +12,7 @@ If videos were split in subfolders, you might still want to retrieve the results
 If videos are damaged (e.g. VLC Media Player shows an error message similar to "Video index damaged or missing") the program will not be able to read them, thus it is necessary to repair the videos before hand. Drag & drop the folder on the window and click "Valider". The tool will recursively look for videos inside the folder to repair them using [FFmpeg](#ffmpeg). The video files `file.ext` with *file* the video name and *ext* the video format extension will be **replaced** by `file.r.mkv`. If this repair fails, good luck.\
 **/!\\** The repair can cause the video's length to be modified, resulting in a time shift : make sure the the video's timing stays aligned afterward, or correct it when asked before analysis.
 #### Video re-dating (Changer date de vidéos)
-If videos were wrongly dated (*last modification* date should correspond to the time the video ended, or the time it started + the duration), this tool will re-date all videos in a folder (not sub-folders) according to a starting date. Drag & drop the folder on the window, fill in the **starting** time of the first video, then click "Valider".
+If videos were wrongly dated (*last modification* date should correspond to the time the video ended, or the time it started + the duration), this tool will re-date all videos in a folder (not sub-folders) according to a starting date. Drag & drop the folder on the window, fill in the **starting** time of the first video according to the provided format, then click "Valider".
 
 <a name="ffmpeg"></a>
 ### FFMPEG
