@@ -12,6 +12,8 @@ Si les vidéos étaient séparées en sous dossiers, vous aurez peut être besoi
 #### Réparer vidéos
 Si les vidéos sont endommagées (e.g. VLC Media Player un message d'erreur similaire à "Index endommagé ou absent") le programme ne sera pas capable de les lire correctement, il est donc nécessaire de réparer les vidéos en amont. Glissez et déposez le dossier sur la fenêtre puis cliquez sur "Valider". L'outil va récursivement regarder les vidéos dans le dossier et les sous-dossiers pour les réparer à l'aide de [FFmpeg](#ffmpeg). Les fichiers vidéo `file.ext` avec *file* le nom de la vidéo et *ext* l'extension du format vidéo seront **remplacés** par `file.r.mkv`. Si cette réparation ne marche pas, bonne chance.\
 **/!\\** La réparation peut changer la durée de la vidéo, créant un décalage temporel : assurez-vous que le temps de la vidéo reste aligné au temps réel, ou corrigez quand on vous le demande avant analyse vidéo.
+#### Changer date de vidéos
+Si des vidéos sont mal datées (la date de *dernière modification* doit correspondre au moment où la vidéo s'est terminée, cad le moment où elle a commencé + sa durée), cet outil va re-dater toutes les vidéos d'un dossier (pas les sous-dossiers) avec une date de départ. Glissez-déposez le dossier sur la fenêtre, entrez la date de **départ** de la première vidéo au format indiqué, puis cliquez sur "Valider".
 
 <a name="ffmpeg"></a>
 ### FFMPEG
