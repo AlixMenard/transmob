@@ -355,11 +355,20 @@ class Analyser:
         self.fleet.cleanse(tracked_ids)
 
     def screen(self, frame, box, id, class_name, c_time, line):
+        nb_lignes = len(self.lines)
+        if nb_lignes > 1:
+            for i in range(nb_lignes):
+                if not os.path.exists(fr"{self.folder}/product/screens/{i}"):
+                    os.makedirs(fr"{self.folder}/product/screens/{i}")
+
         x1, y1, x2, y2 = map(int, box)
         roi = frame[y1:y2, x1:x2]
         if not c_time:
             c_time = self.strt
-        file_name = fr'{self.folder}/product/screens/{str_time(time_1(c_time))}_l{line.id}_{id}_{class_name}.jpg'
+        if nb_lignes == 1:
+            file_name = fr'{self.folder}/product/screens/{str_time(time_1(c_time))}_l{line.id}_{id}_{class_name}.jpg'
+        else:
+            file_name = fr'{self.folder}/product/screens/{line.id}/{str_time(time_1(c_time))}_{id}_{class_name}.jpg'
         #print(file_name)
         cv2.imwrite(file_name, roi)
 
