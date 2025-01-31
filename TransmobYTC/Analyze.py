@@ -150,7 +150,6 @@ class Analyser:
                 draw_line(frame, l,(0, 0, 0, 0))
             for p in self.points:
                 cv2.circle(frame, p, radius=1, color=(0, 0, 255), thickness=3)
-            cv2.imshow("Line setup", frame)
             self.create_line(frame)
 
             self.end = time_1(self.strt + int(self.length / self.fps))
@@ -382,20 +381,40 @@ class Analyser:
 
     def create_line(self, frame):
 
+        orig_h, orig_w = frame.shape[:2]
+        display_w, display_h = 1280, 720
+        scale = min(display_w / orig_w, display_h / orig_h)
+        new_w, new_h = int(orig_w * scale), int(orig_h * scale)
+        display_frame = cv2.resize(frame, (new_w, new_h), interpolation=cv2.INTER_AREA)
+
         def click_event(event, x, y, _, __):
             if event == cv2.EVENT_LBUTTONDOWN:
-                self.points.append((x, y))
+                real_x = int(x / scale)
+                real_y = int(y / scale)
+                self.points.append((real_x, real_y))
+
                 if len(self.points) == 3:
-                    self.lines.append(Line(self.points[0][0], self.points[0][1], self.points[1][0], self.points[1][1],
+                    self.lines.append(Line(self.points[0][0], self.points[0][1],
+                                           self.points[1][0], self.points[1][1],
                                            self.points[2][0], self.points[2][1]))
-                    draw_line(frame, self.lines[-1], (0, 0, 0, 0))
+
+                    dx1, dy1 = int(self.points[0][0] * scale), int(self.points[0][1] * scale)
+                    dx2, dy2 = int(self.points[1][0] * scale), int(self.points[1][1] * scale)
+                    dx3, dy3 = int(self.points[2][0] * scale), int(self.points[2][1] * scale)
+                    temp_l = Line(dx1, dy1, dx2, dy2, dx3, dy3)
+                    draw_line(display_frame, temp_l, (0, 0, 0, 0))
+                    del temp_l
                     self.points = []
                     self.create_mask()
-                for p in self.points:
-                    cv2.circle(frame, p, radius=1, color=(0, 0, 255), thickness=3)
-                cv2.imshow("Line setup", frame)
 
-        cv2.setMouseCallback("Line setup", click_event, param=frame)
+                for p in self.points:
+                    disp_x = int(p[0] * scale)
+                    disp_y = int(p[1] * scale)
+                    cv2.circle(display_frame, (disp_x, disp_y), radius=1, color=(0, 0, 255), thickness=3)
+                cv2.imshow("Line setup", display_frame)
+
+        cv2.imshow("Line setup", display_frame)
+        cv2.setMouseCallback("Line setup", click_event, param=display_frame)
 
     # noinspection PyTypeChecker
     def create_mask(self):
