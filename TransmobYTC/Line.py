@@ -7,7 +7,8 @@ class Line:
 
     nb_lines = 0
     def del_line(self):
-        Line.nb_lines -= 1
+        if not self.mock:
+            Line.nb_lines -= 1
 
     def set_nb_lines(selfself, n):
         Line.nb_lines = n
@@ -16,6 +17,7 @@ class Line:
 
         self.maskbound = None
         self.id = Line.nb_lines
+        seslf.mock = mock
         if not mock:
             Line.nb_lines += 1
         self.counter = Counter()

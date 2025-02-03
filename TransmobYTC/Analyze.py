@@ -402,6 +402,7 @@ class Analyser:
                     dx2, dy2 = int(self.points[1][0] * scale), int(self.points[1][1] * scale)
                     dx3, dy3 = int(self.points[2][0] * scale), int(self.points[2][1] * scale)
                     temp_l = Line(dx1, dy1, dx2, dy2, dx3, dy3, mock = True)
+                    temp_l.id = self.lines[-1].id
                     draw_line(display_frame, temp_l, (0, 0, 0, 0))
                     del temp_l
                     self.points = []
