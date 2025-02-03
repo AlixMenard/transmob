@@ -7,16 +7,19 @@ class Line:
 
     nb_lines = 0
     def del_line(self):
-        Line.nb_lines -= 1
+        if not self.mock:
+            Line.nb_lines -= 1
 
     def set_nb_lines(selfself, n):
         Line.nb_lines = n
 
-    def __init__(self, x1, y1, x2, y2, x3, y3):
+    def __init__(self, x1, y1, x2, y2, x3, y3, mock = False):
 
         self.maskbound = None
         self.id = Line.nb_lines
-        Line.nb_lines += 1
+        self.mock = mock
+        if not mock:
+            Line.nb_lines += 1
         self.counter = Counter()
         self.vehicles = defaultdict(list)
         self.still_close : Dict[int, Vehicle] = {}

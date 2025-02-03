@@ -356,9 +356,9 @@ class Analyser:
     def screen(self, frame, box, id, class_name, c_time, line):
         nb_lignes = len(self.lines)
         if nb_lignes > 1:
-            for i in range(nb_lignes):
-                if not os.path.exists(fr"{self.folder}/product/screens/{i}"):
-                    os.makedirs(fr"{self.folder}/product/screens/{i}")
+            for l in self.lines:
+                if not os.path.exists(fr"{self.folder}/product/screens/{l.id}"):
+                    os.makedirs(fr"{self.folder}/product/screens/{l.id}")
 
         x1, y1, x2, y2 = map(int, box)
         roi = frame[y1:y2, x1:x2]
@@ -386,14 +386,14 @@ class Analyser:
                 self.points.append((real_x, real_y))
 
                 if len(self.points) == 3:
+                    dx1, dy1 = int(self.points[0][0] * scale), int(self.points[0][1] * scale)
+                    dx2, dy2 = int(self.points[1][0] * scale), int(self.points[1][1] * scale)
+                    dx3, dy3 = int(self.points[2][0] * scale), int(self.points[2][1] * scale)
+                    temp_l = Line(dx1, dy1, dx2, dy2, dx3, dy3, mock = True)
                     self.lines.append(Line(self.points[0][0], self.points[0][1],
                                            self.points[1][0], self.points[1][1],
                                            self.points[2][0], self.points[2][1]))
 
-                    dx1, dy1 = int(self.points[0][0] * scale), int(self.points[0][1] * scale)
-                    dx2, dy2 = int(self.points[1][0] * scale), int(self.points[1][1] * scale)
-                    dx3, dy3 = int(self.points[2][0] * scale), int(self.points[2][1] * scale)
-                    temp_l = Line(dx1, dy1, dx2, dy2, dx3, dy3)
                     draw_line(display_frame, temp_l, (0, 0, 0, 0))
                     del temp_l
                     self.points = []

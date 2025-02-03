@@ -394,14 +394,14 @@ class Analyser:
                 self.points.append((real_x, real_y))
 
                 if len(self.points) == 3:
-                    self.lines.append(Line(self.points[0][0], self.points[0][1],
-                                           self.points[1][0], self.points[1][1],
-                                           self.points[2][0], self.points[2][1]))
-
                     dx1, dy1 = int(self.points[0][0] * scale), int(self.points[0][1] * scale)
                     dx2, dy2 = int(self.points[1][0] * scale), int(self.points[1][1] * scale)
                     dx3, dy3 = int(self.points[2][0] * scale), int(self.points[2][1] * scale)
                     temp_l = Line(dx1, dy1, dx2, dy2, dx3, dy3, mock = True)
+                    self.lines.append(Line(self.points[0][0], self.points[0][1],
+                                           self.points[1][0], self.points[1][1],
+                                           self.points[2][0], self.points[2][1]))
+
                     temp_l.id = self.lines[-1].id
                     draw_line(display_frame, temp_l, (0, 0, 0, 0))
                     del temp_l
