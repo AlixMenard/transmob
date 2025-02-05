@@ -19,6 +19,8 @@ import tkinter as tk
 from datetime import datetime
 
 from boxmot import BotSort
+from boxmot.utils import logger as LOGGER
+LOGGER.level("CRITICAL")
 from pathlib import Path
 from fastreid.config import get_cfg
 import torch
