@@ -34,4 +34,6 @@ urllib3==2.2.3
 filterpy
 faiss-cpu==1.9.0.post1
 onnxruntime==1.20.1
+sahi==0.11.18
 yacs==0.1.8
+
