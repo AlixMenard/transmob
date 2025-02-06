@@ -34,6 +34,7 @@ class Line:
         dx, dy = abs(x2-x1), abs(y2-y1)
         self.length = np.sqrt(dx**2 + dy**2)
         self.bounds = [x1-0.1*dy, x2+0.1*dy, min(y1, y2)-0.1*dx, max(y1, y2)+0.1*dx]
+        self.strict_bounds = [x1, x2, min(y1, y2), max(y1, y2)]
 
         #! ax + by + c = 0
         if dx == 0:
@@ -112,9 +113,15 @@ class Line:
             self.still_close.pop(v.id)
         return close
 
+    def strict_inbound(self, x:int, y:int):
+        close = self.strict_bounds[0]<=x<=self.strict_bounds[1] and self.strict_bounds[2]<=y<=self.strict_bounds[3]
+        return close
+
     def cross(self, v : Vehicle):
         crossed = False
         x, y = v.box.cross_point
+        if not self.strict_inbound(x, y):
+            return Falses
         _, p = self.proj((x, y))
         if v.id in self.vehicles and (p * np.mean(self.vehicles[v.id])<0 or p ==0):
             if v.id in self.still_close:
