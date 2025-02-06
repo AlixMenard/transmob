@@ -19,11 +19,11 @@ import tkinter as tk
 from datetime import datetime
 
 from boxmot import BotSort
-from boxmot.utils import logger as LOGGER
-LOGGER.level("CRITICAL")
 from pathlib import Path
 from fastreid.config import get_cfg
 import torch
+from loguru import logger
+logger.disable("boxmot")
 
 # ? First try at box connection, either too slow (often) or incorrect and leaving objects unclassed
 def dic_search2(dic: dict, tupl: tuple):
