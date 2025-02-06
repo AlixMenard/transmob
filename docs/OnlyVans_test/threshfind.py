@@ -1,4 +1,5 @@
 import json
+import matplotlib.pyplot as plt
 
 def get():
     with open('test.json', 'r') as json_file:
@@ -71,12 +72,41 @@ def prep():
 
 prep()
 data = get()
+def find():
+    threshold, score, grade = find_delta(data["cars_confs_deltas"], data["vans_confs_deltas"])
+    print(f"Best threshold delta cars vs vans : {threshold}, Best score: {score}, Grade: {100*grade:.2f}%")
+    threshold, score, grade = find_ratio(data["cars_confs_ratio"], data["vans_confs_ratio"])
+    print(f"Best threshold ratio cars vs vans : {threshold}, Best score: {score}, Grade: {100*grade:.2f}%")
+    threshold, score, grade = find_delta(data["trucks_confs_deltas"], data["vans_confs_deltas"])
+    print(f"Best threshold delta trucks vs vans : {threshold}, Best score: {score}, Grade: {100*grade:.2f}%")
+    threshold, score, grade = find_ratio(data["trucks_confs_ratio"], data["vans_confs_ratio"])
+    print(f"Best threshold ratio trucks vs vans : {threshold}, Best score: {score}, Grade: {100*grade:.2f}%")
 
-threshold, score, grade = find_delta(data["cars_confs_deltas"], data["vans_confs_deltas"])
-print(f"Best threshold delta cars vs vans : {threshold}, Best score: {score}, Grade: {100*grade:.2f}%")
-threshold, score, grade = find_ratio(data["cars_confs_ratio"], data["vans_confs_ratio"])
-print(f"Best threshold ratio cars vs vans : {threshold}, Best score: {score}, Grade: {100*grade:.2f}%")
-threshold, score, grade = find_delta(data["trucks_confs_deltas"], data["vans_confs_deltas"])
-print(f"Best threshold delta trucks vs vans : {threshold}, Best score: {score}, Grade: {100*grade:.2f}%")
-threshold, score, grade = find_ratio(data["trucks_confs_ratio"], data["vans_confs_ratio"])
-print(f"Best threshold ratio trucks vs vans : {threshold}, Best score: {score}, Grade: {100*grade:.2f}%")
+def graphs():
+    cars_confs_yolo = data["cars_confs_yolo"]
+    vans_confs_yolo = data["vans_confs_yolo"]
+    trucks_confs_yolo = data["trucks_confs_yolo"]
+    cars_confs_vans = data["cars_confs_vans"]
+    vans_confs_vans = data["vans_confs_vans"]
+    trucks_confs_vans = data["trucks_confs_vans"]
+
+    plt.plot(cars_confs_yolo, "r.", label="YOLO")
+    plt.plot(cars_confs_vans, "b.", label="OnlyVans")
+    plt.title("Cars confidence")
+    plt.legend()
+    plt.savefig("cars_confidence.png")
+    plt.clf()
+
+    plt.plot(vans_confs_yolo, "r.", label="YOLO")
+    plt.plot(vans_confs_vans, "b.", label="OnlyVans")
+    plt.title("Vans confidence")
+    plt.legend()
+    plt.savefig("vans_confidence.png")
+    plt.clf()
+
+    plt.plot(trucks_confs_yolo, "r.", label="YOLO")
+    plt.plot(trucks_confs_vans, "b.", label="OnlyVans")
+    plt.title("Trucks confidence")
+    plt.legend()
+    plt.savefig("trucks_confidence.png")
+    plt.clf()
