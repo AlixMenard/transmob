@@ -121,7 +121,7 @@ class Line:
         crossed = False
         x, y = v.box.cross_point
         if not self.strict_inbound(x, y):
-            return Falses
+            return False
         _, p = self.proj((x, y))
         if v.id in self.vehicles and (p * np.mean(self.vehicles[v.id])<0 or p ==0):
             if v.id in self.still_close:
