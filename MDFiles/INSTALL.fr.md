@@ -14,7 +14,7 @@ Ceci installera les fichiers du programme sur votre ordinateur, dans `Documents`
 - Allez dans le dépôt : `cd transmob`
 - Installez les librairies nécessaires : `pip install -r requirements.txt`
 - Dans le shell, exécutez : `pip install fastreid==1.4.0 --no-deps`
-- FastReID n'est plus à jour, des modifications sont nécessaires. Trouvez le dossier d'installation (généralement `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages`) et remplacez le dossier **fastreid** par [celui-ci](https://github.com/AlixMenard/fastreid) (décompressez-le avant). Il faut aussi télécharger le [modèle FastReId](README.fr.md#FastReId) et le placer dans le dossier FastReId_config.
+- FastReID n'est plus à jour, des modifications sont nécessaires. Trouvez le dossier d'installation (généralement `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages`) et remplacez le dossier **fastreid** par [celui-ci](https://github.com/AlixMenard/fastreid) (décompressez-le avant). Il faut aussi télécharger le [modèle FastReId](README.fr.md#FastReId) et le placer dans le dossier `transmob/FastReId_config`.
 
 \* Ces étapes vont aussi installer les models YOLO de tailles *n*, *s*, *m* et *l*. La première fois que vous demanderez au programme d'utiliser le modèle de taille *x*, il le téléchargera automatiquement avant de commencer.  \
 Utiliser le modèle *x* avec une carte graphique nécessite de télécharger le modèle OnlyVans correspondant. Celui-ci devrait être téléchargé automatiquement par l'installer et visible dans `weights/vansx.pt`. S'il n'a pas été correctement téléchargé, le modèle devrait être disponible [ici](amenard.perso.ec-m.fr/Transmob/vansx.pt) (serveur étudiant de l'école de l'auteur, Alix Ménard) ou sur le serveur de l'entreprise `BASE DE DONNEES\Programmes\IA comptage\transmob\weights\vansx.pt`.
@@ -26,7 +26,7 @@ Utiliser le modèle *x* avec une carte graphique nécessite de télécharger le 
 - Naviguer jusqu'à l'emplacement dans lequel vous avez installé le programme (Utilisez `cd <nom_dossier>` pour naviguer)
 - Installez les librairies nécessaires : tapez et exécutez (`Entrée`) `pip install -r requirements.txt`
 - Dans le shell, exécutez : `pip install fastreid==1.4.0 --no-deps`
-- FastReID n'est plus à jour, des modifications sont nécessaires. Trouvez le dossier d'installation (généralement `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages`) et remplacez le dossier **fastreid** par [celui-ci](https://github.com/AlixMenard/fastreid) (décompressez-le avant). Il faut aussi télécharger le [modèle FastReId](README.fr.md#FastReId) et le placer dans le dossier `transmob:FastReId_config`.
+- FastReID n'est plus à jour, des modifications sont nécessaires. Trouvez le dossier d'installation (généralement `C:\Users\<user>\AppData\Local\Programs\Python\PythonX\Lib\site-packages`) et remplacez le dossier **fastreid** par [celui-ci](https://github.com/AlixMenard/fastreid) (décompressez-le avant). Il faut aussi télécharger le [modèle FastReId](README.fr.md#FastReId) et le placer dans le dossier `transmob/FastReId_config`.
 
 ### Optionnel
 Si l'ordinateur a une [carte graphique compatible avec CUDA](https://en.wikipedia.org/wiki/CUDA#GPUs_supported), il faut télécharger et installer [NVIDIA CUDA toolkit](https://developer.nvidia.com/cuda-downloads).\
