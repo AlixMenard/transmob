@@ -288,11 +288,12 @@ class Analyser:
                 results = get_sliced_prediction(
                     frame,
                     self.yolo,
-                    slice_height=h // 5,
-                    slice_width=w // 5,
-                    overlap_height_ratio=0.2,
-                    overlap_width_ratio=0.2,
+                    slice_height=h // 3,
+                    slice_width=w // 3,
+                    overlap_height_ratio=0.1,
+                    overlap_width_ratio=0.1,
                     postprocess_class_agnostic=True,
+                    postprocess_match_threshold=0.3,
                     verbose=0
                 )
                 results = results.object_prediction_list
