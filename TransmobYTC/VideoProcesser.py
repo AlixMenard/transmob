@@ -38,7 +38,7 @@ def format_dur(duration):
 
 class Playlist:
     def __init__(self, folder:str, cores:int = 2, model:str="weights/yolov8n.pt", watch_classes=None, frame_nb:int = 2,
-                 graph = False, screenshots = False, onesetup = False, validation = False):
+                 graph = False, screenshots = False, onesetup = False, validation = False, SAHI = False):
         if watch_classes is None:
             watch_classes = ["car", "truck", "motorbike", "bus", "bicycle", "person"]
         self.playlists = None
@@ -56,6 +56,7 @@ class Playlist:
         self.frame_nb = frame_nb
         self.onesetup = onesetup
         self.validation = validation
+        self.SAHI = SAHI
 
     def sort_files(self):
         durations = {f:int(vidduration(self.folder+"/"+f)) for f in self.files}
@@ -98,7 +99,7 @@ class Playlist:
         first = True
         for f in self.files:
             an = Analyser(self.folder, f, graph=self.graph, model=self.model, watch_classes=self.watch_classes,
-                          frame_nb=self.frame_nb, screenshots=self.screenshots)
+                          frame_nb=self.frame_nb, screenshots=self.screenshots, SAHI=self.SAHI)
             if (lines is not None):
                 trust = an.starter(lines, trust_time=trust, sp = not self.validation and not first) or trust
             else:
@@ -170,6 +171,7 @@ class Playlist:
         data["frame_nb"] = self.frame_nb
         data["onesetup"] = self.onesetup
         data["validation"] = self.validation
+        data["SAHI"] = self.SAHI
 
         with open(rf"{parent}/playlist.json", "w") as f:
             json.dump(data, f, indent=3)
@@ -197,7 +199,8 @@ class Playlist:
         data = json.load(open(fr"{parent}/playlist.json", "r"))
 
         p = cls(parent, cores=data["cores"], model=data["model"], watch_classes=data["watch_classes"], frame_nb=data["frame_nb"],
-                graph=data["graph"], screenshots=data["screenshots"], onesetup=data["onesetup"], validation=data["validation"])
+                graph=data["graph"], screenshots=data["screenshots"], onesetup=data["onesetup"], validation=data["validation"],
+                SAHI=data["SAHI"])
 
         if all([os.path.isdir(rf"{parent}/{s}") for s in os.listdir(parent) if s != "playlist.json"]):
             p.playlists = [rf"{parent}/{s}" for s in os.listdir(parent) if s != "playlist.json"]
