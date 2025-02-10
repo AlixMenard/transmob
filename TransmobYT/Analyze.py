@@ -2,6 +2,7 @@ import os
 from copy import deepcopy
 import json
 
+import sahi
 import torch
 
 os.environ["OPENCV_LOG_LEVEL"] = "OFF"
@@ -23,6 +24,9 @@ from boxmot import BotSort
 from pathlib import Path
 from fastreid.config import get_cfg
 import torch
+
+from sahi import AutoDetectionModel
+from sahi.predict import get_sliced_prediction
 
 # ? First try at box connection, either too slow (often) or incorrect and leaving objects unclassed
 def dic_search2(dic: dict, tupl: tuple):
@@ -87,7 +91,7 @@ def str_time(_time):
 class Analyser:
 
     def __init__(self, folder, name, model="weights/yolov8n.pt", graph: bool = False, threshold: float = 0.25,
-                 watch_classes=None, verbose:bool=False, frame_nb:int = 2, screenshots = False):
+                 watch_classes=None, verbose:bool=False, frame_nb:int = 2, screenshots = False, SAHI=False):
         if watch_classes is None:
             watch_classes = ["car", "truck", "motorbike", "bus", "bicycle", "person"]
         if verbose: print("Initialising analyser...")
@@ -100,6 +104,7 @@ class Analyser:
         self.watch_classes = watch_classes
         self.graph = graph
         self.screenshots = screenshots
+        self.SAHI = SAHI
         self.mask = None
         self.length = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
         self.fps = int(self.cap.get(cv2.CAP_PROP_FPS))
@@ -112,7 +117,17 @@ class Analyser:
         del self.cap
         if verbose: print("Video loaded...")
         self.model = model
-        self.yolo = YOLO(model)
+
+        if self.SAHI:
+            self.yolo = AutoDetectionModel.from_pretrained(
+                model_type='yolo11',
+                model_path=os.path.join(os.getcwd(),self.model),
+                confidence_threshold=0.25,
+                device="cpu",
+            )
+        else:
+            self.yolo = YOLO(model)
+
         if verbose: print("YOLO loaded...")
         self.class_labels = [
             "person", "bicycle", "car", "motorbike", "aeroplane", "bus", "train", "truck", "boat",
@@ -262,14 +277,34 @@ class Analyser:
                 x1, y1, x2, y2 = self.mask
                 frame = frame[y1:y2, x1:x2]
 
-            results = self.yolo.predict(frame, verbose=False, classes=self.watch_classes_ids, device='cpu', conf = 0.25, agnostic_nms = True)
-            try:
-                boxes = results[0].boxes.xyxy.cpu().tolist()
-            except:
-                continue
-            classes = results[0].boxes.cls.int().cpu().tolist()
-            confs = results[0].boxes.conf.float().cpu().tolist()
-            dets = np.array([[*box, conf, cls] for box, conf, cls in zip(boxes, confs, classes)])
+            if self.SAHI:
+                w, h, _ = frame.shape
+                results = get_sliced_prediction(
+                    frame,
+                    self.yolo,
+                    slice_height=h // 5,
+                    slice_width=w // 5,
+                    overlap_height_ratio=0.2,
+                    overlap_width_ratio=0.2,
+                    postprocess_class_agnostic=True,
+                    verbose=0
+                )
+                results = results.object_prediction_list
+                results = [r for r in results if r.category.id in self.watch_classes_ids]
+                boxes = [map(round,(r.bbox.minx, r.bbox.miny, r.bbox.maxx, r.bbox.maxy)) for r in results]
+                boxes = [(x1, y1, x2, y2) for (x1, y1, x2, y2) in boxes]
+                classes = [r.category.id for r in results]
+                confs = [r.score.value for r in results]
+                dets = np.array([[*box, conf, cls] for box, conf, cls in zip(boxes, confs, classes)])
+            else:
+                results = self.yolo.predict(frame, verbose=False, classes=self.watch_classes_ids, device='cpu', conf = 0.25, agnostic_nms = True)
+                try:
+                    boxes = results[0].boxes.xyxy.cpu().tolist()
+                except:
+                    continue
+                classes = results[0].boxes.cls.int().cpu().tolist()
+                confs = results[0].boxes.conf.float().cpu().tolist()
+                dets = np.array([[*box, conf, cls] for box, conf, cls in zip(boxes, confs, classes)])
 
             res = self.tracker.update(dets, frame) # ? [*t.xyxy, t.id, t.conf, t.cls, t.det_ind]
 
@@ -433,6 +468,7 @@ class Analyser:
         data["model"] = self.model
         data["strt"] = self.strt
         data["end"] = self.end
+        data["SAHI"] = self.SAHI
 
         data["lines"] = []
         for l in self.lines:
@@ -450,7 +486,7 @@ class Analyser:
     def load(cls, parent, name):
         data = json.load(open(fr"{parent}/cache/{name[:-4]}.json", "r"))
         an = cls(parent, name, model=data["model"], graph=data["graph"], threshold=data["threshold"], watch_classes=data["watch_classes"],
-                 frame_nb=data["frame_nb"], screenshots=data["screenshots"])
+                 frame_nb=data["frame_nb"], screenshots=data["screenshots"], SAHI=data["SAHI"])
         an.strt = data["strt"]
         an.end = data["end"]
         lines = []

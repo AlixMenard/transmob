@@ -173,20 +173,32 @@ def setup_window():
                     widget.destroy()
     one_setup(onesetupb)
 
+
+    # ? SAHI
+    sahib = tk.BooleanVar(value=False)
+    sahi_l = tk.Label(root, text = "Detection fragmentaire")
+    sahi_l.grid(row = 10, column = 0, columnspan = 4)
+    sahi_t = tk.Radiobutton(root, text = "Oui", variable = sahib, value = True)
+    sahi_t.grid(row = 10, column = 4, columnspan = 2)
+    sahi_f = tk.Radiobutton(root, text = "Non", variable = sahib, value = False)
+    sahi_f.grid(row = 10, column = 6, columnspan = 2)
+
     # ! Validation
     def start():
         root.destroy()
         Playlist = vpYT.Playlist
             
         P = Playlist(entry_var.get().strip('"{}'), model=f"weights/yolo11{model_letter.get()}.pt",
-                     watch_classes=classes, graph = graphb.get(), screenshots = screenb.get(), onesetup = onesetupb.get(), validation = validationb.get())
+                     watch_classes=classes, graph = graphb.get(), screenshots = screenb.get(),
+                     onesetup = onesetupb.get(), validation = validationb.get(), SAHI = sahib.get()
+                     )
         P.initialise()
         results = P.play()
         result_window(results)
 
     def create_bt():
         val_bt = tk.Button(root, text="Valider", command=start)
-        val_bt.grid(row = 10, column=0, columnspan=8, pady=10, padx=5)
+        val_bt.grid(row = 11, column=0, columnspan=8, pady=10, padx=5)
 
     # Bind the entry widget to accept file drops
     root.drop_target_register(DND_FILES)
