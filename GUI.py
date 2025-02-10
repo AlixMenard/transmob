@@ -176,12 +176,13 @@ def setup_window():
 
     # ? SAHI
     sahib = tk.BooleanVar(value=False)
-    sahi_l = tk.Label(root, text = "Detection fragmentaire")
-    sahi_l.grid(row = 10, column = 0, columnspan = 4)
-    sahi_t = tk.Radiobutton(root, text = "Oui", variable = sahib, value = True)
-    sahi_t.grid(row = 10, column = 4, columnspan = 2)
-    sahi_f = tk.Radiobutton(root, text = "Non", variable = sahib, value = False)
-    sahi_f.grid(row = 10, column = 6, columnspan = 2)
+    if torch.cuda.is_available():
+        sahi_l = tk.Label(root, text = "Detection fragmentaire")
+        sahi_l.grid(row = 10, column = 0, columnspan = 4)
+        sahi_t = tk.Radiobutton(root, text = "Oui", variable = sahib, value = True)
+        sahi_t.grid(row = 10, column = 4, columnspan = 2)
+        sahi_f = tk.Radiobutton(root, text = "Non", variable = sahib, value = False)
+        sahi_f.grid(row = 10, column = 6, columnspan = 2)
 
     # ! Validation
     def start():
