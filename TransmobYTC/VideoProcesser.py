@@ -59,7 +59,7 @@ class Playlist:
         self.SAHI = SAHI
 
     def sort_files(self):
-        self.files.sort(key=os.path.getctime)
+        self.files.sort(key=lambda x:os.path.getctime(fr"{self.folder}/{x}"))
 
     def initialise(self, lines=None, trust = False):
         if self.playlists is not None:
