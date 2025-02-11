@@ -34,7 +34,12 @@ class Line:
         dx, dy = abs(x2-x1), abs(y2-y1)
         self.length = np.sqrt(dx**2 + dy**2)
         self.bounds = [x1-0.1*dy, x2+0.1*dy, min(y1, y2)-0.1*dx, max(y1, y2)+0.1*dx]
-        self.strict_bounds = [x1, x2, min(y1, y2), max(y1, y2)]
+        if dx>10*dy:
+            self.strict_bounds = [x1, x2, min(y1, y2)-0.1*dx, max(y1, y2)+0.1*dx]
+        elif dy>10*dx:
+            self.strict_bounds = [x1-0.1*dy, x2-0.1*dy, min(y1, y2), max(y1, y2)]
+        else:
+            self.strict_bounds = [x1, x2, min(y1, y2), max(y1, y2)]
 
         #! ax + by + c = 0
         if dx == 0:
