@@ -60,24 +60,7 @@ class Playlist:
         self.SAHI = SAHI
 
     def sort_files(self):
-        durations = {f:int(vidduration(self.folder+"/"+f)) for f in self.files}
-        cores = [[("",0,0)] for _ in range(self.cores)]
-        while durations:
-            longest_vid = max(zip(durations.values(), durations.keys()))[1]
-            shortest_core = min(cores, key=lambda x: x[-1][-1])
-            d = durations.pop(longest_vid)
-            shortest_core.append((longest_vid, d,shortest_core[-1][-1] + d))
-
-        for core in cores:
-            core.pop(0)
-        final_order = []
-        while any([len(c) > 0 for c in cores]):
-            earliest = min(cores, key=lambda x: x[0][-1] - x[0][-2])
-            final_order.append(earliest.pop(0))
-            if len(earliest) == 0:
-                cores.remove(earliest)
-
-        self.files = [f[0] for f in final_order]
+        self.files.sort(key=os.path.getctime)
 
     def initialise(self, lines=None, trust = False):
         if self.playlists is not None:
