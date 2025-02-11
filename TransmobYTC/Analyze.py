@@ -175,6 +175,8 @@ class Analyser:
             if not should_pass:
                 key = cv2.waitKey(0) & 0xFF
             if (not lines is None and should_pass) or key == 13:
+                for l in self.lines:
+                    draw_line(frame, l,(0, 0, 0, 0))
                 f_name = f"{self.folder}/product/{str_time(self.strt)}-{str_time(self.end)[11:]}.jpg"
                 #print(f_name)
                 cv2.imwrite(f_name, frame)
