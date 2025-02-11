@@ -28,6 +28,7 @@ logger.disable("boxmot")
 
 from sahi import AutoDetectionModel
 from sahi.predict import get_sliced_prediction
+from sahi.postprocess.combine import NMMPostprocess
 
 # ? First try at box connection, either too slow (often) or incorrect and leaving objects unclassed
 def dic_search2(dic: dict, tupl: tuple):
@@ -123,7 +124,7 @@ class Analyser:
             self.yolo = AutoDetectionModel.from_pretrained(
                 model_type='yolo11',
                 model_path=os.path.join(os.getcwd(),self.model),
-                confidence_threshold=0.25,
+                confidence_threshold=0.4,
                 device="cuda:0",
             )
         else:
@@ -237,9 +238,9 @@ class Analyser:
             frame_rate=self.fps,
             with_reid=True,
             per_class=False,
-            track_high_thresh=0.3,
-            track_low_thresh=0.1,
-            new_track_thresh=0.35,
+            track_high_thresh=0.4 if self.SAHI else 0.3,
+            track_low_thresh=0.3 if self.SAHI else 0.1,
+            new_track_thresh=0.6 if self.SAHI else 0.5,
             track_buffer=self.fps*20,
             match_thresh=0.15,
             proximity_thresh=0.6,
@@ -247,6 +248,8 @@ class Analyser:
             cmc_method="ecc", # ECC > SIFT > SOF/ORB
             fuse_first_associate=True
         )
+
+        self.postprocess = NMMPostprocess(match_threshold=0.8, match_metric="IOS", class_agnostic=True)
 
     def process(self):
         c_time = None
@@ -290,14 +293,21 @@ class Analyser:
                     self.yolo,
                     slice_height=h // 3,
                     slice_width=w // 3,
-                    overlap_height_ratio=0.1,
-                    overlap_width_ratio=0.1,
+                    overlap_height_ratio=0.2,
+                    overlap_width_ratio=0.2,
                     postprocess_class_agnostic=True,
-                    postprocess_match_threshold=0.3,
+                    postprocess_type = "NMM",
+                    postprocess_match_threshold=0.4,
+                    postprocess_match_metric="IOS",
                     verbose=0
                 )
                 results = results.object_prediction_list
                 results = [r for r in results if r.category.id in self.watch_classes_ids]
+
+                #print(len(results))
+                results = self.postprocess(results)
+                #print(len(results))
+
                 boxes = [map(round,(r.bbox.minx, r.bbox.miny, r.bbox.maxx, r.bbox.maxy)) for r in results]
                 boxes = [(x1, y1, x2, y2) for (x1, y1, x2, y2) in boxes]
                 classes = [r.category.id for r in results]
@@ -314,6 +324,7 @@ class Analyser:
                 dets = np.array([[*box, conf, cls] for box, conf, cls in zip(boxes, confs, classes)])
 
             res = self.tracker.update(dets, frame)  # ? [*t.xyxy, t.id, t.conf, t.cls, t.det_ind]
+            #print([x[5] for x in res])
 
             fleet_ids = self.fleet.ids
             for *box, id, conf, classe, _ in res:
