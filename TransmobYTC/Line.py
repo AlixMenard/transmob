@@ -37,7 +37,7 @@ class Line:
         if dx>10*dy:
             self.strict_bounds = [x1, x2, min(y1, y2)-0.5*dx, max(y1, y2)+0.5*dx]
         elif dy>10*dx:
-            self.strict_bounds = [x1-0.5*dy, x2-0.5*dy, min(y1, y2), max(y1, y2)]
+            self.strict_bounds = [x1-0.5*dy, x2+0.5*dy, min(y1, y2), max(y1, y2)]
         else:
             self.strict_bounds = [x1, x2, min(y1, y2), max(y1, y2)]
 
