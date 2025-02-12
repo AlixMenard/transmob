@@ -242,9 +242,12 @@ class Analyser:
             cmc_method="ecc", # ECC > SIFT > SOF/ORB
         )
 
-    def process(self):
+    def process(self, track = None):
         c_time = None
-        self.init_tracker()
+        if track is None:
+            self.init_tracker()
+        else:
+            self.tracker = track
         self.cap = cv2.VideoCapture(self.url)
         time_last_save = saves = count = 0
         print(f"File : {self.url} - {self.fps} FPS - {int(self.length / self.fps)} seconds")
@@ -370,6 +373,7 @@ class Analyser:
         c_time_str = str_time(c_time)
         self.save(c_time_str, c_time + time_last_save, [])
         cv2.destroyAllWindows()
+        return self.tracker
         #for l in self.lines:
         #    print(l.counter.count())
         #print(f"Done : {self.url}")
