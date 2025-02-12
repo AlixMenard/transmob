@@ -38,7 +38,7 @@ def format_dur(duration):
     return duration
 
 class Playlist:
-    def __init__(self, folder:str, cores:int = 2, model:str="weights/yolov8n.pt", watch_classes=None, frame_nb:int = 2,
+    def __init__(self, folder:str, cores:int = 1, model:str="weights/yolov8n.pt", watch_classes=None, frame_nb:int = 2,
                  graph = False, screenshots = False, onesetup = False, validation = False, SAHI = False):
         if watch_classes is None:
             watch_classes = ["car", "truck", "motorbike", "bus", "bicycle", "person"]
@@ -123,8 +123,9 @@ class Playlist:
             return video_d, process_dur, diff
         An = [self.analysers[f] if self.analysers[f] is not None else f for f in self.files]
         start = time.time()
-        with multiprocessing.Pool(processes=self.cores) as pool:
-            results =pool.map(self.start, An)
+        results = []
+        for an in An:
+            results.append(self.start(an))
         end = time.time()
         video_d = sum(results)
         process_dur = end-start
