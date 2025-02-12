@@ -40,11 +40,11 @@ Suivez les instructions de [Install](INSTALL.fr.md).
 - Les noms des fichiers et des dossiers ne doivent pas contenir d'espace ou de caractères spéciaux
 - Pour des intersections complexes, comme des carrefours giratoires, placez les lignes de manières à ce qu'un véhicule engagé circulant proche de la ligne ne puisse pas la traverser sans quitter l'intersection
 - Pensez à bien couvrir l'ensemble de la zone de passage, en particulier pour les passages piétons, pour lesquels les piétons peuvent traverser autour plutôt que sur le passage exactement
-- ~Les fichiers MP4 et LRV donnent les même résultats, car YOLO réduit la qualité de l'image avant de l'analyser.Cependant, les fichiers LRV sont bien plus légers sur le processeur et la mémoire de l'ordinateur.~ Les fichiers MP4 ont une meilleure robustesse face à la compressionque les fichiers LRV face à la décompresseion, et obtiennent de meilleurs résultats avec SAHI.
+- ~Les fichiers MP4 et LRV donnent les même résultats, car YOLO réduit la qualité de l'image avant de l'analyser.Cependant, les fichiers LRV sont bien plus légers sur le processeur et la mémoire de l'ordinateur.~ Les fichiers MP4 ont une meilleure robustesse face à la compression que les fichiers LRV face à la décompresseion, et obtiennent de meilleurs résultats avec SAHI.
 
 <a name="Tools"></a>
 ### Outils additionnels
-Des outils additionnels utiles sont disponibles. Pour y accèder, ouvrez une invite de commande et naviguez jusqu'au dossier du projet (voir la [partie Installation](#Install) pour plus d'indications sur la navigation via invite de commande). Exécutez `py Tools.py` (ou `python Tools.py`) pour ouvrir une fenêtre incluant les différents outils.
+Des outils additionnels utiles sont disponibles. Pour y accèder, ouvrez une invite de commande et naviguez jusqu'au dossier du projet (voir la [partie Installation](INSTALL.fr.md) pour plus d'indications sur la navigation via invite de commande). Exécutez `py Tools.py` (ou `python Tools.py`) pour ouvrir une fenêtre incluant les différents outils.
 Les outils permettent :
 - Formattage des résultats
 - Renommer vidéos
