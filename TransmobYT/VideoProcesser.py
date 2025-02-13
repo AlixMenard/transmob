@@ -60,7 +60,7 @@ class Playlist:
         self.SAHI = SAHI
 
     def sort_files(self):
-        self.files.sort(key=lambda x:os.path.getctime(fr"{self.folder}/{x}"))
+        self.files.sort(key=lambda x:os.path.getmtime(fr"{self.folder}/{x}"))
 
     def initialise(self, lines=None, trust = False):
         if self.playlists is not None:
@@ -126,7 +126,7 @@ class Playlist:
         results = []
         tracker = None
         for an in An:
-            d, tracker = an.start(an, tracker)
+            d, tracker = self.start(an, tracker)
             results.append(d)
         end = time.time()
         video_d = sum(results)
