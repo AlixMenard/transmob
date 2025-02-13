@@ -89,7 +89,8 @@ class Playlist:
                 trust = an.starter(trust_time=trust) or trust
             if self.onesetup:
                 lines = an.get_lines()
-            self.analysers[f] = an
+            an.dump()
+            self.analysers[f] = f
             first = False
         self.sort_files()
         return lines, trust
