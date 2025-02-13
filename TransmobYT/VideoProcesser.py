@@ -90,7 +90,8 @@ class Playlist:
                 trust = an.starter(trust_time=trust) or trust
             if self.onesetup:
                 lines = an.get_lines()
-            self.analysers[f] = an
+            an.dump()
+            self.analysers[f] = f
             first = False
         self.sort_files()
         return lines, trust
@@ -164,8 +165,9 @@ class Playlist:
         del data
         if self.playlists is None:
             for file in self.analysers:
-                if self.analysers[file] is not None:
-                        self.analysers[file].dump()
+                if self.analysers[file] is not None and not isinstance(self.analysers[file], str):
+                    self.analysers[file].dump()
+                    self.analysers[file] = 0
         else:
             for p in self.playlists:
                 if type(p) == str:
