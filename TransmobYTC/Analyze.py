@@ -253,9 +253,12 @@ class Analyser:
 
         self.postprocess = NMMPostprocess(match_threshold=0.8, match_metric="IOS", class_agnostic=True)
 
-    def process(self):
+    def process(self, track = None):
         c_time = None
-        self.init_tracker()
+        if track is None:
+            self.init_tracker()
+        else:
+            self.tracker = track
         self.cap = cv2.VideoCapture(self.url)
         time_last_save = saves = count = 0
         print(f"File : {self.url} - {self.fps} FPS - {int(self.length / self.fps)} seconds", flush = True)
@@ -305,11 +308,7 @@ class Analyser:
                 )
                 results = results.object_prediction_list
                 results = [r for r in results if r.category.id in self.watch_classes_ids]
-
-                #print(len(results))
                 results = self.postprocess(results)
-                #print(len(results))
-
                 boxes = [map(round,(r.bbox.minx, r.bbox.miny, r.bbox.maxx, r.bbox.maxy)) for r in results]
                 boxes = [(x1, y1, x2, y2) for (x1, y1, x2, y2) in boxes]
                 classes = [r.category.id for r in results]
@@ -326,7 +325,6 @@ class Analyser:
                 dets = np.array([[*box, conf, cls] for box, conf, cls in zip(boxes, confs, classes)])
 
             res = self.tracker.update(dets, frame)  # ? [*t.xyxy, t.id, t.conf, t.cls, t.det_ind]
-            #print([x[5] for x in res])
 
             fleet_ids = self.fleet.ids
             for *box, id, conf, classe, _ in res:
@@ -394,6 +392,7 @@ class Analyser:
         c_time_str = str_time(c_time)
         self.save(c_time_str, c_time + time_last_save, [])
         cv2.destroyAllWindows()
+        return self.tracker
         #for l in self.lines:
         #    print(l.counter.count())
         #print(f"Done : {self.url}")

@@ -95,17 +95,17 @@ class Playlist:
         self.sort_files()
         return lines, trust
 
-    def start(self, an:Analyser):
+    def start(self, an:Analyser, track = None):
         if type(an) == str:
             an = Analyser.load(self.folder, an)
         start_time = time.time()
-        an.process()
+        tracker = an.process(track)
         end_time = time.time()
         process_duration = end_time - start_time
         d = vidduration(an.url)
         print(f"{an.name} ({format_dur(d)}) lasted {format_dur(process_duration)}", flush = True)
         del an
-        return d
+        return d, tracker
 
     def play(self):
         if self.playlists is not None:
@@ -125,8 +125,10 @@ class Playlist:
         An = [self.analysers[f] if self.analysers[f] is not None else f for f in self.files]
         start = time.time()
         results = []
+        tracker = None
         for an in An:
-            results.append(self.start(an))
+            d, tracker = self.start(an, tracker)
+            results.append(d)
         end = time.time()
         video_d = sum(results)
         process_dur = end-start
