@@ -33,11 +33,11 @@ class Line:
         self.p3 = (x3,y3)
         dx, dy = abs(x2-x1), abs(y2-y1)
         self.length = np.sqrt(dx**2 + dy**2)
-        self.bounds = [x1-0.25*dy, x2+0.25*dy, min(y1, y2)-0.25*dx, max(y1, y2)+0.25*dx]
+        self.bounds = [x1-0.5*dy, x2+0.5*dy, min(y1, y2)-0.5*dx, max(y1, y2)+0.5*dx]
         if dx>10*dy:
-            self.strict_bounds = [x1, x2, min(y1, y2)-0.25*dx, max(y1, y2)+0.25*dx]
+            self.strict_bounds = [x1, x2, min(y1, y2)-0.5*dx, max(y1, y2)+0.5*dx]
         elif dy>10*dx:
-            self.strict_bounds = [x1-0.25*dy, x2-0.25*dy, min(y1, y2), max(y1, y2)]
+            self.strict_bounds = [x1-0.5*dy, x2+0.5*dy, min(y1, y2), max(y1, y2)]
         else:
             self.strict_bounds = [x1, x2, min(y1, y2), max(y1, y2)]
 
