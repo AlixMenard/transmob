@@ -1,5 +1,6 @@
 import json
 import pprint
+import tkinter
 from collections import defaultdict
 from datetime import *
 from functools import total_ordering
@@ -13,13 +14,14 @@ from torch.distributions import Pareto
 
 
 class Parser:
-    def __init__(self, path, save_path = None):
+    def __init__(self, path, conglo = True, save_path = None):
         self.timelapse = None
         if save_path is None:
             self.save_path = path
         else:
             self.save_path = save_path
         self.path = path
+        self.conglo = conglo
     
     def parse(self):
         if self.path[-4:] != '.txt':
@@ -75,18 +77,30 @@ class Parser:
                     f.write(f"{line}:{q.pretty_count(line)}\n")
 
     def make_csv(self):
-        columns = ["car", "van", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
+        if self.conglo:
+            columns = ["car", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
+        else:
+            columns = ["car", "van", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
+
         with open(self.save_path[:-3]+"csv", "w") as f:
             f.write("date;time;line;sens;" + ";".join(columns) + "\n")
             for q in self.timelapse:
                 for l in q.count:
                     #Standard ISO formatting apparently
                     line = [q.start.strftime("%Y-%m-%d"), q.start.strftime("%Hh%M")+q.end.strftime("-%Hh%M"), str(l)]
+                    line0 = line[:] + ["0"]
+                    line1 = line[:] + ["1"]
                     for col in columns:
-                        line0 = line[:]
-                        line1 = line[:]
-                        line0 += ["0"] + [str(q.count[l][0][col]) if col in q.count[l][0] else "0" for col in columns]
-                        line1 += ["1"] + [str(q.count[l][1][col]) if col in q.count[l][1] else "0" for col in columns]
+
+                        if col == "car_van":
+                            count0 = q.count[l][0].get("car", 0) + q.count[l][0].get("van", 0)
+                            count1 = q.count[l][1].get("car", 0) + q.count[l][1].get("van", 0)
+                        else:
+                            count0 = q.count[l][0].get(col, 0)
+                            count1 = q.count[l][1].get(col, 0)
+
+                        line0 +=  [str(count0)]
+                        line1 += [str(count1)]
                     f.write(";".join(line0) + "\n")
                     f.write(";".join(line1) + "\n")
 
@@ -138,18 +152,26 @@ def window():
     file_lab.grid(row = 0, column = 0, pady=10, padx=5)
     file_path = tk.StringVar()
     file_entry = tk.Entry(root, textvariable = file_path)
-    file_entry.grid(row = 0, column = 1, pady=10, padx=5)
+    file_entry.grid(row = 0, column = 1, columnspan = 2, pady=10, padx=5)
+
+    conglo = tk.BooleanVar(value = True)
+    conglot = tk.Label(root, text = "Agglomérer VUL et VL : ")
+    conglot.grid(row = 1, column = 0, pady=10, padx=5)
+    conglot = tk.Radiobutton(root, variable = conglo, value = True, text = "Oui")
+    conglot.grid(row = 1, column = 1, pady=10, padx=5)
+    conglof = tk.Radiobutton(root, variable = conglo, value = False, text = "Non")
+    conglof.grid(row = 1, column = 2, pady=10, padx=5)
 
     def validate():
         path = file_path.get()
         path = path.strip('"{}')
-        P = Parser(path)
+        P = Parser(path, conglo = conglo.get())
         P.parse()
         root.destroy()
 
     def create_bt():
         bt = tk.Button(root, text = "Valider", command = validate)
-        bt.grid(row = 1, column = 0, columnspan = 2, pady=10, padx=5)
+        bt.grid(row = 2, column = 0, columnspan = 2, pady=10, padx=5)
 
     def on_drop(event):
         # When a file is dropped, set the file path into the entry widget
