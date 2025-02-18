@@ -121,7 +121,7 @@ class Playlist:
             diff = round(100 * (process_dur / video_d) - 100, 2) if process_dur < video_d else round(100 * (process_dur / video_d) - 100, 2)
             self.clean()
             return video_d, process_dur, diff
-        self.files.reverse()
+        self.sort_files()
         An = [self.analysers[f] if self.analysers[f] is not None else f for f in self.files]
         start = time.time()
         results = []
