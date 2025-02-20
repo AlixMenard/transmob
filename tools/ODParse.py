@@ -9,6 +9,7 @@ import tkinter as tk
 import numpy as np
 from tkinterdnd2 import TkinterDnD, DND_FILES
 import os
+import shutil
 
 from torch.distributions import Pareto
 
@@ -159,7 +160,8 @@ def match_with_user_validation(vehicle_paths, root, top_k=10):
             exit_candidates = [
                 (exit_idx, exit_vehicle)
                 for exit_idx, exit_list in enumerate(vehicle_paths)
-                for exit_vehicle in exit_list if exit_vehicle.sens == 1
+                for exit_vehicle in exit_list
+                if exit_vehicle.sens == 1 and exit_vehicle.id >= enter_vehicle.id
             ]
 
             if not exit_candidates:
@@ -168,8 +170,8 @@ def match_with_user_validation(vehicle_paths, root, top_k=10):
             exit_vehicles = [ev for _, ev in exit_candidates]
             top_matches = get_top_matches(enter_vehicle, exit_vehicles, top_k=top_k)
 
-            acc_thresh = np.mean(accepted_distances) - 3*np.std(accepted_distances) if accepted_distances else 0
-            ref_thresh = np.mean(refused_distances) + 3*np.std(refused_distances) if refused_distances else float("inf")
+            acc_thresh = np.mean(accepted_distances) - 2*np.std(accepted_distances) if accepted_distances else 0
+            ref_thresh = np.mean(refused_distances) + 2*np.std(refused_distances) if refused_distances else float("inf")
 
             for candidate_exit_vehicle, distance in top_matches:
                 decision = None
@@ -289,6 +291,18 @@ class Parser:
         print(f"{unmatched_ent} entering.")
         print(f"{unmatched_exit} exiting.")
         print(od_mat)
+        if os.path.exists(fr"{self.path}/unmatched"):
+            shutil.rmtree(fr"{self.path}/unmatched")
+        os.mkdir(fr"{self.path}/unmatched")
+        os.mkdir(fr"{self.path}/unmatched/enter")
+        os.mkdir(fr"{self.path}/unmatched/exit")
+        unmatched_ent = [(i, a) for i, l in enumerate(vehicle_paths) for a in l if a.sens == 0]
+        unmatched_exit = [(i, a) for i, l in enumerate(vehicle_paths) for a in l if a.sens == 1]
+
+        for line_id, vehicle in unmatched_ent:
+            shutil.copyfile(vehicle.path, fr"{self.path}/unmatched/enter/l{line_id}_{vehicle.short['name']}")
+        for line_id, vehicle in unmatched_exit:
+            shutil.copyfile(vehicle.path, fr"{self.path}/unmatched/exit/l{line_id}_{vehicle.short['name']}")
 
 class OD:
     def __init__(self, line_nb:int):
@@ -317,7 +331,7 @@ class Vehicle:
 
         param = self.path.split("/")
         #print(self.path, param)
-        self.short = {"id" : self.id, "time" : self.time, "line" : int(param[-2]), "sens" : self.sens}
+        self.short = {"id" : self.id, "time" : self.time, "line" : int(param[-2]), "sens" : self.sens, "name" : param[-1]}
 
 def window():
     root = TkinterDnD.Tk()
