@@ -202,7 +202,7 @@ def setup_window():
         P = Playlist(entry_var.get().strip('"{}'), model=f"weights/yolo11{model_letter.get()}.pt",
                      watch_classes=classes, graph = graphb.get(), screenshots = screenb.get(),
                      onesetup = onesetupb.get(), validation = validationb.get(), SAHI = sahib.get(),
-                     OD = ODb.get()
+                     #OD = ODb.get()
                      )
         P.initialise()
         results = P.play()
