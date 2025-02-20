@@ -336,9 +336,9 @@ class Analyser:
                     x, y = box.cross_point
                     if l.inbound(x, y, self.fleet.get(id)):
                         crossed = l.cross(self.fleet.get(id))
-                        if crossed and self.screenshots:
+                        if crossed != 0 and self.screenshots:
                             class_name = self.fleet.get(id)._class
-                            self.screen(frame, box_frame.xyxy, id, class_name, c_time, l)
+                            self.screen(frame, box_frame.xyxy, id, class_name, c_time, l, crossed)
                         color = (255, 0, 0)
 
                 if self.graph:
@@ -392,7 +392,8 @@ class Analyser:
 
         self.fleet.cleanse(tracked_ids)
 
-    def screen(self, frame, box, id, class_name, c_time, line):
+    def screen(self, frame, box, id, class_name, c_time, line, crossed):
+        crossed = 0 if crossed == 1 else 1
         nb_lignes = len(self.lines)
         if nb_lignes > 1:
             for l in self.lines:
@@ -404,9 +405,9 @@ class Analyser:
         if not c_time:
             c_time = self.strt
         if nb_lignes == 1:
-            file_name = fr'{self.folder}/product/screens/{str_time(time_1(c_time))}_l{line.id}_{id}_{class_name}.jpg'
+            file_name = fr'{self.folder}/product/screens/{str_time(time_1(c_time))}_l{line.id}_{id}_s{crossed}_{class_name}.jpg'
         else:
-            file_name = fr'{self.folder}/product/screens/{line.id}/{str_time(time_1(c_time))}_{id}_{class_name}.jpg'
+            file_name = fr'{self.folder}/product/screens/{line.id}/{str_time(time_1(c_time))}_{id}_s{crossed}_{class_name}.jpg'
         #print(file_name)
         cv2.imwrite(file_name, roi)
 
