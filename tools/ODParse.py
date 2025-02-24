@@ -170,17 +170,17 @@ def match_with_user_validation(vehicle_paths, root, top_k=10):
             exit_vehicles = [ev for _, ev in exit_candidates]
             top_matches = get_top_matches(enter_vehicle, exit_vehicles, top_k=top_k)
 
-            acc_thresh = np.mean(accepted_distances) - 2*np.std(accepted_distances) if accepted_distances else 0
-            ref_thresh = np.mean(refused_distances) + 2*np.std(refused_distances) if refused_distances else float("inf")
+            acc_thresh = np.mean(accepted_distances) - 2.5*np.std(accepted_distances) if accepted_distances else 0
+            ref_thresh = np.mean(refused_distances) + 2.5*np.std(refused_distances) if refused_distances else float("inf")
 
             for candidate_exit_vehicle, distance in top_matches:
                 decision = None
                 if acc_thresh < ref_thresh and candidate_exit_vehicle.short["line"] != enter_vehicle.short["line"]:
-                    if distance < acc_thresh:
+                    if distance < acc_thresh and len(accepted_distances)>=10:
                         decision = True
                         print(f"Accepted : {distance}<{acc_thresh}")
                         print(enter_vehicle.short, candidate_exit_vehicle.short)
-                    elif distance > ref_thresh:
+                    elif distance > ref_thresh and len(refused_distances)>=10:
                         decision = False
                         print(f"Refused : {distance}>{ref_thresh}")
                 if decision is None:
@@ -244,24 +244,30 @@ class Parser:
 
         od_mat = OD(line_nb)
 
+        vehicle_exit_map = {}
+        for exit_line in range(line_nb):
+            for v in vehicle_paths[exit_line]:
+                if v.sens == 1:  # exiting vehicles
+                    vehicle_exit_map.setdefault(v.id, set()).add(exit_line)
+
         for enter in range(line_nb):
             enter_vehicles = [v for v in vehicle_paths[enter] if v.sens == 0]
-            for exit in range(line_nb):
-                exit_vehicles = [v for v in vehicle_paths[exit] if v.sens == 1]
-                exit_vehicles_ids = [v.id for v in exit_vehicles]
 
-                found = []
-                for enter_vehicle in enter_vehicles:
-                    if enter_vehicle.id in exit_vehicles_ids:
-                        od_mat.directions[enter][exit].append(enter_vehicle)
-                        found.append(enter_vehicle.id)
+            found = []
+            for enter_vehicle in enter_vehicles:
+                # Check if vehicle exits through exactly one line
+                if vehicle_exit_map.get(enter_vehicle.id) and len(vehicle_exit_map[enter_vehicle.id]) == 1:
+                    exit_line = next(iter(vehicle_exit_map[enter_vehicle.id]))  # get the single exit line
+                    od_mat.directions[enter][exit_line].append(enter_vehicle)
+                    found.append(enter_vehicle.id)
 
-                enter_vehicles = [v for v in enter_vehicles if v.id not in found]
-                vehicle_paths[exit] = [v for v in vehicle_paths[exit] if v.id not in found]
-                vehicle_paths[enter] = [v for v in vehicle_paths[enter] if v.id not in found]
+            vehicle_paths[enter] = [v for v in vehicle_paths[enter] if v.id not in found]
+            for exit_line in range(line_nb):
+                vehicle_paths[exit_line] = [v for v in vehicle_paths[exit_line] if v.id not in found]
 
         unmatched = [len(l) for l in vehicle_paths]
-        print(f"{unmatched} left unmatched, processing with ReId.", end = " ", flush = True)
+        uids = {v.id for l in vehicle_paths for v in l}
+        print(f"{unmatched} left unmatched, processing with ReId. {uids}", end = " ", flush = True)
 
         cfg = get_cfg()
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
