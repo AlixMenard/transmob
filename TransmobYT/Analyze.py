@@ -280,6 +280,8 @@ class Analyser:
                 x1, y1, x2, y2 = self.mask
                 frame = frame[y1:y2, x1:x2]
 
+            immaculate = frame.copy()
+
             if self.SAHI:
                 w, h, _ = frame.shape
                 results = get_sliced_prediction(
@@ -318,7 +320,7 @@ class Analyser:
                 if not class_name in self.watch_classes:
                     continue
                 x1, y1, x2, y2 = map(int, box)
-                dx, dy = self.mask[:2]
+                dx, dy = self.mask[:2] if self.mask is not None else (0,0)
                 x1+=dx
                 x2+=dx
                 y1+=dy
@@ -338,7 +340,7 @@ class Analyser:
                         crossed = l.cross(self.fleet.get(id))
                         if crossed != 0 and self.screenshots:
                             class_name = self.fleet.get(id)._class
-                            self.screen(frame, box_frame.xyxy, id, class_name, c_time, l, crossed)
+                            self.screen(immaculate, box_frame.xyxy, id, class_name, c_time, l, crossed)
                         color = (255, 0, 0)
 
                 if self.graph:
