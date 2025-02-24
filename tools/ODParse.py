@@ -1,6 +1,5 @@
 import json
 import pprint
-import tkinter
 from datetime import *
 from typing import List
 import ast
@@ -27,100 +26,89 @@ class VehicleMatcherGUI:
         self.root = root
         self.root.title("Vehicle Matching Validation")
 
-        self.decision_var = tk.BooleanVar(value=False)
         self.result = None
+        self.selected_index = tk.IntVar(value=-1)  # Index of selected match (-1 for skip)
 
-        # Display paths
+        # Left (entering vehicle) display
+        self.left_image_label = tk.Label(self.root, text="Entering Vehicle")
+        self.left_image_label.grid(row=0, column=0, padx=10, pady=10)
+
         self.left_path_label = tk.Label(self.root)
-        self.left_path_label.grid(row=0, column=0, columnspan=2, padx=10, pady=10)
+        self.left_path_label.grid(row=1, column=0, padx=10, pady=5)
 
-        self.right_path_label = tk.Label(self.root)
-        self.right_path_label.grid(row=0, column=2, columnspan=2, padx=10, pady=10)
+        self.left_short_label = tk.Label(self.root)
+        self.left_short_label.grid(row=2, column=0, padx=10, pady=5)
 
-        # Image display frames
-        self.left_image_label = tk.Label(root)
-        self.left_image_label.grid(row=1, rowspan=3, column=0, padx=10, pady=10)
+        # Right side (top 10 exiting vehicles)
+        self.matches_frame = tk.Frame(self.root)
+        self.matches_frame.grid(row=0, column=1, rowspan=3, padx=10, pady=10)
 
-        self.right_image_label = tk.Label(root)
-        self.right_image_label.grid(row=1, rowspan=3, column=3, padx=10, pady=10)
+        self.match_buttons = []
+        self.match_images = []
+        for i in range(10):
+            frame = tk.Frame(self.matches_frame, relief=tk.RAISED, borderwidth=1)
+            frame.grid(row=i // 2, column=i % 2, padx=5, pady=5)
 
-        # Short display
-        self.left_short1_label = tk.Label(self.root)
-        self.left_short1_label.grid(row=1, column=1, padx=10, pady=10)
-        self.left_short2_label = tk.Label(self.root)
-        self.left_short2_label.grid(row=2, column=1, padx=10, pady=10)
-        self.left_short3_label = tk.Label(self.root)
-        self.left_short3_label.grid(row=3, column=1, padx=10, pady=10)
+            label = tk.Label(frame)
+            label.pack()
 
-        self.right_short1_label = tk.Label(self.root)
-        self.right_short1_label.grid(row=1, column=2, padx=10, pady=10)
-        self.right_short2_label = tk.Label(self.root)
-        self.right_short2_label.grid(row=2, column=2, padx=10, pady=10)
-        self.right_short3_label = tk.Label(self.root)
-        self.right_short3_label.grid(row=3, column=2, padx=10, pady=10)
+            info_label = tk.Label(frame)
+            info_label.pack()
 
-        # Approve and Reject buttons
-        self.approve_button = tk.Button(root, text="✅ Approve", command=self.approve_match, width=15, bg="green", fg="white")
-        self.approve_button.grid(row=4, column=0, columnspan=2, pady=10)
+            button = tk.Button(frame, text=f"Select #{i+1}", command=lambda idx=i: self.select_match(idx))
+            button.pack(pady=2)
 
-        self.reject_button = tk.Button(root, text="❌ Reject", command=self.reject_match, width=15, bg="red", fg="white")
-        self.reject_button.grid(row=4, column=2, columnspan=2, pady=10)
+            self.match_buttons.append((label, info_label, button))
 
-        # Internal variables
-        self.result = None
-        self.root.withdraw()  # Hide initially; show when needed
+        # Skip button
+        self.skip_button = tk.Button(self.root, text="🚫 Skip", command=self.skip_match, bg="gray", fg="white")
+        self.skip_button.grid(row=3, column=0, columnspan=2, pady=10)
 
-    def show_images(self, enter_vehicle, exit_vehicle):
-        """Display two images side-by-side for user validation."""
-        self.root.deiconify()  # Show the window if hidden
+        self.root.withdraw()  # Hide initially
 
-        # Convert OpenCV images (BGR) to PIL images (RGB)
+    def show_images(self, enter_vehicle, top_matches):
+        """Display entering vehicle and top 10 exiting vehicles for user selection."""
+        self.root.deiconify()
+
+        # Display entering vehicle
         enter_image = cv2.imread(enter_vehicle.path)
-        enter_image = Image.fromarray(cv2.cvtColor(enter_image, cv2.COLOR_BGR2RGB))
-        exit_image = cv2.imread(exit_vehicle.path)
-        exit_image = Image.fromarray(cv2.cvtColor(exit_image, cv2.COLOR_BGR2RGB))
-
-        # Resize for display
-        enter_image = enter_image.resize((300, 200))
-        exit_image = exit_image.resize((300, 200))
-
-        # Convert to Tkinter-compatible format
+        enter_image = Image.fromarray(cv2.cvtColor(enter_image, cv2.COLOR_BGR2RGB)).resize((200, 150))
         self.enter_photo = ImageTk.PhotoImage(enter_image)
-        self.exit_photo = ImageTk.PhotoImage(exit_image)
-
-        # Update paths
-        self.left_path_label.configure(text=enter_vehicle.path)
-        self.right_path_label.configure(text=exit_vehicle.path)
-
-        # Update shorts
-        self.left_short1_label.configure(text=enter_vehicle.short["id"])
-        self.left_short2_label.configure(text=enter_vehicle.short["time"])
-        self.left_short3_label.configure(text=f"Entered from line {enter_vehicle.short['line']}")
-
-        self.right_short1_label.configure(text=exit_vehicle.short["id"])
-        self.right_short2_label.configure(text=exit_vehicle.short["time"])
-        self.right_short3_label.configure(text=f"Exited from line {exit_vehicle.short['line']}")
-
-        # Update labels
         self.left_image_label.config(image=self.enter_photo)
-        self.right_image_label.config(image=self.exit_photo)
+        self.left_path_label.config(text=enter_vehicle.path)
+        self.left_short_label.config(text=f"ID: {enter_vehicle.short['id']} | Time: {enter_vehicle.short['time']} | Line: {enter_vehicle.short['line']}")
 
-        self.result = None
-        self.root.wait_variable(self.decision_var)  # Wait for user approval or rejection
+        # Display top matches
+        for i, (candidate_exit_vehicle, distance) in enumerate(top_matches):
+            exit_image = cv2.imread(candidate_exit_vehicle.path)
+            exit_image = Image.fromarray(cv2.cvtColor(exit_image, cv2.COLOR_BGR2RGB)).resize((200, 150))
+            photo = ImageTk.PhotoImage(exit_image)
+            self.match_images.append(photo)
 
-    def approve_match(self):
-        self.result = True
-        self.decision_var.set(True)
-        self.root.withdraw()  # Hide window after decision
+            label, info_label, _ = self.match_buttons[i]
+            label.config(image=photo)
+            info_label.config(text=f"ID: {candidate_exit_vehicle.short['id']} | Time: {candidate_exit_vehicle.short['time']} | Line: {candidate_exit_vehicle.short['line']}\nDistance: {distance:.4f}")
 
-    def reject_match(self):
-        self.result = False
-        self.decision_var.set(True)
+        # Hide unused slots if fewer than 10 matches
+        for j in range(len(top_matches), 10):
+            label, info_label, _ = self.match_buttons[j]
+            label.config(image="")
+            info_label.config(text="No Match")
+
+        self.selected_index.set(-1)
+        self.root.wait_variable(self.selected_index)
         self.root.withdraw()
+
+    def select_match(self, index):
+        self.result = index
+        self.selected_index.set(index)
+
+    def skip_match(self):
+        self.result = -1
+        self.selected_index.set(-1)
 
     def get_result(self):
         return self.result
-
 
 def resize_with_padding(image, target_size):
     h, w = image.shape[:2]
@@ -136,7 +124,6 @@ def resize_with_padding(image, target_size):
     return padded
 
 def get_top_matches(enter_vehicle, exit_vehicles, top_k=10):
-    """Return top_k closest exiting vehicles to the entering vehicle."""
     if not exit_vehicles:
         return []
 
@@ -148,15 +135,13 @@ def get_top_matches(enter_vehicle, exit_vehicles, top_k=10):
 def match_with_user_validation(vehicle_paths, root, top_k=10):
     matcher_gui = VehicleMatcherGUI(root)
     match_list = []
-
-    accepted_distances = []
-    refused_distances = []
+    selected_distances = []
+    skipped_distances = []
 
     for enter_idx, enter_list in enumerate(vehicle_paths):
         enter_vehicles = [v for v in enter_list if v.sens == 0]
 
         for enter_vehicle in enter_vehicles:
-            # Gather exiting vehicles from other paths
             exit_candidates = [
                 (exit_idx, exit_vehicle)
                 for exit_idx, exit_list in enumerate(vehicle_paths)
@@ -170,36 +155,47 @@ def match_with_user_validation(vehicle_paths, root, top_k=10):
             exit_vehicles = [ev for _, ev in exit_candidates]
             top_matches = get_top_matches(enter_vehicle, exit_vehicles, top_k=top_k)
 
-            acc_thresh = np.mean(accepted_distances) - 2.5*np.std(accepted_distances) if accepted_distances else 0
-            ref_thresh = np.mean(refused_distances) + 2.5*np.std(refused_distances) if refused_distances else float("inf")
+            # Automatic acceptance if criteria met
+            if len(selected_distances) >= 10:
+                mean_distance = np.mean(selected_distances)
+                std_distance = np.std(selected_distances)
+                auto_accept_threshold = mean_distance - 2.5 * std_distance
 
-            for candidate_exit_vehicle, distance in top_matches:
-                decision = None
-                if acc_thresh < ref_thresh and candidate_exit_vehicle.short["line"] != enter_vehicle.short["line"]:
-                    if distance < acc_thresh and len(accepted_distances)>=10:
-                        decision = True
-                        print(f"Accepted : {distance}<{acc_thresh}")
-                        print(enter_vehicle.short, candidate_exit_vehicle.short)
-                    elif distance > ref_thresh and len(refused_distances)>=10:
-                        decision = False
-                        print(f"Refused : {distance}>{ref_thresh}")
-                if decision is None:
-                    matcher_gui.show_images(enter_vehicle, candidate_exit_vehicle)
-                    decision = matcher_gui.get_result()
+                best_match, best_distance = top_matches[0]
+                if best_distance < auto_accept_threshold:
+                    enter_list.remove(enter_vehicle)
+                    exit_idx = next(idx for idx, ev in exit_candidates if ev == best_match)
+                    vehicle_paths[exit_idx].remove(best_match)
+                    match_list.append((enter_idx, exit_idx, best_match))
+                    selected_distances.append(best_distance)
+                    print(f"✅ Auto-accepted: V1 {enter_vehicle.short} - V2 {best_match.short}")
+                    continue
+            if len(skipped_distances) >= 10:
+                mean_skipped = np.mean(skipped_distances)
+                std_skipped = np.std(skipped_distances)
+                auto_reject_threshold = mean_skipped + 2.5 * std_skipped
 
-                if decision:  # User approved
-                    accepted_distances.append(distance)
-                    vehicle_paths[enter_idx].remove(enter_vehicle)
-                    exit_idx = next(idx for idx, ev in exit_candidates if ev == candidate_exit_vehicle)
-                    vehicle_paths[exit_idx].remove(candidate_exit_vehicle)
-                    match_list.append((enter_idx, exit_idx, candidate_exit_vehicle))
-                    break  # Go to next entering vehicle
-                else:
-                    refused_distances.append(distance)
+                best_match, best_distance = top_matches[0]
+                if best_distance > auto_reject_threshold:
+                    skipped_distances.extend([distance for _, distance in top_matches])
+                    enter_list.remove(enter_vehicle)
+                    print(f"🚫 Auto-rejected: Distance {best_distance:.4f} > {auto_reject_threshold:.4f}")
+                    continue
 
+            matcher_gui.show_images(enter_vehicle, top_matches)
+            selected_index = matcher_gui.get_result()
+
+            if selected_index != -1:  # User selected a match
+                candidate_exit_vehicle, distance = top_matches[selected_index]
+                enter_list.remove(enter_vehicle)
+                exit_idx = next(idx for idx, ev in exit_candidates if ev == candidate_exit_vehicle)
+                vehicle_paths[exit_idx].remove(candidate_exit_vehicle)
+                match_list.append((enter_idx, exit_idx, candidate_exit_vehicle))
+                selected_distances.append(distance)
             else:
-                #print("🚫 No approved match found after top 10 candidates.")
-                vehicle_paths[enter_idx].remove(enter_vehicle)
+                skipped_distances.extend([distance for _, distance in top_matches])
+                enter_list.remove(enter_vehicle)
+
     return match_list
 
 class Parser:
@@ -266,8 +262,8 @@ class Parser:
                 vehicle_paths[exit_line] = [v for v in vehicle_paths[exit_line] if v.id not in found]
 
         unmatched = [len(l) for l in vehicle_paths]
-        uids = {v.id for l in vehicle_paths for v in l}
-        print(f"{unmatched} left unmatched, processing with ReId. {uids}", end = " ", flush = True)
+        #uids = {v.id for l in vehicle_paths for v in l}
+        print(f"{unmatched} left unmatched, processing with ReId.", end = " ", flush = True)
 
         cfg = get_cfg()
         normalize = transforms.Normalize(mean=[0.485, 0.456, 0.406],
