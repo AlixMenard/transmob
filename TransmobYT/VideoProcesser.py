@@ -38,7 +38,7 @@ def format_dur(duration):
     return duration
 
 class Playlist:
-    def __init__(self, folder:str, cores:int = 1, model:str="weights/yolov8n.pt", watch_classes=None, frame_nb:int = 2,
+    def __init__(self, folder:str, cores:int = 1, model:str="weights/yolov12n.pt", watch_classes=None, frame_nb:int = 2,
                  graph = False, screenshots = False, onesetup = False, validation = False, SAHI = False):
         if watch_classes is None:
             watch_classes = ["car", "truck", "motorbike", "bus", "bicycle", "person"]
@@ -203,7 +203,7 @@ def models_trials(folder, cores, lines = None):
     for m in models:
         print("\n"*3)
         print(f"Model size : {m}")
-        p = Playlist(folder, model=f"weights/yolov8{m}.pt", cores = cores)
+        p = Playlist(folder, model=f"weights/yolov12{m}.pt", cores = cores)
         if not lines is None:
             p.initialise(lines)
         else:
@@ -220,7 +220,7 @@ def accuracy(folder, cores, lines = None):
     for m in models:
         print("\n"*3)
         print(f"Model size : {m}")
-        p = Playlist(folder, model=f"weights/yolov8{m}.pt", cores = cores, frame_nb = 1)
+        p = Playlist(folder, model=f"weights/yolov12{m}.pt", cores = cores, frame_nb = 1)
         if not lines is None:
             p.initialise(lines)
         else:
@@ -235,6 +235,6 @@ def accuracy(folder, cores, lines = None):
 if __name__ == "__main__":
     folder = input("Give folder : ")
     #models_trials(folder, 1)
-    P = Playlist(folder, cores = 3, model="weights/yolov8m.pt") #, watch_classes=["bicycle", "person"]
+    P = Playlist(folder, cores = 3, model="weights/yolov12m.pt") #, watch_classes=["bicycle", "person"]
     P.initialise()
     P.play()
