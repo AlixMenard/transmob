@@ -258,6 +258,7 @@ class Analyser:
         if track is None:
             self.init_tracker()
         else:
+            self.postprocess = NMMPostprocess(match_threshold=0.8, match_metric="IOS", class_agnostic=True)
             self.tracker = track
         self.cap = cv2.VideoCapture(self.url)
         time_last_save = saves = count = 0
