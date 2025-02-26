@@ -283,6 +283,7 @@ class Parser:
                 vehicle.features = predictor(image)
         print("Matching...", flush = True)
         id_matched = match_with_user_validation(vehicle_paths, root, top_k=10)
+        print(len(id_matched))
         for enter_id, exit_id, vehicle in id_matched:
             od_mat.directions[enter_id][exit_id].append(vehicle)
 
