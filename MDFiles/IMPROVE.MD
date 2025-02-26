@@ -14,14 +14,17 @@ You need to change the generic version on the yolo models (e.g. `yolov8{m}.pt` o
 ## Tracking parameters
 
 The vehicle tracking is done using BoT-SORT. The parameters are available in `TransmobYTC/Analyze.py` (for GPU version, otherwise `TransmobYT/Analyze.py`) at the lines :
-<p align="center">
-  <div style="display: inline-block; text-align: center; margin: 0 10px;">
-    <img src="images/Tracker_YTC.png?raw=true" alt="YTC tracker" title="YTC tracker" width="45%"/>
-    <div style="font-size: 0.9em; margin-top: 5px;">YTC Tracker</div>
-  </div>
-  <div style="display: inline-block; text-align: center; margin: 0 10px;">
-    <img src="images/Tracker_YT.png?raw=true" alt="YT tracker" title="YT tracker" width="45%"/>
-    <div style="font-size: 0.9em; margin-top: 5px;">YT Tracker</div>
-  </div>
-</p>
+<table>
+  <tr>
+    <td align="center">
+      <img src="images/Tracker_YTC.png?raw=true" alt="YTC tracker" title="YTC tracker" width="300"/>
+      <br/><sub>YTC Tracker</sub>
+    </td>
+    <td align="center">
+      <img src="images/Tracker_YT.png?raw=true" alt="YT tracker" title="YT tracker" width="300"/>
+      <br/><sub>YT Tracker</sub>
+    </td>
+  </tr>
+</table>
+
 
