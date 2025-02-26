@@ -199,7 +199,7 @@ def setup_window():
         root.destroy()
         Playlist = vpYT.Playlist
             
-        P = Playlist(entry_var.get().strip('"{}'), model=f"weights/yolov12{model_letter.get()}.pt",
+        P = Playlist(entry_var.get().strip('"{}'), model=f"weights/yolo11{model_letter.get()}.pt",
                      watch_classes=classes, graph = graphb.get(), screenshots = screenb.get(),
                      onesetup = onesetupb.get(), validation = validationb.get(), SAHI = sahib.get(),
                      #OD = ODb.get()
