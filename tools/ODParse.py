@@ -124,14 +124,28 @@ def resize_with_padding(image, target_size):
     padded[top:top + new_h, left:left + new_w] = resized
     return padded
 
-def get_top_matches(enter_vehicle, exit_vehicles, top_k=12):
+import numpy as np
+from scipy.spatial.distance import cdist
+
+def get_top_matches(enter_vehicle, exit_vehicles, top_k=12, lambda_id=0.1, max_id=1000):
     if not exit_vehicles:
         return []
 
+    # 1. Compute feature distances (cosine)
     exit_features = np.vstack([v.features for v in exit_vehicles])
-    distances = cdist(enter_vehicle.features.reshape(1, -1), exit_features, metric='cosine')[0]
-    top_indices = np.argsort(distances)[:top_k]
-    return [(exit_vehicles[i], distances[i]) for i in top_indices]
+    feature_distances = cdist(enter_vehicle.features.reshape(1, -1), exit_features, metric='cosine')[0]
+
+    # 2. Compute ID proximity penalty
+    id_differences = np.array([abs(enter_vehicle.id - v.id) for v in exit_vehicles])
+    id_penalty = lambda_id * (id_differences / max_id)
+
+    # 3. Combine distances
+    combined_distances = feature_distances + id_penalty
+
+    # 4. Get top matches based on combined distances
+    top_indices = np.argsort(combined_distances)[:top_k]
+    return [(exit_vehicles[i], combined_distances[i]) for i in top_indices]
+
 
 def match_with_user_validation(vehicle_paths, root, top_k=12):
     matcher_gui = VehicleMatcherGUI(root)
@@ -154,7 +168,7 @@ def match_with_user_validation(vehicle_paths, root, top_k=12):
                 continue
 
             exit_vehicles = [ev for _, ev in exit_candidates]
-            top_matches = get_top_matches(enter_vehicle, exit_vehicles, top_k=top_k)
+            top_matches = get_top_matches(enter_vehicle, exit_vehicles, top_k=top_k, max_id=max_id)
 
             # Automatic acceptance if criteria met
             if len(selected_distances) >= 10:
@@ -222,6 +236,7 @@ class Parser:
 
         line_nb = self.line_nb
 
+        max_id = 0
         vehicle_paths = [[] for _ in range(line_nb)]
         for screens_folder in screens_folders:
             line_folders = os.listdir(screens_folder)
@@ -235,6 +250,7 @@ class Parser:
                     type = v_param[3][:-4]
                     p = os.path.join(screens_folder, line_folder, vehicle_path)
                     v = Vehicle(id, type, t, p, sens)
+                    max_id = max(max_id, id)
                     vehicle_paths[line_id].append(v)
 
         start = min((vehicle for vlist in vehicle_paths for vehicle in vlist), key=lambda v: v.time)
