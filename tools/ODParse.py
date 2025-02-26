@@ -3,6 +3,7 @@ import pprint
 from datetime import *
 from typing import List
 import ast
+import csv
 import tkinter as tk
 
 import numpy as np
@@ -207,6 +208,7 @@ class Parser:
             self.save_path = save_path
         self.path = path
         self.conglo = conglo
+        self.line_nb = len(os.listdir(screens_folders[0]))
 
     def parse(self, root):
 
@@ -218,7 +220,7 @@ class Parser:
             if "screens" in dirnames:
                 screens_folders.append(os.path.join(dirpath, "screens"))
 
-        line_nb = len(os.listdir(screens_folders[0]))
+        line_nb = self.line_nb
 
         vehicle_paths = [[] for _ in range(line_nb)]
         for screens_folder in screens_folders:
@@ -311,7 +313,28 @@ class Parser:
         self.parsed = od_mat
 
     def make_csv(self):
-        pass
+        Quarter._conglo = self.conglo
+        for i in range(self.line_nb):
+            for j in range(self.line_nb):
+                for v in self.parsed.directions[i][j]:
+                    q = Quarter.get_quarter_for_time(i, j, v.time)
+                    q.add_vehicle(v)
+
+        columns = ["date", "time", "enter", "exit"]
+        if self.conglo:
+            columns += ["car", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
+        else:
+            columns += ["car", "van", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
+
+        with open("dir.csv", "wt") as fp:
+            writer = csv.writer(fp, delimiter=";")
+            writer.writerow(columns)
+            for q in Quarter._instances.items():
+                date = q.time_start.strftime("%Y-%m-%d")
+                hs = q.time_start.strftime("%Hh%M")
+                he = q.time_end.strftime("%Hh%M")
+                row = [date, f"{hs}-{he}", q.enter, q.exit] + q.count()
+                writer.writerow(row)
 
 class OD:
     def __init__(self, line_nb:int):
@@ -327,6 +350,50 @@ class OD:
             for j in range(self.line_nb):
                 rep[i, j] = len(self.directions[i, j])
         return str(rep)
+
+from datetime import datetime, timedelta
+
+class Quarter:
+    _instances = {}
+    _conglo = True
+
+    def __init__(self, enter: int, exit: int, time_start: datetime, conglo: bool = True):
+        self.enter = enter
+        self.exit = exit
+        self.time_start = time_start
+        self.time_end = time_start + timedelta(minutes=15)
+        self.conglo = conglo
+        self.vehicles = []
+        Quarter._instances[(enter, exit, time_start)] = self  # Store with tuple key
+
+    @classmethod
+    def get_quarter_for_time(cls, enter: int, exit: int, time: datetime):
+        # Align the time to the start of the corresponding quarter
+        quarter_start = time.replace(minute=(time.minute // 15) * 15, second=0, microsecond=0)
+        key = (enter, exit, quarter_start)
+
+        # Return the existing quarter or create a new one if not found
+        return cls._instances.get(key) or cls(enter, exit, quarter_start, cls._conglo)
+
+    def add_vehicle(self, vehicle):
+        if self.conglo and vehicle.type == "van":
+            vehicle.type = "car"
+        self.vehicles.append(vehicle)
+
+    def count(self):
+        if self.conglo:
+            columns = ["car", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
+        else:
+            columns = ["car", "van", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
+
+        results = []
+        for col in columns:
+            results.append(0)
+            for vehicle in self.vehicles:
+                if vehicle.type == col:
+                    results[-1] += 1
+        return results
+
 
 
 class Vehicle:
