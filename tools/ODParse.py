@@ -341,6 +341,7 @@ class Parser:
 
     def make_csv(self):
         Quarter._conglo = self.conglo
+        Quarter._instances = {}
         for i in range(self.line_nb):
             for j in range(self.line_nb):
                 for v in self.parsed.directions[i][j]:
