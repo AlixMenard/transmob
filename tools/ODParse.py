@@ -276,14 +276,17 @@ class Parser:
         predictor = DefaultPredictor(cfg)
         for path in vehicle_paths:
             for vehicle in path:
-                image = cv2.imread(vehicle.path)[:, :, ::-1]
+                try:
+                    image = cv2.imread(vehicle.path)[:, :, ::-1]
+                except:
+                    input(vehicle.path)
                 image = resize_with_padding(image, cfg.INPUT.SIZE_TEST[::-1])
                 image = torch.as_tensor(image.astype("float32").transpose(2, 0, 1)) / 255.0
                 image = normalize(image).unsqueeze(0).to(cfg.MODEL.DEVICE)
                 vehicle.features = predictor(image)
         print("Matching...", flush = True)
         id_matched = match_with_user_validation(vehicle_paths, root, top_k=12)
-        print(len(id_matched))
+        print(f"{len(id_matched)} hand made matches.")
         for enter_id, exit_id, vehicle in id_matched:
             od_mat.directions[enter_id][exit_id].append(vehicle)
 
