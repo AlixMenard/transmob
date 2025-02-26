@@ -92,7 +92,7 @@ def str_time(_time):
 
 class Analyser:
 
-    def __init__(self, folder, name, model="weights/yolov8n.pt", graph: bool = False, threshold: float = 0.25,
+    def __init__(self, folder, name, model="weights/yolov12n.pt", graph: bool = False, threshold: float = 0.25,
                  watch_classes=None, verbose:bool=False, frame_nb:int = 2, screenshots = False, SAHI=False):
         if watch_classes is None:
             watch_classes = ["car", "truck", "motorbike", "bus", "bicycle", "person"]
@@ -122,7 +122,7 @@ class Analyser:
 
         if self.SAHI:
             self.yolo = AutoDetectionModel.from_pretrained(
-                model_type='yolo11',
+                model_type='ultralytics',
                 model_path=os.path.join(os.getcwd(),self.model),
                 confidence_threshold=0.4,
                 device="cuda:0",
@@ -258,6 +258,7 @@ class Analyser:
         if track is None:
             self.init_tracker()
         else:
+            self.postprocess = NMMPostprocess(match_threshold=0.8, match_metric="IOS", class_agnostic=True)
             self.tracker = track
         self.cap = cv2.VideoCapture(self.url)
         time_last_save = saves = count = 0
@@ -290,6 +291,8 @@ class Analyser:
             if self.mask is not None:
                 x1, y1, x2, y2 = self.mask
                 frame = frame[y1:y2, x1:x2]
+
+            immaculate = frame.copy()
 
             if self.SAHI:
                 w, h, _ = frame.shape
@@ -334,7 +337,7 @@ class Analyser:
                     continue
                 x1, y1, x2, y2 = map(int, box)
                 x1, y1, x2, y2 = map(lambda x: max(0,x), (x1, y1, x2, y2))
-                dx, dy = self.mask[:2]
+                dx, dy = self.mask[:2] if self.mask is not None else (0,0)
                 x1+=dx
                 x2+=dx
                 y1+=dy
@@ -345,7 +348,7 @@ class Analyser:
                 if id in fleet_ids:
                     truck_frame = None
                     if class_name in ["truck", "car"]:
-                        truck_frame = frame[y1-dy:y2-dy, x1-dx:x2-dx]
+                        truck_frame = immaculate[y1-dy:y2-dy, x1-dx:x2-dx]
                     self.fleet.update_vehicle(id, box, class_name, conf, count, truck_frame)
                 else:
                     self.fleet.add_vehicle(id, box, class_name, conf, count)
@@ -355,9 +358,9 @@ class Analyser:
                     x, y = box.cross_point
                     if l.inbound(x, y, self.fleet.get(id)):
                         crossed = l.cross(self.fleet.get(id))
-                        if crossed and self.screenshots:
+                        if crossed != 0 and self.screenshots:
                             class_name = self.fleet.get(id)._class
-                            self.screen(frame, box_frame.xyxy, id, class_name, c_time, l)
+                            self.screen(immaculate, box_frame.xyxy, id, class_name, c_time, l, crossed)
                         color = (255, 0, 0)
 
                 if self.graph:
@@ -411,7 +414,8 @@ class Analyser:
 
         self.fleet.cleanse(tracked_ids)
 
-    def screen(self, frame, box, id, class_name, c_time, line):
+    def screen(self, frame, box, id, class_name, c_time, line, crossed):
+        crossed = 0 if crossed == 1 else 1
         nb_lignes = len(self.lines)
         if nb_lignes > 1:
             for l in self.lines:
@@ -423,9 +427,9 @@ class Analyser:
         if not c_time:
             c_time = self.strt
         if nb_lignes == 1:
-            file_name = fr'{self.folder}/product/screens/{str_time(time_1(c_time))}_l{line.id}_{id}_{class_name}.jpg'
+            file_name = fr'{self.folder}/product/screens/{str_time(time_1(c_time))}_l{line.id}_{id}_s{crossed}_{class_name}.jpg'
         else:
-            file_name = fr'{self.folder}/product/screens/{line.id}/{str_time(time_1(c_time))}_{id}_{class_name}.jpg'
+            file_name = fr'{self.folder}/product/screens/{line.id}/{str_time(time_1(c_time))}_{id}_s{crossed}_{class_name}.jpg'
         #print(file_name)
         cv2.imwrite(file_name, roi)
 
