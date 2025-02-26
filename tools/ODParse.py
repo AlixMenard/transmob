@@ -48,7 +48,7 @@ class VehicleMatcherGUI:
         self.match_images = []
         for i in range(10):
             frame = tk.Frame(self.matches_frame, relief=tk.RAISED, borderwidth=1)
-            frame.grid(row=i // 2, column=i % 2, padx=5, pady=5)
+            frame.grid(row=i // 4, column=i % 4, padx=5, pady=5)
 
             label = tk.Label(frame)
             label.pack()
@@ -124,7 +124,7 @@ def resize_with_padding(image, target_size):
     padded[top:top + new_h, left:left + new_w] = resized
     return padded
 
-def get_top_matches(enter_vehicle, exit_vehicles, top_k=10):
+def get_top_matches(enter_vehicle, exit_vehicles, top_k=12):
     if not exit_vehicles:
         return []
 
@@ -133,7 +133,7 @@ def get_top_matches(enter_vehicle, exit_vehicles, top_k=10):
     top_indices = np.argsort(distances)[:top_k]
     return [(exit_vehicles[i], distances[i]) for i in top_indices]
 
-def match_with_user_validation(vehicle_paths, root, top_k=10):
+def match_with_user_validation(vehicle_paths, root, top_k=12):
     matcher_gui = VehicleMatcherGUI(root)
     match_list = []
     selected_distances = []
