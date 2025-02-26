@@ -17,11 +17,11 @@ The vehicle tracking is done using BoT-SORT. The parameters are available in `Tr
 <table>
   <tr>
     <td align="center" width="45%">
-      <img src="images/Tracker_YTC.png?raw=true" alt="YTC tracker" title="YTC tracker" width="45%"/>
+      <img src="images/Tracker_YTC.png?raw=true" alt="YTC tracker" title="YTC tracker"/>
       <br/><sub>YTC Tracker</sub>
     </td>
     <td align="center" width="45%">
-      <img src="images/Tracker_YT.png?raw=true" alt="YT tracker" title="YT tracker" width="45%"/>
+      <img src="images/Tracker_YT.png?raw=true" alt="YT tracker" title="YT tracker"/>
       <br/><sub>YT Tracker</sub>
     </td>
   </tr>
