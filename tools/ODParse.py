@@ -331,7 +331,7 @@ class Parser:
         with open("dir.csv", "wt") as fp:
             writer = csv.writer(fp, delimiter=";")
             writer.writerow(columns)
-            for q in Quarter._instances.items():
+            for q in Quarter._instances.values():
                 date = q.time_start.strftime("%Y-%m-%d")
                 hs = q.time_start.strftime("%Hh%M")
                 he = q.time_end.strftime("%Hh%M")
