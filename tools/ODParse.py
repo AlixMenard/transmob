@@ -179,7 +179,6 @@ def match_with_user_validation(vehicle_paths, root, top_k=12):
                 best_match, best_distance = top_matches[0]
                 if best_distance > auto_reject_threshold:
                     skipped_distances.extend([distance for _, distance in top_matches])
-                    enter_list.remove(enter_vehicle)
                     print(f"🚫 Auto-rejected: Distance {best_distance:.4f} > {auto_reject_threshold:.4f}")
                     continue
 
@@ -195,7 +194,6 @@ def match_with_user_validation(vehicle_paths, root, top_k=12):
                 selected_distances.append(distance)
             else:
                 skipped_distances.extend([distance for _, distance in top_matches])
-                enter_list.remove(enter_vehicle)
 
     return match_list
 
@@ -285,10 +283,8 @@ class Parser:
                 vehicle.features = predictor(image)
         print("Matching...", flush = True)
         id_matched = match_with_user_validation(vehicle_paths, root, top_k=10)
-        print(od_mat)
         for enter_id, exit_id, vehicle in id_matched:
             od_mat.directions[enter_id][exit_id].append(vehicle)
-        print(od_mat)
 
 
 
