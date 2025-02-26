@@ -91,7 +91,7 @@ class VehicleMatcherGUI:
             info_label.config(text=f"ID: {candidate_exit_vehicle.short['id']} | Time: {candidate_exit_vehicle.short['time']} | Line: {candidate_exit_vehicle.short['line']}\nDistance: {distance:.4f}")
 
         # Hide unused slots if fewer than 10 matches
-        for j in range(len(top_matches), 10):
+        for j in range(len(top_matches), 12):
             label, info_label, _ = self.match_buttons[j]
             label.config(image="")
             info_label.config(text="No Match")
