@@ -208,17 +208,19 @@ class Parser:
             self.save_path = save_path
         self.path = path
         self.conglo = conglo
-        self.line_nb = len(os.listdir(screens_folders[0]))
+
+        self.screens_folders = []
+        for dirpath, dirnames, _ in os.walk(self.path):
+            if "screens" in dirnames:
+                self.screens_folders.append(os.path.join(dirpath, "screens"))
+        self.line_nb = len(os.listdir(self.screens_folders[0]))
 
     def parse(self, root):
 
         for widget in root.winfo_children():
             widget.destroy()
 
-        screens_folders = []
-        for dirpath, dirnames, _ in os.walk(self.path):
-            if "screens" in dirnames:
-                screens_folders.append(os.path.join(dirpath, "screens"))
+        screens_folders = self.screens_folders
 
         line_nb = self.line_nb
 
@@ -431,6 +433,7 @@ def window():
         path = path.strip('"{}')
         P = Parser(path, conglo=conglo.get())
         P.parse(root)
+        P.make_csv()
         root.destroy()
 
     def create_bt():
