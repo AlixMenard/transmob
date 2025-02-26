@@ -144,6 +144,9 @@ def get_top_matches(enter_vehicle, exit_vehicles, top_k=12, lambda_id=0.1, max_i
     combined_distances = feature_distances + id_penalty
     combined_distances = np.array([(d * 2) if enter_vehicle.short["line"] == exit_vehicles[i].short["line"] else d for i, d in
                            enumerate(combined_distances)])
+    combined_distances = np.array(
+        [0 if enter_vehicle.id == exit_vehicles[i].id else d for i, d in
+         enumerate(combined_distances)])
 
     # 4. Get top matches based on combined distances
     top_indices = np.argsort(combined_distances)[:top_k]
@@ -177,7 +180,7 @@ def match_with_user_validation(vehicle_paths, root, top_k=12, max_id=1000):
             if len(selected_distances) >= 10:
                 mean_distance = np.mean(selected_distances)
                 std_distance = np.std(selected_distances)
-                auto_accept_threshold = mean_distance - 2.5 * std_distance
+                auto_accept_threshold = mean_distance - 3 * std_distance
 
                 best_match, best_distance = top_matches[0]
                 if best_distance < auto_accept_threshold:
@@ -191,7 +194,7 @@ def match_with_user_validation(vehicle_paths, root, top_k=12, max_id=1000):
             if len(skipped_distances) >= 10:
                 mean_skipped = np.mean(skipped_distances)
                 std_skipped = np.std(skipped_distances)
-                auto_reject_threshold = mean_skipped + 2.5 * std_skipped
+                auto_reject_threshold = mean_skipped + 2 * std_skipped
 
                 best_match, best_distance = top_matches[0]
                 if best_distance > auto_reject_threshold:
