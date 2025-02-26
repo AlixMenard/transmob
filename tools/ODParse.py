@@ -284,6 +284,7 @@ class Parser:
                 image = torch.as_tensor(image.astype("float32").transpose(2, 0, 1)) / 255.0
                 image = normalize(image).unsqueeze(0).to(cfg.MODEL.DEVICE)
                 vehicle.features = predictor(image)
+                del image
         print("Matching...", flush = True)
         id_matched = match_with_user_validation(vehicle_paths, root, top_k=12)
         print(f"{len(id_matched)} hand made matches.")
