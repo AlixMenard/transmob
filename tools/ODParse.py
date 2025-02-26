@@ -147,7 +147,7 @@ def get_top_matches(enter_vehicle, exit_vehicles, top_k=12, lambda_id=0.1, max_i
     return [(exit_vehicles[i], combined_distances[i]) for i in top_indices]
 
 
-def match_with_user_validation(vehicle_paths, root, top_k=12):
+def match_with_user_validation(vehicle_paths, root, top_k=12, max_id=1000):
     matcher_gui = VehicleMatcherGUI(root)
     match_list = []
     selected_distances = []
@@ -302,7 +302,7 @@ class Parser:
                 vehicle.features = predictor(image)
                 del image
         print("Matching...", flush = True)
-        id_matched = match_with_user_validation(vehicle_paths, root, top_k=12)
+        id_matched = match_with_user_validation(vehicle_paths, root, top_k=12, max_id=max_id)
         print(f"{len(id_matched)} hand made matches.")
         for enter_id, exit_id, vehicle in id_matched:
             od_mat.directions[enter_id][exit_id].append(vehicle)
