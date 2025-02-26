@@ -138,10 +138,12 @@ def get_top_matches(enter_vehicle, exit_vehicles, top_k=12, lambda_id=0.1, max_i
     # 2. Compute ID proximity penalty
     id_differences = np.array([abs(enter_vehicle.id - v.id) for v in exit_vehicles])
     id_penalty = lambda_id * (id_differences / max_id)
-    id_penalty = np.array( [(p*2.5) if enter_vehicle.short["line"]==exit_vehicles[i].short["line"] else p for i,p in enumerate(id_penalty)] )
+
 
     # 3. Combine distances
     combined_distances = feature_distances + id_penalty
+    combined_distances = np.array([(d * 2) if enter_vehicle.short["line"] == exit_vehicles[i].short["line"] else d for i, d in
+                           enumerate(combined_distances)])
 
     # 4. Get top matches based on combined distances
     top_indices = np.argsort(combined_distances)[:top_k]
