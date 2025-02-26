@@ -46,7 +46,7 @@ class VehicleMatcherGUI:
 
         self.match_buttons = []
         self.match_images = []
-        for i in range(10):
+        for i in range(12):
             frame = tk.Frame(self.matches_frame, relief=tk.RAISED, borderwidth=1)
             frame.grid(row=i // 4, column=i % 4, padx=5, pady=5)
 
