@@ -27,6 +27,11 @@ class VehicleMatcherGUI:
         self.root = root
         self.root.title("Vehicle Matching Validation")
 
+        def on_close():
+            self.root.destroy()
+            sys.exit()  # Ensure the program fully exits
+        self.root.protocol("WM_DELETE_WINDOW", on_close)  # Handle window close event
+
         self.result = None
         self.selected_index = tk.IntVar(value=-1)  # Index of selected match (-1 for skip)
 
