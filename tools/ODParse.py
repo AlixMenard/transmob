@@ -280,7 +280,9 @@ class Parser:
                 image = normalize(image).unsqueeze(0).to(cfg.MODEL.DEVICE)
                 vehicle.features = predictor(image)
         print("Matching...", flush = True)
-        match_with_user_validation(vehicle_paths, root, top_k=10)
+        id_matched = match_with_user_validation(vehicle_paths, root, top_k=10)
+        for enter_id, exit_id, vehicle in id_matched:
+            od_mat.directions[enter_id][exit_id].append(vehicle)
 
 
 
@@ -305,6 +307,11 @@ class Parser:
             shutil.copyfile(vehicle.path, fr"{self.path}/unmatched/enter/l{line_id}_{vehicle.short['name']}")
         for line_id, vehicle in unmatched_exit:
             shutil.copyfile(vehicle.path, fr"{self.path}/unmatched/exit/l{line_id}_{vehicle.short['name']}")
+
+        self.parsed = od_mat
+
+    def make_csv(self):
+        pass
 
 class OD:
     def __init__(self, line_nb:int):
