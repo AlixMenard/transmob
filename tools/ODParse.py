@@ -328,7 +328,7 @@ class Parser:
         else:
             columns += ["car", "van", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
 
-        with open("dir.csv", "wt") as fp:
+        with open(rf"{self.root}/dir.csv", "wt") as fp:
             writer = csv.writer(fp, delimiter=";")
             writer.writerow(columns)
             for q in Quarter._instances.values():
