@@ -1,9 +1,9 @@
 | Image | Comment |
 |-------|---------|
-| ![Image 1](images/lines/AIX1_good.png) | Comment about image 1 |
-| ![Image 1](images/lines/AIX1_bad.png) | Comment about image 1 |
-| ![Image 1](images/lines/AIX1.jpg) | Comment about image 1 |
-| ![Image 1](images/lines/AIX2.jpg) | Comment about image 1 |
+| ![Image 1](images/lines/AIX1_good.png | width=100) | Comment about image 1 |
+| ![Image 1](images/lines/AIX1_bad.png | width=100) | Comment about image 1 |
+| ![Image 1](images/lines/AIX1.jpg | width=100) | Comment about image 1 |
+| ![Image 1](images/lines/AIX2.jpg | width=100) | Comment about image 1 |
 | ![Image 1](images/lines/MEZES.jpg) | Comment about image 1 |
 | ![Image 1](images/lines/nuit%202%20off.jpg) ![Image 1](images/lines/nuit%202%20on.jpg) | Comment about image 1 |
 | ![Image 1](images/lines/obstruct.jpg) ![Image 1](images/lines/obstruct_n.jpg) | Comment about image 1 |
