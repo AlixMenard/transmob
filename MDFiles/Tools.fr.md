@@ -15,6 +15,11 @@ Si les vidéos sont endommagées (e.g. VLC Media Player un message d'erreur simi
 #### Changer date de vidéos
 Si des vidéos sont mal datées (la date de *dernière modification* doit correspondre au moment où la vidéo s'est terminée, cad le moment où elle a commencé + sa durée), cet outil va re-dater toutes les vidéos d'un dossier (pas les sous-dossiers) avec une date de départ. Glissez-déposez le dossier sur la fenêtre, entrez la date de **départ** de la première vidéo au format indiqué, puis cliquez sur "Valider".
 
+#### Formattage directionnel
+Pour obtenir un fichier de résultats directionnels pour le dossier, il suffit de glisser-déposer le dossier dans la fenêtre et de cliquer sur « Valider ». Le programme recherchera les dossiers de captures d'écrans pour effectuer la correspondance entrée/sortie. Si certains véhicules n'ont pas pu être suivis sur l'ensemble de l'intersection, le programme entrera dans une phase de correspondance manuelle.
+
+Un véhicule entrant vous sera présenté, ainsi que 12 correspondances potentielles parmi les véhicules sortants. Les correspondances potentielles sont sélectionnées sur la base de la ressemblance visuelle et de l'heure de traversée. Vous pouvez soit sélectionner le véhicule correspondant s'il est trouvé, soit l'ignorer si vous ne pouvez pas déterminer avec certitude une correspondance. Au fur et à mesure, le programme commencera à déterminer s'il est suffisamment sûr de lui pour accepter ou rejeter automatiquement certaines correspondances, afin de vous faciliter la tâche.
+
 <a name="ffmpeg"></a>
 ### FFMPEG
 Est un project gratuit et open-source avec pour objectif de gérer les fichiers vidéo, audio, et autres multimédias. FFmpeg n'est **pas** installé nativement sur les appareils Windows, il est donc nécessaire de l'installer afin d'utiliser l'outil Réparer vidéos..\
