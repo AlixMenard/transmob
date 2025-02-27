@@ -14,7 +14,7 @@ If videos are damaged (e.g. VLC Media Player shows an error message similar to "
 #### Video re-dating (Changer date de vidéos)
 If videos were wrongly dated (*last modification* date should correspond to the time the video ended, or the time it started + the duration), this tool will re-date all videos in a folder (not sub-folders) according to a starting date. Drag & drop the folder on the window, fill in the **starting** time of the first video according to the provided format, then click "Valider".
 
-#### Directionnal formatting
+#### Directionnal formatting (Formattage directionnel)
 To get a directionnal result file for the folder. Simply drag & drop the folder on the window and click "Valider". The program will look for screeshots folders to do entry/exit matching. If some vehicles could not be tracked all across the intersection, the program will enter a hand matching phase.
 
 You will be presented an entering vehicle, and 12 potential matches amongst exiting vehicles. The potential matches are selected based on visual ressemblance and crossing time. You can either select the matching vehicle if found, or skip it if you can't surely determine a match. As you do this, the program will start to determine weither it is confident enough to automatically accept or reject some matches, to ease your task.
