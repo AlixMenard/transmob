@@ -124,23 +124,24 @@ class Line:
         return close
 
     def cross(self, v : Vehicle):
-        crossed = False
+        crossed = 0
         x, y = v.box.cross_point
         if not self.strict_inbound(x, y):
-            return False
+            return 0
         _, p = self.proj((x, y))
         if v.id in self.vehicles and (p * np.mean(self.vehicles[v.id])<0 or p ==0):
             if v.id in self.still_close:
                 self.vehicles[v.id].append(p)
-                return False
-            crossed = True
+                return 0
             self.still_close[v.id] = v
             if np.mean(self.vehicles[v.id])<0:
                 self.counter.add(v, direction = 0)
                 v.cross(self.id)
+                crossed = 1
             else:
                 self.counter.add(v, direction = 1)
                 v.cross(-self.id)
+                crossed = -1
         self.vehicles[v.id].append(p)
         return crossed
 

@@ -92,7 +92,7 @@ class Parser:
                     line1 = line[:] + ["1"]
                     for col in columns:
 
-                        if col == "car_van":
+                        if col == "car" and self.conglo:
                             count0 = q.count[l][0].get("car", 0) + q.count[l][0].get("van", 0)
                             count1 = q.count[l][1].get("car", 0) + q.count[l][1].get("van", 0)
                         else:

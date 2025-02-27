@@ -184,6 +184,16 @@ def setup_window():
         sahi_f = tk.Radiobutton(root, text = "Non", variable = sahib, value = False)
         sahi_f.grid(row = 10, column = 6, columnspan = 2)
 
+    """# ? OD
+    ODb = tk.BooleanVar(value=False)
+    if torch.cuda.is_available():
+        OD_l = tk.Label(root, text = "Traitement OD")
+        OD_l.grid(row = 11, column = 0, columnspan = 4)
+        OD_t = tk.Radiobutton(root, text = "Oui", variable = ODb, value = True)
+        OD_t.grid(row = 11, column = 4, columnspan = 2)
+        OD_f = tk.Radiobutton(root, text = "Non", variable = ODb, value = False)
+        OD_f.grid(row = 11, column = 6, columnspan = 2)"""
+
     # ! Validation
     def start():
         root.destroy()
@@ -191,7 +201,8 @@ def setup_window():
             
         P = Playlist(entry_var.get().strip('"{}'), model=f"weights/yolo11{model_letter.get()}.pt",
                      watch_classes=classes, graph = graphb.get(), screenshots = screenb.get(),
-                     onesetup = onesetupb.get(), validation = validationb.get(), SAHI = sahib.get()
+                     onesetup = onesetupb.get(), validation = validationb.get(), SAHI = sahib.get(),
+                     #OD = ODb.get()
                      )
         P.initialise()
         results = P.play()
@@ -199,7 +210,7 @@ def setup_window():
 
     def create_bt():
         val_bt = tk.Button(root, text="Valider", command=start)
-        val_bt.grid(row = 11, column=0, columnspan=8, pady=10, padx=5)
+        val_bt.grid(row = 12, column=0, columnspan=8, pady=10, padx=5)
 
     # Bind the entry widget to accept file drops
     root.drop_target_register(DND_FILES)

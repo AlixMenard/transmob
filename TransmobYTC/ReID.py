@@ -8,6 +8,8 @@ import os
 import matplotlib.pyplot as plt
 import seaborn as sns
 from copy import deepcopy
+from fastreid.config import get_cfg
+from fastreid.engine import DefaultPredictor
 
 class ReId:
     def __init__(self, model = r"../FastReId_config/veriwild_bot_resnet50.pt", config = r"../FastReId_config/bagtricks_R50-ibn.yml"):

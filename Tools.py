@@ -33,24 +33,32 @@ def window():
         root.destroy()
         ar.window()
 
-    bt_split = tk.Button(root, text="Aggréger résultats", command=aggregate)
-    bt_split.grid(column=1, row=1, pady=10, padx=5)
+    bt_aggr = tk.Button(root, text="Aggréger résultats", command=aggregate)
+    bt_aggr.grid(column=1, row=1, pady=10, padx=5)
 
     def repair():
         import tools.repairVids as rv
         root.destroy()
         rv.window()
 
-    bt_split = tk.Button(root, text="Réparer vidéos", command=repair)
-    bt_split.grid(column=0, row=2, pady=10, padx=5)
+    bt_rep = tk.Button(root, text="Réparer vidéos", command=repair)
+    bt_rep.grid(column=0, row=2, pady=10, padx=5)
 
     def redate():
         import tools.redateVid as rv
         root.destroy()
         rv.window()
 
-    bt_split = tk.Button(root, text="Changer date de vidéos", command=redate)
-    bt_split.grid(column=1, row=2, pady=10, padx=5)
+    bt_date = tk.Button(root, text="Changer date de vidéos", command=redate)
+    bt_date.grid(column=1, row=2, pady=10, padx=5)
+
+    def OD():
+        import tools.ODParse as od
+        root.destroy()
+        od.window()
+
+    bt_od = tk.Button(root, text="Formattage enquête OD", command=OD)
+    bt_od.grid(column=0, row=3, columnspan=2, pady=10, padx=5)
 
     def on_closing():
         global end
