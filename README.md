@@ -56,7 +56,7 @@ More details are available [here](MDFiles/Tools.md).
 
 ### Improvements
 
-This program uses state of the art AI models and algorithms, but may be improvable with the updates of those tools. Here is a [guide](MDFiles/Improve.md) about how to modify and improve the program.
+This program uses state of the art AI models and algorithms, but may be improvable with the updates of those tools. Here is a [guide](MDFiles/IMPROVE.md) about how to modify and improve the program.
 
 ## ~~transmob~~
 
