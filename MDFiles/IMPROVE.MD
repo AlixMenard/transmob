@@ -41,7 +41,7 @@ The vehicle tracking is done using BoT-SORT. The parameters are available in `Tr
 | **`per_class`**: Track objects separately per class. |   |   |
 
 
-*\* IoU : Area of Intersection / Area of Union
+*\* IoU : Area of Intersection / Area of Union*
 
 ## Tuning Tips
 - **Too many ID switches?** Increase `track_buffer`, lower `match_thresh`, `proximity_thresh`, `appearance_thresh`.
