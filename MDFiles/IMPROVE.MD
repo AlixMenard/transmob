@@ -6,7 +6,7 @@ In case a new more performing YOLO version is released, download the weights and
 <p align="center">
   <figure style="display: inline-block; text-align: center; margin: 0 10px;">
     <img src="images/YOLO_version.png?raw=true" alt="Yolo version" title="Yolo version" width="45%"/>
-    <figcaption style="font-size: 0.9em;">Yolo version</figcaption>
+    <figcaption style="font-size: 0.9em; text-align: center;">Yolo version</figcaption>
   </figure>
 </p>
 You need to change the generic version on the yolo models (e.g. `yolov8{m}.pt` or `yolo11{m}.pt`). The `{m}` placeholder will change automatically depending on the model size chosen when running. *Check the name of the new version's models to ensure writing in the right generic version.
@@ -61,6 +61,7 @@ OnlyVans is the model created specifically to identify vans, in order to prevent
 <p align="center">
   <figure style="display: inline-block; text-align: center; margin: 0 10px;">
     <img src="images/OnlyVans_import.png?raw=true" alt="OnlyVans import" title="OnlyVans import" width="45%"/>
-    <figcaption style="font-size: 0.9em;">OnlyVans import</figcaption>
+    <figcaption style="font-size: 0.9em; text-align: center;">OnlyVans import</figcaption>
   </figure>
 </p>
+Change the path to the model's weights.
