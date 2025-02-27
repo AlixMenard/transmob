@@ -32,7 +32,7 @@
   </tr>
   <tr>
     <td>
-      <img src="images/lines/obstruct.jpg" width="150">
+      <img src="images/lines/obstruct.JPG" width="150">
       <img src="images/lines/obstruct_n.jpg" width="150">
     </td>
     <td>Comment about image 1</td>
