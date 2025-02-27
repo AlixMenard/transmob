@@ -59,9 +59,8 @@ Training a new model may require a new dataset, some can be found on websites su
 
 OnlyVans is the model created specifically to identify vans, in order to prevent cars to be mistakenly categorized as trucks. The original version was based on YOLO11, and trained on [this dataset](https://universe.roboflow.com/maryam-mahmood-6hoeq/vans/dataset/3). If you trained a model, here is how to use it : in `TransmobYTC/Vehicle.py`
 <p align="center">
-  <figure style="display: inline-block; text-align: center; margin: 0 10px;">
-    <img src="images/OnlyVans_import.png?raw=true" alt="OnlyVans import" title="OnlyVans import" width="45%"/>
-    <figcaption style="font-size: 0.9em; text-align: center;">OnlyVans import</figcaption>
-  </figure>
+  <img src="images/OnlyVans_import.png?raw=true" alt="OnlyVans import" title="OnlyVans import" width="45%"/>
+  <br>
+  <em>OnlyVans import</em>
 </p>
 Change the path to the model's weights.
