@@ -1,64 +1,64 @@
-# Here are guidelines to make improvements to the program
+# Guide pour l'amélioration du programme
+## Version de YOLO
 
-## Yolo version
-
-In case a new more performing YOLO version is released, download the weights and put them in the `weights` folder. Then in `GUI.py`, modify this line :
+Si une nouvelle version plus performante de YOLO sort, téléchargez les modèles et placez les dans le dossier `weights`. Ensuite, dans `GUI.py`, modifiez cette ligne :
 <p align="center">
-  <img src="images/YOLO_version.png?raw=true" alt="Yolo version" title="Yolo version" width="45%"/><br>
-  <em>YOLO version</em>
+  <img src="images/YOLO_version.png?raw=true" alt="Version YOLO" title="Version YOLO" width="45%"/><br>
+  <em>Version YOLO</em>
 </p>
-You need to change the generic version on the yolo models (e.g. `yolov8{m}.pt` or `yolo11{m}.pt`). The `{m}` placeholder will change automatically depending on the model size chosen when running. *Check the name of the new version's models to ensure writing in the right generic version.
+Il faut changer le nom générique du modèle YOLO (e.g. `yolov8{m}.pt` ou `yolo11{m}.pt`). Le paramètre `{m}` changera automatiquement en fonction de la taille de modèle choisie au lancement. *Verifiez bien le nom des modèles pour mettre le bon nom générique.*
 
-## Tracking parameters
+## Paramètres du traqueur
 
-### Lines for modification
+### Lignes pour modification
 
-The vehicle tracking is done using BoT-SORT. The parameters are available in `TransmobYTC/Analyze.py` (for GPU version, otherwise `TransmobYT/Analyze.py`) at the lines :
+Le suivi de véhicule est fait avec BoT-SORT. Les paramètres sont disponibles dans `TransmobYTC/Analyze.py` (pour la version carte graphique, sinon `TransmobYT/Analyze.py`) aux lignes :
 <table>
   <tr>
     <td align="center" width="45%">
-      <img src="images/Tracker_YTC.png?raw=true" alt="YTC tracker" title="YTC tracker"/>
-      <br/><sub>YTC Tracker</sub>
+      <img src="images/Tracker_YTC.png?raw=true" alt="Traqueur YTC" title="Traqueur YTC"/>
+      <br/><sub>Traqueur YTC</sub>
     </td>
     <td align="center" width="45%">
-      <img src="images/Tracker_YT.png?raw=true" alt="YT tracker" title="YT tracker"/>
-      <br/><sub>YT Tracker</sub>
+      <img src="images/Tracker_YT.png?raw=true" alt="Traqueur YT" title="Traqueur YT"/>
+      <br/><sub>Traqueur YT</sub>
     </td>
   </tr>
 </table>
 
-### Tracker Parameters
+### Paramètres de suivi
 
-| General Settings      | Detection & Tracking        | Matching Criteria        |
+| Paramètres généraux      | Détection & Suivi        | Critères d'association        |
 |----------------------|----------------------------|--------------------------|
-| **`cmc_method`**: Camera motion correction method. | **`track_high_thresh`**: Min confidence for detection association. | **`match_thresh`**: IoU threshold for detection-track matching. |
-| **`device`**: `cuda:0` (GPU) or `cpu`. | **`track_low_thresh`**: Min confidence for tracking. | **`proximity_thresh`**: Max allowed bounding box distance. |
-| **`half`**: Use FP16 for speed if supported. | **`new_track_thresh`**: Min confidence to start a new track. | **`appearance_thresh`**: Min similarity score for ReID matches. |
-| **`frame_rate`**: Affects track buffer length. | **`track_buffer`**: Frames to keep a lost track alive. | **`fuse_first_associate`**: Use both appearance & motion cues initially. |
-| **`with_reid`**: Enable ReID-based tracking. | | **`reid_weights`**: Path to ReID model weights. |
-| **`per_class`**: Track objects separately per class. |   |   |
+| **`cmc_method`**: Méthode de correction des mouvements caméra. | **`track_high_thresh`**: Confiance min pour associer les détections. | **`match_thresh`**: Seuil IoU pour associer la détection à une traque. |
+| **`device`**: `cuda:0` (carte graphique) ou `cpu`. | **`track_low_thresh`**: Confiance min pour la traque. | **`proximity_thresh`**: Distance max entre 2 cadres pour association. |
+| **`half`**: utilise FP16 pour la rapidité, si disponible. | **`new_track_thresh`**: Confiance min pour commencer une traque. | **`appearance_thresh`**: Similarité min pour association par visuel. |
+| **`frame_rate`**: Influe sur le *track_buffer*. | **`track_buffer`**: Nombres max d'images pour conserver une traque perdue. | **`fuse_first_associate`**: Utiliser le visuel et le mouvement pour la première association. |
+| **`with_reid`**: Autorise l'utilisation de la reconnaissance visuelle. | | **`reid_weights`**: Chemin vers le modèle de reconnaissance visuelle. |
+| **`per_class`**: Traquer les objets séparéments par classe (non recommandé). |   |   |
 
 
-*\* IoU : Area of Intersection / Area of Union*
+*\* IoU : Aire d'Intersection / Aier d'Union*
+*Une traque est l'ensemble des éléments composant le suivi **d'un** véhicule.*
 
-### Tuning Tips
-- **Too many ID switches?** Increase `track_buffer`, lower `match_thresh`, `proximity_thresh`, `appearance_thresh`.
-- **False associations?** Increase `match_thresh`, `proximity_thresh`, `appearance_thresh`.
-- **Missed objects?** Lower `new_track_thresh`, `track_high_thresh`.
-- **Track loss after occlusion?** Increase `track_buffer`, adjust `appearance_thresh`.
+### Aides
+- **trop d'échanges d'ID** Augmenter `track_buffer`, baisser `match_thresh`, `proximity_thresh`, `appearance_thresh`.
+- **Mauvaises associations** Augmenter `match_thresh`, `proximity_thresh`, `appearance_thresh`.
+- **Détections manquantes** Baisser `new_track_thresh`, `track_high_thresh`.
+- **Perte traque après occlusion** Augmenter `track_buffer`, ajuster `appearance_thresh`.
 
-## Train a new model
+## Entraîner un nouveau modèle
 
-Numerous tutorial are available online to train a custom model of YOLO. They may require different actions depending od the current YOLO version in use. Here is the official [Ultralytics training page](https://docs.ultralytics.com/modes/train/) valid as of YOLOv12. The page contains all the available parameters, as well as a video tutorial for a step by step showing of the process.
+De nombreux tutos sont disonibles en ligne pour entraîner un moèdel personnalisé de YOLO. Ils peuvent différer selon la version de YOLO utilisée. Voici la [page Ultralytics pour l'entraînement](https://docs.ultralytics.com/modes/train/)  officielle, valide jusqu'à YOLOv12. La page présente tous les paramètres, ainsi qu'un tutoriel vidéo pour un guide étape pétape.
 
-Training a new model may require a new dataset, some can be found on websites such as [Roboflow Universe](https://universe.roboflow.com/).
+Entraîner un modèle nécessite un ensemble de donnée, certains peuvent être trouvés sur des sites comme [Roboflow Universe](https://universe.roboflow.com/).
 
 ## OnlyVans
 
-OnlyVans is the model created specifically to identify vans, in order to prevent cars to be mistakenly categorized as trucks. The original version was based on YOLO11, and trained on [this dataset](https://universe.roboflow.com/maryam-mahmood-6hoeq/vans/dataset/3). If you trained a model, here is how to use it : in `TransmobYTC/Vehicle.py`
+OnlyVans est le modèle utilisé spécifiquement pour identifier les camionnettes, afin d'éviter les voitures catégorisées en camions. La version originale est basée sur YOLO11, et entraînnée sur [cet ensemble de données](https://universe.roboflow.com/maryam-mahmood-6hoeq/vans/dataset/3). Si vous entraîner un nouveau modèle OnlyVans, voici comment l'implementer : dans `TransmobYTC/Vehicle.py`
 <p align="center">
-  <img src="images/OnlyVans_import.png?raw=true" alt="OnlyVans import" title="OnlyVans import" width="45%"/>
+  <img src="images/OnlyVans_import.png?raw=true" alt="Import OnlyVans" title="Import OnlyVans" width="45%"/>
   <br>
-  <em>OnlyVans import</em>
+  <em>Import OnlyVans</em>
 </p>
-Change the path to the model's weights.
+Changer le chemin pour celui du nouveau modèle.
