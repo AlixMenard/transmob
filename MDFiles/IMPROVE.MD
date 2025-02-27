@@ -4,10 +4,8 @@
 
 In case a new more performing YOLO version is released, download the weights and put them in the `weights` folder. Then in `GUI.py`, modify this line :
 <p align="center">
-  <figure style="display: inline-block; text-align: center; margin: 0 10px;">
-    <img src="images/YOLO_version.png?raw=true" alt="Yolo version" title="Yolo version" width="45%"/>
-    <figcaption style="font-size: 0.9em; text-align: center;">Yolo version</figcaption>
-  </figure>
+  <img src="images/YOLO_version.png?raw=true" alt="Yolo version" title="Yolo version" width="45%"/><br>
+  <em>YOLO version</em>
 </p>
 You need to change the generic version on the yolo models (e.g. `yolov8{m}.pt` or `yolo11{m}.pt`). The `{m}` placeholder will change automatically depending on the model size chosen when running. *Check the name of the new version's models to ensure writing in the right generic version.
 
