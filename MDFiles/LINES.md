@@ -1,18 +1,77 @@
-| Image | Comment |
-|-------|---------|
-| ![Image 1](images/lines/AIX1_good.png | width=100) | Comment about image 1 |
-| ![Image 1](images/lines/AIX1_bad.png | width=100) | Comment about image 1 |
-| ![Image 1](images/lines/AIX1.jpg | width=100) | Comment about image 1 |
-| ![Image 1](images/lines/AIX2.jpg | width=100) | Comment about image 1 |
-| ![Image 1](images/lines/MEZES.jpg) | Comment about image 1 |
-| ![Image 1](images/lines/nuit%202%20off.jpg) ![Image 1](images/lines/nuit%202%20on.jpg) | Comment about image 1 |
-| ![Image 1](images/lines/obstruct.jpg) ![Image 1](images/lines/obstruct_n.jpg) | Comment about image 1 |
-| ![Image 1](images/lines/PEGOMAS.jpg) | Comment about image 1 |
-| ![Image 1](images/lines/perspectived.jpg) | Comment about image 1 |
-| ![Image 1](images/lines/remorque.jpg) | Comment about image 1 |
-| ![Image 1](images/lines/RODEZ.jpg) | Comment about image 1 |
-| ![Image 1](images/lines/setup%201.jpg) | Comment about image 1 |
-| ![Image 1](images/lines/setup%202.jpg) | Comment about image 1 |
-| ![Image 1](images/lines/STJUNIEN1.jpg) | Comment about image 1 |
-| ![Image 1](images/lines/STJUNIEN2.jpg) | Comment about image 1 |
-| ![Image 1](images/lines/VALENCE.jpg) | Comment about image 1 |
+<table>
+  <tr>
+    <th>Image</th>
+    <th>Comment</th>
+  </tr>
+  <tr>
+    <td><img src="images/lines/AIX1_good.png" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td><img src="images/lines/AIX1_bad.png" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td><img src="images/lines/AIX1.jpg" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td><img src="images/lines/AIX2.jpg" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td><img src="images/lines/MEZES.jpg" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td>
+      <img src="images/lines/nuit%202%20off.jpg" width="150">
+      <img src="images/lines/nuit%202%20on.jpg" width="150">
+    </td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td>
+      <img src="images/lines/obstruct.jpg" width="150">
+      <img src="images/lines/obstruct_n.jpg" width="150">
+    </td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td><img src="images/lines/PEGOMAS.jpg" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td><img src="images/lines/perspectived.jpg" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td><img src="images/lines/remorque.jpg" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td><img src="images/lines/RODEZ.jpg" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td><img src="images/lines/setup%201.jpg" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td><img src="images/lines/setup%202.jpg" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td><img src="images/lines/STJUNIEN1.jpg" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td><img src="images/lines/STJUNIEN2.jpg" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+  <tr>
+    <td><img src="images/lines/VALENCE.jpg" width="150"></td>
+    <td>Comment about image 1</td>
+  </tr>
+</table>
+
