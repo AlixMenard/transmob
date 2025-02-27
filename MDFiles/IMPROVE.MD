@@ -13,6 +13,8 @@ You need to change the generic version on the yolo models (e.g. `yolov8{m}.pt` o
 
 ## Tracking parameters
 
+### Lines for modification
+
 The vehicle tracking is done using BoT-SORT. The parameters are available in `TransmobYTC/Analyze.py` (for GPU version, otherwise `TransmobYT/Analyze.py`) at the lines :
 <table>
   <tr>
@@ -26,5 +28,24 @@ The vehicle tracking is done using BoT-SORT. The parameters are available in `Tr
     </td>
   </tr>
 </table>
+
+### Tracker Parameters
+
+| General Settings      | Detection & Tracking        | Matching Criteria        |
+|----------------------|----------------------------|--------------------------|----------------------------|
+| **`reid_weights`**: Path to ReID model weights. | **`track_high_thresh`**: Min confidence for detection association. | **`match_thresh`**: IoU threshold for detection-track matching. |
+| **`device`**: `cuda:0` (GPU) or `cpu`. | **`track_low_thresh`**: Min confidence for tracking. | **`proximity_thresh`**: Max allowed bounding box distance. |
+| **`half`**: Use FP16 for speed if supported. | **`new_track_thresh`**: Min confidence to start a new track. | **`appearance_thresh`**: Min similarity score for ReID matches. |
+| **`frame_rate`**: Affects track buffer length. | **`track_buffer`**: Frames to keep a lost track alive. | **`fuse_first_associate`**: Use both appearance & motion cues initially. |
+| **`with_reid`**: Enable ReID-based tracking. | | **`cmc_method`**: Camera motion correction method. |
+| **`per_class`**: Track objects separately per class. | | |
+
+*\* IoU : Area of Intersection / Area of Union
+
+## Tuning Tips
+- **Too many ID switches?** Increase `track_buffer`, lower `match_thresh`, `proximity_thresh`, `appearance_thresh`.
+- **False associations?** Increase `match_thresh`, `proximity_thresh`, `appearance_thresh`.
+- **Missed objects?** Lower `new_track_thresh`, `track_high_thresh`.
+- **Track loss after occlusion?** Increase `track_buffer`, adjust `appearance_thresh`.
 
 
