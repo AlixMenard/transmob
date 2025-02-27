@@ -43,10 +43,14 @@ The vehicle tracking is done using BoT-SORT. The parameters are available in `Tr
 
 *\* IoU : Area of Intersection / Area of Union*
 
-## Tuning Tips
+### Tuning Tips
 - **Too many ID switches?** Increase `track_buffer`, lower `match_thresh`, `proximity_thresh`, `appearance_thresh`.
 - **False associations?** Increase `match_thresh`, `proximity_thresh`, `appearance_thresh`.
 - **Missed objects?** Lower `new_track_thresh`, `track_high_thresh`.
 - **Track loss after occlusion?** Increase `track_buffer`, adjust `appearance_thresh`.
 
+## Train a new model
 
+Numerous tutorial are available online to train a custom model of YOLO. They may require different actions depending od the current YOLO version in use. Here is the official [Ultralytics training page](https://docs.ultralytics.com/modes/train/) valid as of YOLOv12. The page contains all the available parameters, as well as a video tutorial for a step by step showing of the process.
+
+Training a new model may require a new dataset, some can be found on websites such as [Roboflow Universe](https://universe.roboflow.com/).
