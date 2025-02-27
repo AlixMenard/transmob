@@ -54,3 +54,13 @@ The vehicle tracking is done using BoT-SORT. The parameters are available in `Tr
 Numerous tutorial are available online to train a custom model of YOLO. They may require different actions depending od the current YOLO version in use. Here is the official [Ultralytics training page](https://docs.ultralytics.com/modes/train/) valid as of YOLOv12. The page contains all the available parameters, as well as a video tutorial for a step by step showing of the process.
 
 Training a new model may require a new dataset, some can be found on websites such as [Roboflow Universe](https://universe.roboflow.com/).
+
+## OnlyVans
+
+OnlyVans is the model created specifically to identify vans, in order to prevent cars to be mistakenly categorized as trucks. The original version was based on YOLO11, and trained on [this dataset](https://universe.roboflow.com/maryam-mahmood-6hoeq/vans/dataset/3). If you trained a model, here is how to use it : in `TransmobYTC/Vehicle.py`
+<p align="center">
+  <figure style="display: inline-block; text-align: center; margin: 0 10px;">
+    <img src="images/OnlyVans_import.png?raw=true" alt="OnlyVans import" title="OnlyVans import" width="45%"/>
+    <figcaption style="font-size: 0.9em;">OnlyVans import</figcaption>
+  </figure>
+</p>
