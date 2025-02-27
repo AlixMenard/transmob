@@ -38,7 +38,8 @@ The vehicle tracking is done using BoT-SORT. The parameters are available in `Tr
 | **`half`**: Use FP16 for speed if supported. | **`new_track_thresh`**: Min confidence to start a new track. | **`appearance_thresh`**: Min similarity score for ReID matches. |
 | **`frame_rate`**: Affects track buffer length. | **`track_buffer`**: Frames to keep a lost track alive. | **`fuse_first_associate`**: Use both appearance & motion cues initially. |
 | **`with_reid`**: Enable ReID-based tracking. | | **`cmc_method`**: Camera motion correction method. |
-| **`per_class`**: Track objects separately per class. | | |
+| **`per_class`**: Track objects separately per class. |   |   |
+
 
 *\* IoU : Area of Intersection / Area of Union
 
