@@ -54,6 +54,10 @@ Les outils permettent :
 
 Plus de détails sont disponibles [ici](Tools.fr.md).
 
+### Improvements
+
+Ce programme utilise des outils IA et des algorithmes à l'état de l'art (02/2025), mais des améliorations avec les mises à jour de ces outils sont possibles. Voici un [guide](MDFiles/IMPROVE.fr.md) sur comment modifier et améliorer le programme.
+
 ## ~~transmob~~
 
 Detection d'objet par YOLO, suivi par SORT.\
