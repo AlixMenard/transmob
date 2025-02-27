@@ -32,7 +32,7 @@ The vehicle tracking is done using BoT-SORT. The parameters are available in `Tr
 ### Tracker Parameters
 
 | General Settings      | Detection & Tracking        | Matching Criteria        |
-|----------------------|----------------------------|--------------------------|----------------------------|
+|----------------------|----------------------------|--------------------------|
 | **`reid_weights`**: Path to ReID model weights. | **`track_high_thresh`**: Min confidence for detection association. | **`match_thresh`**: IoU threshold for detection-track matching. |
 | **`device`**: `cuda:0` (GPU) or `cpu`. | **`track_low_thresh`**: Min confidence for tracking. | **`proximity_thresh`**: Max allowed bounding box distance. |
 | **`half`**: Use FP16 for speed if supported. | **`new_track_thresh`**: Min confidence to start a new track. | **`appearance_thresh`**: Min similarity score for ReID matches. |
