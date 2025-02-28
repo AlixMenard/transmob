@@ -176,7 +176,7 @@ def setup_window():
 
     # ? SAHI
     sahib = tk.BooleanVar(value=False)
-    if torch.cuda.is_available():
+    if False and torch.cuda.is_available():
         sahi_l = tk.Label(root, text = "Detection fragmentaire")
         sahi_l.grid(row = 10, column = 0, columnspan = 4)
         sahi_t = tk.Radiobutton(root, text = "Oui", variable = sahib, value = True)
