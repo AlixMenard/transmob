@@ -6,6 +6,8 @@ import ast
 import csv
 import tkinter as tk
 
+from copy import deepcopy
+
 import numpy as np
 from tkinterdnd2 import TkinterDnD, DND_FILES
 import os
@@ -359,7 +361,7 @@ class Parser:
         else:
             columns += ["car", "van", "truck", "bus", "motorbike", "bicycle", "person", "scooter"]
 
-        with open(rf"{self.path}/dir.csv", "wt", newline="") as fp:
+        with open(rf"{self.path}/dir1.csv", "wt", newline="") as fp:
             writer = csv.writer(fp, delimiter=";")
             writer.writerow(columns)
             for q in Quarter._instances.values():
@@ -368,6 +370,46 @@ class Parser:
                 he = q.time_end.strftime("%Hh%M")
                 row = [date, f"{hs}-{he}", q.enter, q.exit] + q.count()
                 writer.writerow(row)
+
+
+        q_mats = Quarter.matrices()
+        times = [t for t in q_mats.keys() if t != "HP"]
+        times.sort()
+        with open(rf"{self.path}/dir2.csv", "wt", newline="") as fp:
+            writer = csv.writer(fp, delimiter=";")
+            for t in times:
+                row = [t.strftime("%Hh%M")]
+                for l in range(Quarter.lines()):
+                    row += [l,"_","_","_","_"]
+                writer.writerow(row)
+
+                row = ["Entrant / Sortant"]
+                for l in range(Quarter.lines()):
+                    row += ["VL", "PL", "Bus", "M", "Velo"]
+                writer.writerow(row)
+
+                for i in range(Quarter.lines()):
+                    row = [i]
+                    for j in range(Quarter.lines()):
+                        row += list(q_mats[t][i, j]) #! dim of q_mats[t] ?
+                    writer.writerow(row)
+
+            row = ["HP"]
+            for l in range(Quarter.lines()):
+                row += [l,"_","_","_","_"]
+            writer.writerow(row)
+
+            row = ["Entrant / Sortant"]
+            for l in range(Quarter.lines()):
+                row += ["VL", "PL", "Bus", "M", "Velo"]
+            writer.writerow(row)
+
+            for i in range(Quarter.lines()):
+                row = [i]
+                for j in range(Quarter.lines()):
+                    row += list(q_mats["HP"][i, j])
+                writer.writerow(row)
+
 
 class OD:
     def __init__(self, line_nb:int):
@@ -427,6 +469,50 @@ class Quarter:
                     results[-1] += 1
         return results
 
+    @classmethod
+    def grouped(cls):
+        times = set(x[2] for x in cls._instances.keys())
+        return {time: [q for key, q in cls._instances.items() if key[2] == time] for time in times}
+
+    @classmethod
+    def lines(cls):
+        return max([max(k[0], k[1]) for k in cls._instances.keys()], default=0)+1
+
+    @classmethod
+    def matrices(cls):
+        matrices = {}
+        affluence = []
+        times = cls.grouped()
+        lines_nb = cls.lines()
+
+        for time in times:
+
+            od_temp = np.zeros((lines_nb, lines_nb), dtype=object)
+            for i in range(lines_nb):
+                for j in range(lines_nb):
+                    od_temp[i,j] = np.array([0] * 5)
+
+
+            for q in times[time]:
+                columns = q.count()
+                if len(columns) == 8:
+                    columns[0] += columns.pop(1)
+                columns = columns[:5]
+                for i in range(5):
+                    od_temp[q.enter, q.exit][i] += columns[i]
+            matrices[time] = deepcopy(od_temp)
+            affluence.append((time, od_temp.sum()))
+
+        affluence.sort(key=lambda x: x[0])
+        maxaff = 0
+        start = 0
+        for i in range(len(affluence)-4):
+            if sum(j for _, j in affluence[i:i+4]) > maxaff:
+                maxaff = sum(j for _, j in affluence[i:i+4])
+                start = i
+
+        matrices["HP"] = sum([matrices[t] for t, _ in affluence[start:start+4]])
+        return matrices
 
 
 class Vehicle:
