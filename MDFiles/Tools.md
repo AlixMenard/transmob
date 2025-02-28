@@ -19,6 +19,10 @@ To get a directionnal result file for the folder. Simply drag & drop the folder 
 
 You will be presented an entering vehicle, and 12 potential matches amongst exiting vehicles. The potential matches are selected based on visual ressemblance and crossing time. You can either select the matching vehicle if found, or skip it if you can't surely determine a match. As you do this, the program will start to determine weither it is confident enough to automatically accept or reject some matches, to ease your task.
 
+Once done, 2 files are created :
+- `dir1.csv` : This is a csv file where each line shows the number of vehicles counted by type, indexed by unique (time, entering line, exiting line) combinations.
+- `dir2.csv` : This csv file contains, for each time analysed, a matrix with entries as lines, exits as columns, as well as the combination of the most busy consecutive hour matrix.
+
 
 <a name="ffmpeg"></a>
 ### FFMPEG
