@@ -20,6 +20,10 @@ Pour obtenir un fichier de résultats directionnels pour le dossier, il suffit d
 
 Un véhicule entrant vous sera présenté, ainsi que 12 correspondances potentielles parmi les véhicules sortants. Les correspondances potentielles sont sélectionnées sur la base de la ressemblance visuelle et de l'heure de traversée. Vous pouvez soit sélectionner le véhicule correspondant s'il est trouvé, soit l'ignorer si vous ne pouvez pas déterminer avec certitude une correspondance. Au fur et à mesure, le programme commencera à déterminer s'il est suffisamment sûr de lui pour accepter ou rejeter automatiquement certaines correspondances, afin de vous faciliter la tâche.
 
+Une fois fait, 2 fichiers sont créés :
+- `dir1.csv` : Ce fichier csv contient, par ligne, les combinaisons uniques (quart d'heure, voie d'entrée, voie de sortie), ainsi que le compte de véhicules correspondant.
+- `dir2.csv` : Ce fichier csv contient, par quart d'heure, une matrice de passage avec en ligne les entrées, en colonnes les sorties, ainsi que la matrice combinant les 4 (si possible) quarts d'heures les plus actifs.
+
 <a name="ffmpeg"></a>
 ### FFMPEG
 Est un project gratuit et open-source avec pour objectif de gérer les fichiers vidéo, audio, et autres multimédias. FFmpeg n'est **pas** installé nativement sur les appareils Windows, il est donc nécessaire de l'installer afin d'utiliser l'outil Réparer vidéos..\
