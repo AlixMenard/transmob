@@ -114,8 +114,8 @@ En double frame, les modèles se situent entre 80% et 95% (estimation max), avec
 - [X] Paramétrage rapide en cas de vidéos avec le même PDV
 - [X] Groupement de vidéos efficace en termes de mémoire
 - [X] Distinguer SUV (voitures larges), camionnettes aet camions
-- [ ] Implémenter ReId pour éviter les pertes de suivi
-- [ ] Etude directionnelle
+- [X] Implémenter ReId pour éviter les pertes de suivi
+- [X] Etude directionnelle
       
 ### Mentions légales
 YOLO étant sous [license AGPL-3.0](https://firebasestorage.googleapis.com/v0/b/ultralytics-public-site.appspot.com/o/license%2FAGPL-3.0-Software-License.pdf?alt=media), ce code l'est aussi. En termes simples, il peut être utilisé avec un objectif commercial au sein de l'entreprise, mais ne peut pas être utilisé comme service en ligne/hébergé accessible à des utilisateurs publiques ou privés. Dans un tel cas, l'entièreté du code source doit être rendu disponible aux utilisateurs, à moins d'acheter une license entreprise à Ultralytics.
