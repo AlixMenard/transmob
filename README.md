@@ -116,8 +116,8 @@ With double frame, models are located between 80% and 95% (estimate of max), wit
 - [X] Cancel line creation if mistake made
 - [X] Memory efficient playlisting
 - [X] Discriminate SUV (large cars), vans and trucks
-- [ ] Implement ReId to prevent track loss
-- [ ] Directional process
+- [X] Implement ReId to prevent track loss
+- [X] Directional process
 
 
 ### Legal
